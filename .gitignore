@@ -6,3 +6,6 @@
 
 # Jetbrains files we don't need
 .idea
+
+# don't need to upload the output of arduino IDE formatted files
+/arduino_builds
