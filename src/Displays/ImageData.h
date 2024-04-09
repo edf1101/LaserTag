@@ -16,6 +16,11 @@ namespace ImageData {
         const unsigned char *MyImage; // Pointer to const unsigned char
     };
 
+    // Describes how we want an image to be centered / or not when drawing it
+    enum OFFSET{
+        TOP_LEFT,
+        CENTERED,
+    };
 
 // include all images here
 

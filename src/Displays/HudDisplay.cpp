@@ -14,30 +14,53 @@
 #define SCREEN_ADDRESS 0x3D ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 
 void HudDisplay::init() {
-    // Initialize the HUD
+  // Initialize the HUD
 
-    // create the display object
-    ssd1306Display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+  // create the display object
+  hudDisplay = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-    // Try to set it up, else loop forever as without it the gun is useless.f
-    if(!ssd1306Display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
-        Serial.println(F("SSD1306 allocation failed"));
-        for(;;); // Don't proceed, loop forever
-    }
+  // Try to set it up, else loop forever as without it the gun is useless.f
+  if (!hudDisplay.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;); // Don't proceed, loop forever
+  }
+  hudDisplay.setRotation(1); // rotate it so screen is portrait
 
 
-    // Clear the buffer
-    ssd1306Display.clearDisplay();
-    setImage(ImageData::img_bullet);
-    ssd1306Display.display();
+  // Clear the buffer
+  hudDisplay.clearDisplay();
+  drawImage(0, 0, ImageData::img_bullet);
+  hudDisplay.display();
 }
 
-void HudDisplay::setImage(ImageData::ImageData image){
+void HudDisplay::setBackdrop(ImageData::ImageData image) {
+  // Set the backdrop of the HUD to an image
 
-    ssd1306Display.clearDisplay();
+  hudDisplay.clearDisplay();
 
-    ssd1306Display.drawBitmap(20, 20, image.MyImage,
-                              (short)image.width,
-                              (short)image.height,1);
-    ssd1306Display.display();
+  // height and width (assuming portrait orientation) must be set to 128 and 64 respectively
+  // as it's a whole screen image.
+  hudDisplay.drawBitmap(0, 0, image.MyImage,
+                        64, 128, 1);
+  hudDisplay.display();
+}
+
+void HudDisplay::drawImage(int x, int y, ImageData::ImageData image, ImageData::OFFSET orientation) {
+  // Draw an image to the HUD
+
+  hudDisplay.clearDisplay();
+
+  // If it's centered around the x and y point then modify them
+  if (orientation == ImageData::CENTERED) {
+    x = x - (image.width / 2);
+    y = y - (image.height / 2);
+  }
+  hudDisplay.drawBitmap((short) x, (short) y, image.MyImage,
+                        (short) image.width, (short) image.height, 1);
+  hudDisplay.display();
+}
+
+void HudDisplay::setState(HUD_STATE::HUD_STATE newState) {
+  // Set the state of the HUD
+  state = newState;
 }
