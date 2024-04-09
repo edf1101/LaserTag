@@ -1,9 +1,10 @@
 #include <Arduino.h>
-#include <HudDisplay.h>
-
+#include "Displays/HudDisplay.h"
+HudDisplay hud;
 
 void setup() {
     // Gets called once at the start of the program
+    hud.init();
 }
 
 void loop() {

@@ -24,12 +24,12 @@ void oled_tester(){
 
     // Clear the buffer
     testDisplay.clearDisplay();
-
-    testDisplay.clearDisplay();
+    // write some demo text
     testDisplay.setTextSize(1);
     testDisplay.setTextColor(WHITE);
     testDisplay.setCursor(0, 0);
     testDisplay.print("Display A");
-    testDisplay.display();
+
+    testDisplay.display(); // display it
 }
 #endif

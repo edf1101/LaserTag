@@ -6,10 +6,11 @@
 
 #include "HudDisplay.h"
 
+
 // definitions of various OLED screen parameters
 #define SCREEN_WIDTH 128 // OLED testDisplay width, in pixels
 #define SCREEN_HEIGHT 64 // OLED testDisplay height, in pixels
-#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET     (-1) // Reset pin # (or -1 if sharing Arduino reset pin)
 #define SCREEN_ADDRESS 0x3D ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 
 void HudDisplay::init() {
@@ -27,5 +28,16 @@ void HudDisplay::init() {
 
     // Clear the buffer
     ssd1306Display.clearDisplay();
+    setImage(ImageData::img_bullet);
+    ssd1306Display.display();
+}
+
+void HudDisplay::setImage(ImageData::ImageData image){
+
+    ssd1306Display.clearDisplay();
+
+    ssd1306Display.drawBitmap(20, 20, image.MyImage,
+                              (short)image.width,
+                              (short)image.height,1);
     ssd1306Display.display();
 }
