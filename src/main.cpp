@@ -1,17 +1,21 @@
+/*
+ * Created by Ed Fillingham on 07/04/2024.
+ *
+ * This is the basic entrance file for the Laser Tag project.
+ * It initializes the LaserTag object and calls the loop function repeatedly.
+ */
+
 #include <Arduino.h>
-#include "Displays/HudDisplay.h"
-#include "Displays/SideDisplay.h"
-HudDisplay hud;
-SideDisplay sideDisplay;
+#include "LaserTag.h"
+
+LaserTag laserTag;
 
 void setup() {
     // Gets called once at the start of the program
-    Serial.begin(9600);
-    hud.init();
-    sideDisplay.init();
+    laserTag.init();
 }
 
 void loop() {
     // Gets called repeatedly by the microcontroller
-    sideDisplay.pollEncoder();
+    laserTag.loop();
 }

@@ -24,7 +24,7 @@ namespace ImageData {
 
 // include all images here
 
-#include "Displays/Images/img_Bullet.h"
+#include "Images/img_Bullet.h"
 
 }
 #endif //LASERTAG_IMAGEDATA_H

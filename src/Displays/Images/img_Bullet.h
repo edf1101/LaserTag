@@ -8,7 +8,7 @@
 #define LASERTAG_IMG_BULLET_H
 
 # include <Arduino.h>
-# include "Displays/ImageData.h"
+# include "../ImageData.h"
 
 
 // put image here
