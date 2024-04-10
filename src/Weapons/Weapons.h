@@ -10,7 +10,7 @@
 #include "Arduino.h"
 #include <string>
 #include "Gun.h" // For creating Gun types
-#include "Displays/ImageData.h" // For getting gun images
+#include "../Displays/ImageData.h" // For getting gun images
 
 namespace Weapons {
 

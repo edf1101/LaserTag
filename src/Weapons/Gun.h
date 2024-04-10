@@ -8,7 +8,7 @@
 #define LASERTAG_GUN_H
 
 #include <string>
-#include "Displays/ImageData.h"
+#include "../Displays/ImageData.h"
 
 namespace Weapons { // So we don't have irrelevant things floating around in the global namespace
 
