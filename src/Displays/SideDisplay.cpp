@@ -14,16 +14,16 @@ void SideDisplay::init() {
   side_Display.setRotation(3); // set its rotation to be horizontal
 
   side_Display.fillScreen(ST7735_BLACK); // fill the screen with black
-  drawImage(50,50,ImageData::img_bullet,ST7735_RED,ImageData::CENTERED); // draw the heart image
+  drawImage(50, 50, Images::img_bullet, ST7735_RED, Images::CENTERED); // draw the heart image
 }
 
-void SideDisplay::drawImage(int x, int y, ImageData::ImageData image,
+void SideDisplay::drawImage(int x, int y, Images::ImageData image,
                             uint16_t color = ST7735_WHITE,
-                            ImageData::OFFSET orientation = ImageData::TOP_LEFT) {
+                            Images::OFFSET orientation = Images::TOP_LEFT) {
   // Draw an image to the Side screen
 
   // If it's centered around the x and y point then modify them
-  if (orientation == ImageData::CENTERED) {
+  if (orientation == Images::CENTERED) {
     x = x - (image.width / 2);
     y = y - (image.height / 2);
   }

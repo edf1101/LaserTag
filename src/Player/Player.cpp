@@ -9,7 +9,7 @@
 #include <utility>
 
 // constructor for player
-Player::Player(int _unitnum, int _team) {
+void Player::init(int _unitnum, int _team) {
   unitnum = _unitnum;
   team = _team;
   name = "Player" + std::to_string(unitnum);

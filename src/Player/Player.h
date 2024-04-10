@@ -14,8 +14,7 @@
 
 class Player {
 public:
-    Player(int _unitnum,int _team); // Default constructor
-
+    void init(int _unitnum,int _team); // Default constructor
     int getUnitnum() const; // Returns the player's unit number
     void setUnitnum(int _unitnum); // Sets the player's unit number
 

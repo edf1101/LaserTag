@@ -8,7 +8,9 @@
 #ifndef LASERTAG_IMAGEDATA_H
 #define LASERTAG_IMAGEDATA_H
 
-namespace ImageData {
+#include "Arduino.h"
+
+namespace Images {
 
     struct ImageData {
         int width;

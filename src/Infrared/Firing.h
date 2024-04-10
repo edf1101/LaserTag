@@ -7,7 +7,7 @@
 #ifndef LASERTAG_FIRING_H
 #define LASERTAG_FIRING_H
 
-//#include "../LaserTag.h"
+#include <Arduino.h>
 #include "Infrared.h"
 #include "../Pins.h"
 

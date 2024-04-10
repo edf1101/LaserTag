@@ -37,9 +37,9 @@ public:
 private:
     HUD_STATE::HUD_STATE state; // The current state of the HUD
     Adafruit_SSD1306 hudDisplay; // OLED testDisplay object
-    void setBackdrop(ImageData::ImageData image); // Set a whole screen image on the HUD
-    void drawImage(int x, int y, ImageData::ImageData image,
-                   ImageData::OFFSET orientation = ImageData::TOP_LEFT); // Draw an image on the HUD
+    void setBackdrop(Images::ImageData image); // Set a whole screen image on the HUD
+    void drawImage(int x, int y, Images::ImageData image,
+                   Images::OFFSET orientation = Images::TOP_LEFT); // Draw an image on the HUD
     void updateSplash(); // Update the splash screen (rotate through the animation frames)
 };
 

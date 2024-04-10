@@ -13,6 +13,8 @@
 #include "Displays/HudDisplay.h"
 #include "Displays/SideDisplay.h"
 #include "Infrared/Firing.h"
+#include "Player/Player.h"
+#include "Weapons/Weapons.h"
 
 
 class LaserTag {
@@ -24,6 +26,8 @@ private:
     SideDisplay sideDisplay;
 
     Firing firing = Firing(this);  // firing object
+
+    Player player;  // player object
 
 
 };

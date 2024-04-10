@@ -26,8 +26,8 @@ public:
 private:
     Adafruit_ST7735 side_Display = Adafruit_ST7735(TFT_CS, TFT_DC,
                                                    TFT_RST); // The side display object (ST7735)
-    void drawImage(int x, int y, ImageData::ImageData image,
-                   uint16_t color, ImageData::OFFSET orientation);
+    void drawImage(int x, int y, Images::ImageData image,
+                   uint16_t color, Images::OFFSET orientation);
 
     // variables relating to the rotary encoder
     bool lastStateA = false;

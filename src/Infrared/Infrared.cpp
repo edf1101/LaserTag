@@ -1,5 +1,13 @@
+/*
+ * Code from Techcamp (techcamp.org.uk) for LaserTag20
+ *
+ * This handles the low level IR communication.
+ * Don't edit this file unless you know what you're doing,
+ * often you'll want to edit Firing.cpp/.h and even then its likely
+ * you want to change a gun or gamemode file.
+*/
+
 #include "Infrared.h"
-#include "HardwareSerial.h"
 
 Infrared::Infrared()
 {

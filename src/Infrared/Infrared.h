@@ -2,7 +2,9 @@
  * Code from Techcamp (techcamp.org.uk) for LaserTag20
  *
  * This handles the low level IR communication.
- * Don't edit this file unless you know what you're doing, most of the time you'll want to edit Firing.cpp/.h
+ * Don't edit this file unless you know what you're doing,
+ * often you'll want to edit Firing.cpp/.h and even then its likely
+ * you want to change a gun or gamemode file.
 */
 
 #ifndef LASERTAG_INFRARED_H

@@ -29,11 +29,11 @@ void HudDisplay::init() {
 
   // Clear the buffer
   hudDisplay.clearDisplay();
-  drawImage(0, 0, ImageData::img_bullet);
+  drawImage(0, 0, Images::img_bullet);
   hudDisplay.display();
 }
 
-void HudDisplay::setBackdrop(ImageData::ImageData image) {
+void HudDisplay::setBackdrop(Images::ImageData image) {
   // Set the backdrop of the HUD to an image
 
   hudDisplay.clearDisplay();
@@ -45,13 +45,13 @@ void HudDisplay::setBackdrop(ImageData::ImageData image) {
   hudDisplay.display();
 }
 
-void HudDisplay::drawImage(int x, int y, ImageData::ImageData image, ImageData::OFFSET orientation) {
+void HudDisplay::drawImage(int x, int y, Images::ImageData image, Images::OFFSET orientation) {
   // Draw an image to the HUD
 
   hudDisplay.clearDisplay();
 
   // If it's centered around the x and y point then modify them
-  if (orientation == ImageData::CENTERED) {
+  if (orientation == Images::CENTERED) {
     x = x - (image.width / 2);
     y = y - (image.height / 2);
   }
