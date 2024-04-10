@@ -9,17 +9,22 @@
 #ifndef LASERTAG_LASERTAG_H
 #define LASERTAG_LASERTAG_H
 
+#include "Arduino.h"
 #include "Displays/HudDisplay.h"
 #include "Displays/SideDisplay.h"
+#include "Infrared/Firing.h"
 
 
 class LaserTag {
-public :
+public:
     void init();
     void loop();
 private:
     HudDisplay hudDisplay;  // display objects
     SideDisplay sideDisplay;
+
+    Firing firing = Firing(this);  // firing object
+
 
 };
 

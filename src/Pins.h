@@ -17,4 +17,9 @@
 #define ROT_OUT_B 5
 #define ROT_SWITCH 19
 
+// Pin definitions for IR Transmitter & Receiver
+#define IR_RECEIVER GPIO_NUM_35
+#define IR_TRANSMITTER GPIO_NUM_26
+
+
 #endif //LASERTAG_PINS_H

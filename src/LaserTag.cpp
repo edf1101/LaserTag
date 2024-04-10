@@ -8,16 +8,26 @@
 
 #include "LaserTag.h"
 
+long t;
+
 void LaserTag::init() {
   // This gets called once at the start of the program
 
   Serial.begin(9600); // start serial communication for debug purposes
+
+  // set up the displays
   hudDisplay.init();
   sideDisplay.init();
+
 }
 
 void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
-
-  sideDisplay.pollEncoder();
+  if (millis()-t>1000) {
+    t = millis();
+    Serial.println("sending command");
+    firing.sendCommand(1013);
+  }
+//  sideDisplay.pollEncoder(); // Check the rotary encoder for movements
+  firing.FiringLoop(); // Call the firing loop function
 }

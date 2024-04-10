@@ -11,11 +11,12 @@ Other components can be found:
 
 ## Software
 ### Libraries needed
-- [FastLED]()
-- etc.
+- FastLED
+- Adafruit SSD1306
+- Adafruit ST7735
 
 ### Installation
-#### Basic Setup
+#### Basic Setup (Arduino IDE)
 To upload the code without doing any major modifications it is easiest to use the Arduino IDE:
 1. Install the Arduino IDE and ESP32 board manager.
 2. Download the simple code from the releases section.
@@ -23,7 +24,7 @@ To upload the code without doing any major modifications it is easiest to use th
 4. Select the correct board and port.
 5. Upload the code.
 
-#### Advanced Setup
+#### Advanced Setup (Platformio)
 To use the code in a platformio environment:
 1. Clone the repository.
 2. Open the code in a platformio environment.
