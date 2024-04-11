@@ -30,6 +30,9 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 //            ,unsigned char *gunSound
             );
         void resetCharacteristics(); // Reset the gun's characteristics to default
+        int getIndex() const; // Returns the gun's index
+        bool tryFire(); // if the gun can fire (not reloading etc.), it fires and returns true, otherwise returns false
+        void resetBurstCount(); // Resets the burst count (when trigger released)
 
     private:
         // Gun default Characteristics

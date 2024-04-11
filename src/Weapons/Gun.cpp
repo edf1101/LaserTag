@@ -48,3 +48,36 @@ void Gun::resetCharacteristics() {
   this->burstCount = 0;
   this->suppressed = defaultSuppressed;
 }
+
+int Gun::getIndex() const {
+  // Return the gun's index
+  return gunID;
+}
+
+bool Gun::tryFire() {
+  if (reloading) {
+    return false; // If the gun is reloading, it can't fire
+  }
+
+  if (millis()-lastFired < fireRate) {
+    return false; // If the gun has fired too recently, it can't fire
+  }
+
+  if (burstCount>=shotsPerBurst && shotsPerBurst!=-1) {
+    return false; // If the gun has fired too many shots in the current burst, it can't fire
+  }
+
+
+  // It passed the tests so fire the gun
+  lastFired = millis();
+  burstCount++;
+
+
+  return true; // This means that the gun can fire and just has
+}
+
+void Gun::resetBurstCount() {
+  // Reset the burst count (when trigger released)
+
+  burstCount = 0;
+}

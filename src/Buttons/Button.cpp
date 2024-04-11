@@ -7,21 +7,23 @@
 
 #include "Button.h"
 
+#include <utility>
+
 Button::Button(int pin) {
   // Constructor for the Button class
   this->pin = pin;
-  pinMode(pin, INPUT);
+  pinMode(pin, INPUT_PULLDOWN);
 }
 
-void Button::SetPressedCallback(void (*_pressedCallback)()) {
+void Button::SetPressedCallback(std::function<void(void)> callback) {
   // Set the callback function for when the button is pressed
-  this->pressedCallback = _pressedCallback;
+  this->pressedCallback = std::move(callback);
   this->setPressedCallback = true;
 }
 
-void Button::SetReleasedCallback(void (*_releasedCallback)()) {
+void Button::SetReleasedCallback(std::function<void(void)> callback) {
   // Set the callback function for when the button is released
-  this->releasedCallback = _releasedCallback;
+  this->releasedCallback = std::move(callback);
   this->setReleasedCallback = true;
 }
 

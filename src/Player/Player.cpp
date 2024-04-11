@@ -56,22 +56,6 @@ void Player::setHealth(int _health) {
   health = _health;
 }
 
-// getter & setter for ammo
-int Player::getAmmo() const {
-  return ammo;
-}
-void Player::setAmmo(int _ammo) {
-  ammo = _ammo;
-}
-
-// getter & setter for mags
-int Player::getMags() const {
-  return mags;
-}
-void Player::setMags(int _mags) {
-  mags = _mags;
-}
-
 // getter & setter for kills
 int Player::getKills() const {
   return kills;
@@ -86,5 +70,13 @@ bool Player::getCarryingFlag() const {
 }
 void Player::setCarryingFlag(bool _carryingFlag) {
   carryingFlag = _carryingFlag;
+}
+
+// getter & setter for gun
+Weapons::Gun* Player::getGun() {
+  return gun;
+}
+void Player::setGun(Weapons::Gun *_gun) {
+  gun = _gun;
 }
 

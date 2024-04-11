@@ -9,8 +9,9 @@
 
 #include <string>
 #include "Arduino.h"
+#include "../Weapons/Weapons.h"
 
-#define MAX_LIVES 5; // The maximum number of revives a player can have
+#define START_LIVES 3; // The maximum number of revives a player can have
 
 class Player {
 public:
@@ -30,32 +31,28 @@ public:
     void setHealth(int health); // Sets the player's health
     int getHealth() const; // Returns the player's health
 
-    void setAmmo(int ammo); // Sets the player's ammo
-    int getAmmo() const; // Returns the player's ammo
-
-    void setMags(int mags); // Sets the player's magazines
-    int getMags() const; // Returns the player's magazines
-
     void setKills(int kills); // Sets the player's kills
     int getKills() const; // Returns the player's kills
 
     void setCarryingFlag(bool carryingFlag); // Sets whether the player is carrying the flag
     bool getCarryingFlag() const; // Returns whether the player is carrying the flag
 
+    void setGun(Weapons::Gun* gun); // Sets the player's gun
+    Weapons::Gun* getGun() ; // Returns the player's gun
+
 
 
 private:
+    GunTypes myGuns;
     int unitnum; // The player's unit number
     int team; // The player's team
     std::string name; // The player's name
 
-    int revives = MAX_LIVES; // The number of revives the player has remaining
+    int revives = START_LIVES; // The number of revives the player has remaining
     u_int8_t health = 100; // The player's health 0-100 (u_int8_t is 0 - 256 so saves space)
-    int ammo = 0; // The player's ammo in the current magazine
-    int mags = 0; // The number of magazines the player has remaining
     int kills = 0; // The number of kills the player has
     bool carryingFlag = false; // Whether the player is carrying the flag
-
+    Weapons::Gun* gun = &myGuns.AssaultRifle; // The player's gun (default is the Assault Rifle)
 
 };
 

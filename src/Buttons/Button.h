@@ -9,15 +9,16 @@
 #define LASERTAG_BUTTON_H
 
 #include "Arduino.h"
+#include <functional>
 
 
 class Button {
 public:
     explicit Button(int pin);
 
-    void SetPressedCallback(void (*_pressedCallback)());
+    void SetPressedCallback(std::function<void(void)> callback);
 
-    void SetReleasedCallback(void (*_releasedCallback)());
+    void SetReleasedCallback(std::function<void(void)> callback);
 
     void poll();
 
@@ -27,11 +28,11 @@ private:
     int pin;
     bool lastState = false;
 
-    void (*pressedCallback)();
+    std::function<void(void)> pressedCallback;
 
     bool setPressedCallback = false;
 
-    void (*releasedCallback)();
+    std::function<void(void)> releasedCallback;
 
     bool setReleasedCallback = false;
 

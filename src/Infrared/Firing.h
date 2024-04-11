@@ -10,6 +10,9 @@
 #include <Arduino.h>
 #include "Infrared.h"
 #include "../Pins.h"
+#include "../Player/Player.h"
+#include "../Weapons/Weapons.h"
+#include "../Buttons/Buttons.h"
 
 class LaserTag; // Forward declaration
 
@@ -22,9 +25,12 @@ public:
 
 private:
     LaserTag* mySystem; // The system object
+    Buttons* gameButtons;
     Infrared infraredTransciever;  // infrared object
     void OnHit(); // Function to call when a hit packet is received
     void OnCommand(); // Function to call when a control packet is received
+
+    void OnTriggerUp();
 };
 
 

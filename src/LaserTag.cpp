@@ -8,12 +8,6 @@
 
 #include "LaserTag.h"
 
-long t;
-
-void onButtonDown();
-
-void onButtonUp();
-
 void LaserTag::init() {
   // This gets called once at the start of the program
 
@@ -40,4 +34,9 @@ void LaserTag::loop() {
 Player *LaserTag::getPlayer() {
   // returns a pointer to the player object
   return &player;
+}
+
+Buttons *LaserTag::getButtons(){
+  // returns a pointer to the trigger button object
+  return &buttons;
 }

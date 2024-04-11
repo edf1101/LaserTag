@@ -10,32 +10,36 @@ Firing::Firing(LaserTag *_mySystem) {
   // This is important, so it can access sounds, player data, etc.
   mySystem = _mySystem;
 
+  // set up buttons
+  gameButtons = mySystem->getButtons();
+  gameButtons->triggerButton.SetReleasedCallback(std::bind(&Firing::OnTriggerUp, this));
+
   // set up low level IR transceiver
   infraredTransciever.init(IR_RECEIVER, IR_TRANSMITTER);
 }
 
 void Firing::FiringLoop() {
   infraredTransciever.receiveIR();
-  //Serial.println(canRx);
   if (infraredTransciever.infraredReceived) {  // canRx bit used to be up here if any weird issues try moving back up here
 
 
     if (infraredTransciever.crcValid)  // if valid reception and we're running ... also make you invincible if you are in an admin menu, ie you cant run commands
     {
-
       int irControl = infraredTransciever.irPacketIn.control;
-      int irUnitnum = infraredTransciever.irPacketIn.unitnum;
-      int irWeapon = infraredTransciever.irPacketIn.weapon;
-      Serial.println("rxIR");
+
       if (irControl == 0) {  //recieved shot control signal
         OnHit();
       }
       if (irControl == 1) {
         OnCommand();
-
       }
     }
     infraredTransciever.infraredReceived = 0;
+  }
+
+  // TODO need a way to check non gun reasons if can fire, eg. in admin menu, in respawn etc.
+  if(gameButtons->triggerButton.isPressed()){
+    Fire();
   }
 
 }
@@ -43,18 +47,22 @@ void Firing::FiringLoop() {
 void Firing::OnHit() {
   // This gets called when the gun has been hit by an IR signal
 
-  // TODO make it so own unitnum can't be hit once player class done
   // TODO have callback func if required by gamemode (gamemode should have a special callback on top of this)
   //  usual gamemodes won't need as this will handle lives remove and if teams / friendly fire etc.
 
-  // Get the data
-  int unitnum = infraredTransciever.irPacketIn.unitnum;
-  int weapon = infraredTransciever.irPacketIn.weapon;
+  // Get the data recieved
+  int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
+  int rxWeapon = infraredTransciever.irPacketIn.weapon;
+
+  // Check if the player has been hit by their own gun, if so ignore
+  if (mySystem->getPlayer()->getUnitnum() == rxUnitnum) {
+    return;
+  }
 
   Serial.print("Hit! Shot by: ");
-  Serial.print(unitnum);
+  Serial.print(rxUnitnum);
   Serial.print(" with weapon: ");
-  Serial.println(weapon);
+  Serial.println(rxWeapon);
 
 }
 
@@ -96,10 +104,23 @@ void Firing::sendCommand(uint16_t command) {
 void Firing::Fire() {
   // This function sends a shot signal to other guns
 
-  // Will fake these for now
-  //TODO implement real weapon and unitnum once player and weapon classes are implemented
-  int weapon = 1; // weapon number  (MAX 2^4 = 16)
-  int unitnum = 1; // unit number (MAX 2^7 = 128)
+  // Get the current gun object and check it can fire
+  Player* player = mySystem->getPlayer();
+  Weapons::Gun* myGun = player->getGun();
+  if (!myGun->tryFire()) { // If the gun can't fire then skip past this
+    return;
+  }
+Serial.println("Firing");
+  return;
+  int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
+  int unitnum = player->getUnitnum();; // unit number (MAX 2^7 = 128)
 
   infraredTransciever.sendIR(0, (uint8_t) unitnum, (uint8_t) weapon);
+}
+
+void Firing::OnTriggerUp(){
+  // This function gets called when the trigger is pressed
+  Player* player = mySystem->getPlayer();
+  Weapons::Gun* myGun = player->getGun();
+    myGun->resetBurstCount();
 }

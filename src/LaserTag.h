@@ -9,6 +9,7 @@
 #ifndef LASERTAG_LASERTAG_H
 #define LASERTAG_LASERTAG_H
 
+#include <functional>
 #include "Arduino.h"
 #include "Displays/HudDisplay.h"
 #include "Displays/SideDisplay.h"
@@ -25,6 +26,7 @@ public:
     void loop();
 
     Player *getPlayer();
+    Buttons *getButtons();
 
 private:
     Buttons buttons;  // object representing all buttons on the gun
@@ -34,7 +36,6 @@ private:
     Firing firing = Firing(this);  // firing object
 
     Player player;  // player object
-
 
 };
 
