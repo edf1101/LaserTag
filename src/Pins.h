@@ -20,8 +20,11 @@
 // Pin definitions for IR Transmitter & Receiver
 #define IR_RECEIVER GPIO_NUM_35
 #define IR_TRANSMITTER GPIO_NUM_26
+#define MUZZLE_LED 13
 
+// Pin definitions for the buttons
 #define TRIGGER_BUTTON 12
+#define MAGAZINE_BUTTON 16
 
 
 #endif //LASERTAG_PINS_H

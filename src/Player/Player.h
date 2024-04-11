@@ -52,7 +52,7 @@ private:
     u_int8_t health = 100; // The player's health 0-100 (u_int8_t is 0 - 256 so saves space)
     int kills = 0; // The number of kills the player has
     bool carryingFlag = false; // Whether the player is carrying the flag
-    Weapons::Gun* gun = &myGuns.AssaultRifle; // The player's gun (default is the Assault Rifle)
+    Weapons::Gun* gun = myGuns.getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)
 
 };
 

@@ -9,10 +9,12 @@
 
 #include <utility>
 
-Button::Button(int pin) {
+Button::Button(int pin, uint8_t inputMode) {
   // Constructor for the Button class
   this->pin = pin;
-  pinMode(pin, INPUT_PULLDOWN);
+  this->inputMode = inputMode;
+
+  pinMode(pin, inputMode);
 }
 
 void Button::SetPressedCallback(std::function<void(void)> callback) {
@@ -30,6 +32,9 @@ void Button::SetReleasedCallback(std::function<void(void)> callback) {
 void Button::poll() {
   // Poll the button to see if it has been pressed or released
   bool currentState = digitalRead(pin);
+  if (inputMode == INPUT_PULLUP) {
+    currentState = !currentState;
+  }
 
   if (currentState != lastState) {
     lastState = currentState;
@@ -48,5 +53,9 @@ void Button::poll() {
 
 bool Button::isPressed() const {
   // Return whether the button is currently pressed
+
+  if (inputMode == INPUT_PULLUP) { // If the button is a pullup, invert the logic
+    return digitalRead(pin) == LOW;
+  }
   return digitalRead(pin) == HIGH;
 }

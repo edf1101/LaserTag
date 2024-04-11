@@ -14,7 +14,7 @@
 
 class Button {
 public:
-    explicit Button(int pin);
+    explicit Button(int pin, uint8_t inputMode = INPUT_PULLDOWN);
 
     void SetPressedCallback(std::function<void(void)> callback);
 
@@ -26,6 +26,7 @@ public:
 
 private:
     int pin;
+    uint8_t inputMode;
     bool lastState = false;
 
     std::function<void(void)> pressedCallback;

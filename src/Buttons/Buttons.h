@@ -14,10 +14,12 @@
 class Buttons {
 public:
     Button triggerButton = Button(TRIGGER_BUTTON);
+    Button magazineButton = Button(MAGAZINE_BUTTON, INPUT_PULLUP);
 
     void pollButtons() {
       // Polls all the buttons for updates
       triggerButton.poll();
+      magazineButton.poll();
     }
 };
 

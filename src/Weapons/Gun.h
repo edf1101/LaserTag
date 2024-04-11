@@ -12,10 +12,19 @@
 
 namespace Weapons { // So we don't have irrelevant things floating around in the global namespace
 
-    enum ReloadType{
+#define PRESSES_TO_RELOAD 2 // How many times you need to press the reload button to reload all mags
+
+    enum ReloadType {
         AUTO, // Don't need to press anything to reload
-        PRESS_ALL, // Need to press a button to reload all mags
-        PRESS_BULLET // Need to press a button to reload each bullet (when you fire again it stops reloading)
+        PRESS_FOR_ALL, // Need to press a button to reload all mags
+        PRESS_PER_BULLET // Need to press a button to reload each bullet (when you fire again it stops reloading)
+    };
+
+    // This defines the different fire rates a gun can have
+    enum FireRate {
+        NORMAL, // The gun's normal fire rate
+        FAST, // The gun's fast fire rate
+        SLOW // The gun's slow fire rate
     };
 
     class Gun {
@@ -28,11 +37,24 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
             int fireRateNormal, int fireRateFast, int fireRateSlow,
             int shotsPerBurst, bool defaultSuppressed, float volume
 //            ,unsigned char *gunSound
-            );
+        );
+
         void resetCharacteristics(); // Reset the gun's characteristics to default
         int getIndex() const; // Returns the gun's index
+
         bool tryFire(); // if the gun can fire (not reloading etc.), it fires and returns true, otherwise returns false
         void resetBurstCount(); // Resets the burst count (when trigger released)
+
+        bool getSuppressed(); // Get whether the gun is suppressed
+        void setSuppressed(bool _suppressed); // Set whether the gun is suppressed
+
+        void reloadLoop(); // The loop that deals with reloading logic
+        void reloadAddBullet();
+
+        void setFireRate(FireRate _fireRate); // Set the fire rate of the gun
+
+        std::string getName(); // Get the gun's name
+        int createHash(); // Create a hash of the gun's characteristics for the anti-cheat system
 
     private:
         // Gun default Characteristics
@@ -63,14 +85,13 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         bool reloading; // Whether the gun is currently reloading
         long reloadStartTime = 0; // The time the gun started reloading (used for guns with auto reload)
-        int reloadCount; // How many times reload button has been pressed (for guns with press all)
+        int reloadCount; // How many times reload button has been pressed (for guns with press all or press bullet)
 
         int fireRate; // The current fire rate of the gun
         long lastFired = 0; // The time the gun last fired (used to check if can fire)
         int burstCount; // How many shots have been fired in the current burst
 
         bool suppressed; // Whether the gun is currently suppressed
-
     };
 }
 

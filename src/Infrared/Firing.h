@@ -16,6 +16,8 @@
 
 class LaserTag; // Forward declaration
 
+#define MUZZLE_FLASH_TIME 50 // Time in ms for the muzzle flash to be on
+
 class Firing {
 public:
     explicit Firing(LaserTag* _mySystem); // Constructor
@@ -31,6 +33,10 @@ private:
     void OnCommand(); // Function to call when a control packet is received
 
     void OnTriggerUp();
+    void OnMagazineButtonDown();
+
+    bool muzzleFlash = false; // Is the muzzle flash on
+    long lastMuzzleFlash = 0; // The time it turned on
 };
 
 

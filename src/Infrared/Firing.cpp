@@ -13,9 +13,13 @@ Firing::Firing(LaserTag *_mySystem) {
   // set up buttons
   gameButtons = mySystem->getButtons();
   gameButtons->triggerButton.SetReleasedCallback(std::bind(&Firing::OnTriggerUp, this));
+  gameButtons->magazineButton.SetPressedCallback(std::bind(&Firing::OnMagazineButtonDown, this));
 
   // set up low level IR transceiver
   infraredTransciever.init(IR_RECEIVER, IR_TRANSMITTER);
+
+  // set up muzzle flash LED
+  pinMode(MUZZLE_LED, OUTPUT);
 }
 
 void Firing::FiringLoop() {
@@ -38,9 +42,19 @@ void Firing::FiringLoop() {
   }
 
   // TODO need a way to check non gun reasons if can fire, eg. in admin menu, in respawn etc.
-  if(gameButtons->triggerButton.isPressed()){
+  if (gameButtons->triggerButton.isPressed()) {
     Fire();
   }
+
+  // Deal with muzzle flash
+  if (muzzleFlash && millis() - lastMuzzleFlash > MUZZLE_FLASH_TIME) {
+    muzzleFlash = false;
+    digitalWrite(MUZZLE_LED, LOW);
+  }
+
+  // Deal with gun reloading object
+  // May not actually be reloading but that's dealt with in the gun object
+  mySystem->getPlayer()->getGun()->reloadLoop();
 
 }
 
@@ -105,22 +119,37 @@ void Firing::Fire() {
   // This function sends a shot signal to other guns
 
   // Get the current gun object and check it can fire
-  Player* player = mySystem->getPlayer();
-  Weapons::Gun* myGun = player->getGun();
+  Player *player = mySystem->getPlayer();
+  Weapons::Gun *myGun = player->getGun();
   if (!myGun->tryFire()) { // If the gun can't fire then skip past this
     return;
   }
-Serial.println("Firing");
-  return;
+  Serial.println("Firing");
+
+  // Do muzzle flash
+  if (!myGun->getSuppressed()) {
+    muzzleFlash = true;
+    lastMuzzleFlash = millis();
+    digitalWrite(MUZZLE_LED, HIGH);
+  }
+
+  // Send the actual data over IR
   int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
   int unitnum = player->getUnitnum();; // unit number (MAX 2^7 = 128)
-
   infraredTransciever.sendIR(0, (uint8_t) unitnum, (uint8_t) weapon);
+
 }
 
-void Firing::OnTriggerUp(){
+void Firing::OnTriggerUp() {
   // This function gets called when the trigger is pressed
-  Player* player = mySystem->getPlayer();
-  Weapons::Gun* myGun = player->getGun();
-    myGun->resetBurstCount();
+  Player *player = mySystem->getPlayer();
+  Weapons::Gun *myGun = player->getGun();
+  myGun->resetBurstCount();
+}
+
+void Firing::OnMagazineButtonDown() {
+  // This function gets called when the magazine button is pressed
+  Player *player = mySystem->getPlayer();
+  Weapons::Gun *myGun = player->getGun();
+  myGun->reloadAddBullet();
 }
