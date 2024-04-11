@@ -26,5 +26,8 @@
 #define TRIGGER_BUTTON 12
 #define MAGAZINE_BUTTON 16
 
+// Speaker pins
+#define DAC_PIN 25
+
 
 #endif //LASERTAG_PINS_H

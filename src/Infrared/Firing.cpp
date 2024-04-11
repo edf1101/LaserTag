@@ -126,11 +126,12 @@ void Firing::Fire() {
   }
   Serial.println("Firing");
 
-  // Do muzzle flash
+  // Do muzzle flash / sound effect if not suppressed
   if (!myGun->getSuppressed()) {
     muzzleFlash = true;
     lastMuzzleFlash = millis();
     digitalWrite(MUZZLE_LED, HIGH);
+    mySystem->getSoundPlayer()->playSound(myGun->getSound());
   }
 
   // Send the actual data over IR

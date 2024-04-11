@@ -26,6 +26,7 @@ void LaserTag::init() {
 void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
 
+  soundPlayer.soundLoop(); // Check if any sounds need to be played / fill buffer
   sideDisplay.pollEncoder(); // Check the rotary encoder for movements
   buttons.pollButtons(); // Check the buttons for presses
   firing.FiringLoop(); // Call the firing loop function
@@ -39,4 +40,9 @@ Player *LaserTag::getPlayer() {
 Buttons *LaserTag::getButtons(){
   // returns a pointer to the trigger button object
   return &buttons;
+}
+
+Sounds::SoundPlayer *LaserTag::getSoundPlayer(){
+  // returns a pointer to the sound player object
+  return &soundPlayer;
 }

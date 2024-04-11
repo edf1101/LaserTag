@@ -17,6 +17,7 @@
 #include "Player/Player.h"
 #include "Weapons/Weapons.h"
 #include "Buttons/Buttons.h"
+#include "Sound/SoundPlayer.h"
 
 
 class LaserTag {
@@ -27,16 +28,19 @@ public:
 
     Player *getPlayer();
     Buttons *getButtons();
+    Sounds::SoundPlayer *getSoundPlayer();
+
 
 private:
+    // Objects for main hardware components of the gun
     Buttons buttons;  // object representing all buttons on the gun
     HudDisplay hudDisplay;  // display objects
     SideDisplay sideDisplay;
+    Sounds::SoundPlayer soundPlayer;  // sound player object
 
+    // Objects for main software system components
     Firing firing = Firing(this);  // firing object
-
     Player player;  // player object
-
 };
 
 

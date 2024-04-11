@@ -13,8 +13,8 @@ Gun::Gun(int gunId, std::string gunName, std::string gunAcronym,
          Images::ImageData _gunImage,
          int magSize, int magStartCount, int magReloadTime, ReloadType magReloadType,
          int damage, int fireRateNormal, int fireRateFast, int fireRateSlow, int shotsPerBurst,
-         bool defaultSuppressed, float volume) {
-//         ,unsigned char *gunSound
+         bool defaultSuppressed, float volume,
+         XT_Wav_Class* gunSound){
 
 
   // Move over the default characteristics from the constructor to the class variables
@@ -33,7 +33,7 @@ Gun::Gun(int gunId, std::string gunName, std::string gunAcronym,
   this->shotsPerBurst = shotsPerBurst;
   this->defaultSuppressed = defaultSuppressed;
   this->volume = volume;
-//  this->gunSound = gunSound;
+  this->gunSound = gunSound;
 
   resetCharacteristics();
 }
@@ -188,4 +188,9 @@ int Gun::createHash() {
 std::string Gun::getName() {
   // Return the gun's name
   return gunName;
+}
+
+XT_Wav_Class* Gun::getSound() {
+  // Return the gun's sound
+  return gunSound;
 }

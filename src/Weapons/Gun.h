@@ -8,6 +8,7 @@
 #define LASERTAG_GUN_H
 
 #include <string>
+#include "XT_DAC_Audio.h"
 #include "../Displays/ImageData.h"
 
 namespace Weapons { // So we don't have irrelevant things floating around in the global namespace
@@ -35,8 +36,8 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
             int magSize, int magStartCount, int magReloadTime, ReloadType magReloadType,
             int damage,
             int fireRateNormal, int fireRateFast, int fireRateSlow,
-            int shotsPerBurst, bool defaultSuppressed, float volume
-//            ,unsigned char *gunSound
+            int shotsPerBurst, bool defaultSuppressed, float volume,
+            XT_Wav_Class* gunSound
         );
 
         void resetCharacteristics(); // Reset the gun's characteristics to default
@@ -54,6 +55,8 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         void setFireRate(FireRate _fireRate); // Set the fire rate of the gun
 
         std::string getName(); // Get the gun's name
+        XT_Wav_Class *getSound(); // Get the gun's sound effect so it can be played back elsewhere
+
         int createHash(); // Create a hash of the gun's characteristics for the anti-cheat system
 
     private:
@@ -77,7 +80,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         bool defaultSuppressed; // Whether the gun is suppressed by default
         float volume; // The volume of the gun (0-1)
-        unsigned char *gunSound;
+        XT_Wav_Class* gunSound;
 
         // Gun instance variables
         int magsRemaining; // How many mags are left
