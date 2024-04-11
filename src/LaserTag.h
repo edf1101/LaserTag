@@ -15,13 +15,19 @@
 #include "Infrared/Firing.h"
 #include "Player/Player.h"
 #include "Weapons/Weapons.h"
+#include "Buttons/Buttons.h"
 
 
 class LaserTag {
 public:
     void init();
+
     void loop();
+
+    Player *getPlayer();
+
 private:
+    Buttons buttons;  // object representing all buttons on the gun
     HudDisplay hudDisplay;  // display objects
     SideDisplay sideDisplay;
 
