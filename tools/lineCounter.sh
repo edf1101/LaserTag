@@ -11,3 +11,4 @@ find . -name '*.h' | xargs wc -l
 
 echo "Counting lines of image/sound data to ignore ..."
 cat Displays/Images/*.h | wc -l
+cat Sound/Sounds/*.h | wc -l

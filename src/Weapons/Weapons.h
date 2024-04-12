@@ -45,7 +45,7 @@ private:
                                              Weapons::ReloadType::AUTO, 20,
                                              300, 100, 400,
                                              -1, false, 1,
-                                             &Sounds::SoundPlayer::TestSound);
+                                             &Sounds::SoundPlayer::ArSound);
 
     Weapons::Gun SMG = Weapons::Gun(0, "SMG", "SMG",
                                     Images::img_bullet,
@@ -53,7 +53,7 @@ private:
                                     Weapons::ReloadType::AUTO, 15,
                                     150, 75, 250,
                                     3, false, 0.8,
-                                    &Sounds::SoundPlayer::TestSound);
+                                    &Sounds::SoundPlayer::SmgSound);
 
     // Put all the guns created into this array (order doesn't matter)
     Weapons::Gun *allGuns[2] = {&AssaultRifle, &SMG};

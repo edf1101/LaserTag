@@ -42,7 +42,9 @@ void Firing::FiringLoop() {
   }
 
   // TODO need a way to check non gun reasons if can fire, eg. in admin menu, in respawn etc.
-  if (gameButtons->triggerButton.isPressed()) {
+  if (gameButtons->triggerButton.isPressed()
+      && mySystem->getPlayer()->canFire()
+      && mySystem->getGamemode()->canFire()) {
     Fire();
   }
 
@@ -64,19 +66,25 @@ void Firing::OnHit() {
   // TODO have callback func if required by gamemode (gamemode should have a special callback on top of this)
   //  usual gamemodes won't need as this will handle lives remove and if teams / friendly fire etc.
 
+  Player *player = mySystem->getPlayer();
+
+
   // Get the data recieved
   int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
   int rxWeapon = infraredTransciever.irPacketIn.weapon;
 
   // Check if the player has been hit by their own gun, if so ignore
-  if (mySystem->getPlayer()->getUnitnum() == rxUnitnum) {
+  if (player->getUnitnum() == rxUnitnum) {
     return;
   }
+
 
   Serial.print("Hit! Shot by: ");
   Serial.print(rxUnitnum);
   Serial.print(" with weapon: ");
   Serial.println(rxWeapon);
+
+  player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
 
 }
 

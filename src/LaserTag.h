@@ -18,6 +18,8 @@
 #include "Weapons/Weapons.h"
 #include "Buttons/Buttons.h"
 #include "Sound/SoundPlayer.h"
+#include "Gamemodes/Gamemode.h"
+#include "Gamemodes/GamemodeSolo.h"
 
 
 class LaserTag {
@@ -29,6 +31,7 @@ public:
     Player *getPlayer();
     Buttons *getButtons();
     Sounds::SoundPlayer *getSoundPlayer();
+    Gamemode *getGamemode();
 
 
 private:
@@ -41,6 +44,7 @@ private:
     // Objects for main software system components
     Firing firing = Firing(this);  // firing object
     Player player;  // player object
+    Gamemode currentGame = GamemodeSolo(this);  // current gamemode object
 };
 
 

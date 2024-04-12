@@ -19,7 +19,7 @@ void LaserTag::init() {
   // set up the displays
   hudDisplay.init();
   sideDisplay.init();
-
+  
 }
 
 
@@ -30,8 +30,10 @@ void LaserTag::loop() {
   sideDisplay.pollEncoder(); // Check the rotary encoder for movements
   buttons.pollButtons(); // Check the buttons for presses
   firing.FiringLoop(); // Call the firing loop function
+  player.loop(); // Call the player loop function
 }
 
+// Pointer Getters for the main objects so they can be accessed elsewhere
 Player *LaserTag::getPlayer() {
   // returns a pointer to the player object
   return &player;
@@ -45,4 +47,8 @@ Buttons *LaserTag::getButtons(){
 Sounds::SoundPlayer *LaserTag::getSoundPlayer(){
   // returns a pointer to the sound player object
   return &soundPlayer;
+}
+
+Gamemode *LaserTag::getGamemode() {
+  return &currentGame;
 }

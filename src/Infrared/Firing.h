@@ -36,7 +36,7 @@ private:
     void OnMagazineButtonDown();
 
     bool muzzleFlash = false; // Is the muzzle flash on
-    long lastMuzzleFlash = 0; // The time it turned on
+    unsigned long lastMuzzleFlash = 0; // The time it turned on
 };
 
 

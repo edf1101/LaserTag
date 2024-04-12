@@ -9,14 +9,19 @@
 using namespace Sounds;
 
 // Define sounds here
-XT_Wav_Class SoundPlayer::TestSound =  XT_Wav_Class(TestWAV);
+XT_Wav_Class SoundPlayer::ArSound = XT_Wav_Class(ARwav);
+XT_Wav_Class SoundPlayer::SmgSound = XT_Wav_Class(SMGwav);
 
 void SoundPlayer::soundLoop() {
 // This is called every main system loop
-    DacAudio.FillBuffer();                // Fill the sound buffer with data
+#if SOUND_ON
+  DacAudio.FillBuffer();                // Fill the sound buffer with data
+#endif
 }
 
 void SoundPlayer::playSound(XT_PlayListItem_Class *sound) {
+#if SOUND_ON
   DacAudio.Play(sound);
+#endif
 }
 

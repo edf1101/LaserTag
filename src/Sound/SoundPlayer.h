@@ -7,13 +7,16 @@
 #ifndef FIRING_CPP_SOUNDPLAYER_H
 #define FIRING_CPP_SOUNDPLAYER_H
 
+#define SOUND_ON 0
+
 #include "Arduino.h"
 #include "XT_DAC_Audio.h"
 #include "../Pins.h"
 
 namespace Sounds {
 
-#include "Sounds/TestSound.h"
+#include "Sounds/ArSound.h"
+#include "Sounds/SmgSound.h"
 
     class SoundPlayer {
     public:
@@ -22,12 +25,14 @@ namespace Sounds {
         void playSound(XT_PlayListItem_Class *sound); // Play a sound
 
         // declare all sounds here, then declare them in the .cpp file
-        static XT_Wav_Class TestSound;
+        static XT_Wav_Class ArSound;
+        static XT_Wav_Class SmgSound;
 
     private:
         // Create the sound low level object
+#if SOUND_ON
         XT_DAC_Audio_Class DacAudio = XT_DAC_Audio_Class(DAC_PIN, 0);
-
+#endif
     };
 }
 

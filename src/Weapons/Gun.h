@@ -56,6 +56,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         std::string getName(); // Get the gun's name
         XT_Wav_Class *getSound(); // Get the gun's sound effect so it can be played back elsewhere
+        int getDamage(); // Get the gun's damage
 
         int createHash(); // Create a hash of the gun's characteristics for the anti-cheat system
 

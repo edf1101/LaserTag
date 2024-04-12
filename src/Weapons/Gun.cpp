@@ -194,3 +194,8 @@ XT_Wav_Class* Gun::getSound() {
   // Return the gun's sound
   return gunSound;
 }
+
+int Gun::getDamage() {
+  // Return the gun's damage
+  return damage;
+}
