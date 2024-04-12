@@ -1,2 +1,2 @@
-src/Sound/Sounds/** linguist-vendored
-src/Displays/Images/** linguist-vendored
+src/Sound/Sounds/* linguist-vendored
+src/Displays/Images/* linguist-vendored
