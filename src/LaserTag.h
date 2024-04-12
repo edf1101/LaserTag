@@ -32,6 +32,7 @@ public:
     Buttons *getButtons();
     Sounds::SoundPlayer *getSoundPlayer();
     Gamemode *getGamemode();
+    HudDisplay *getHudDisplay();
 
 
 private:

@@ -20,6 +20,8 @@ void LaserTag::init() {
   hudDisplay.init();
   sideDisplay.init();
 
+  currentGame.drawHUD();
+
 }
 
 
@@ -51,4 +53,8 @@ Sounds::SoundPlayer *LaserTag::getSoundPlayer(){
 
 Gamemode *LaserTag::getGamemode() {
   return &currentGame;
+}
+
+HudDisplay *LaserTag::getHudDisplay() {
+  return &hudDisplay;
 }

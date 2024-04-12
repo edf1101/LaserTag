@@ -10,6 +10,7 @@
 
 Gamemode::Gamemode(LaserTag *_mySystem) {
   mySystem = _mySystem;
+  displayHud = mySystem->getHudDisplay();
 }
 
 void Gamemode::initialisePlayer() {
@@ -57,6 +58,14 @@ void Gamemode::onDropFlag() {
 
 }
 
+
+
 std::string Gamemode::getName() {
   return name;
+}
+
+void Gamemode::drawHUD() {
+  displayHud->getDisplay()->clearDisplay();
+  displayHud->drawRevives();
+  displayHud->getDisplay()->display();
 }

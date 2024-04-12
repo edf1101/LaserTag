@@ -32,15 +32,18 @@ namespace HUD_STATE { // container for the HUD_STATE enum
 class HudDisplay {
 public:
     void init();
+
     void setState(HUD_STATE::HUD_STATE newState); // Set the state of the HUD via enum either (SPLASH, GAME, IMAGE)
     void updatePlayerState(); // Update the player state on the HUD
+    Adafruit_SSD1306 *getDisplay(); // Get the display object
+    void drawRevives(int yStart = 0);
+
 private:
     HUD_STATE::HUD_STATE state; // The current state of the HUD
     Adafruit_SSD1306 hudDisplay; // OLED testDisplay object
     void setBackdrop(Images::ImageData image); // Set a whole screen image on the HUD
     void drawImage(int x, int y, Images::ImageData image,
                    Images::OFFSET orientation = Images::TOP_LEFT); // Draw an image on the HUD
-    void updateSplash(); // Update the splash screen (rotate through the animation frames)
+    void updateSplash(); // Update the splash screen (rotate through the animation frames)};
 };
-
 #endif //LASERTAG_HUD_H

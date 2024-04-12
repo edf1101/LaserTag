@@ -9,6 +9,7 @@
 #define FIRING_CPP_GAMEMODE_H
 
 #include <string>
+#include "../Displays/HudDisplay.h"
 
 class LaserTag;
 
@@ -23,6 +24,7 @@ public:
     std::string getName(); // Get the name of the gamemode
 
     bool canFire(); // Function to check if the player can fire according to the gamemode state
+    void drawHUD(); // Function to draw the HUD for the gamemode
 
     // Event functions (These get called when something happens, eg. player dies)
     virtual void onPlayerDeath(); // Called when a player dies
@@ -33,6 +35,7 @@ public:
 
 protected:
     LaserTag* mySystem; // Reference to the main LaserTag system object
+    HudDisplay* displayHud; // Reference to the display object
 
     // Details about the gamemode itself
     std::string name = "Base Gamemode";

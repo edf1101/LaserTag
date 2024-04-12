@@ -27,9 +27,8 @@ void HudDisplay::init() {
   hudDisplay.setRotation(1); // rotate it so screen is portrait
 
 
-  // Clear the buffer
+  // Clear the display for start
   hudDisplay.clearDisplay();
-  drawImage(0, 0, Images::img_bullet);
   hudDisplay.display();
 }
 
@@ -48,8 +47,6 @@ void HudDisplay::setBackdrop(Images::ImageData image) {
 void HudDisplay::drawImage(int x, int y, Images::ImageData image, Images::OFFSET orientation) {
   // Draw an image to the HUD
 
-  hudDisplay.clearDisplay();
-
   // If it's centered around the x and y point then modify them
   if (orientation == Images::CENTERED) {
     x = x - (image.width / 2);
@@ -63,4 +60,23 @@ void HudDisplay::drawImage(int x, int y, Images::ImageData image, Images::OFFSET
 void HudDisplay::setState(HUD_STATE::HUD_STATE newState) {
   // Set the state of the HUD
   state = newState;
+}
+
+Adafruit_SSD1306 *HudDisplay::getDisplay() {
+  return &hudDisplay;
+}
+
+void HudDisplay::drawRevives(int yStart) {
+  // Draw the player's name to the HUD
+
+  int revives = 5;
+
+  hudDisplay.setTextSize(2);               // Normal 1:1 pixel scale
+  hudDisplay.setTextColor(SSD1306_WHITE);  // Draw white text
+  hudDisplay.setCursor(20, 0);             // Start at top-left corner
+  hudDisplay.cp437(true);                  // Use full 256 char 'Code Page 437' font
+  char buf[10];
+  itoa(revives, buf, 10);
+  hudDisplay.write(buf);
+  drawImage(0, 0, Images::img_revive, Images::TOP_LEFT);
 }

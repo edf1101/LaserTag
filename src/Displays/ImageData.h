@@ -27,6 +27,7 @@ namespace Images {
 // include all images here
 
 #include "Images/img_Bullet.h"
+#include "Images/img_Revive.h"
 
 }
 #endif //LASERTAG_IMAGEDATA_H
