@@ -19,7 +19,7 @@ void LaserTag::init() {
   // set up the displays
   hudDisplay.init();
   sideDisplay.init();
-  
+
 }
 
 
