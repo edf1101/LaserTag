@@ -22,7 +22,6 @@ Gamemode::Gamemode(LaserTag *_mySystem) {
   magsWidget.init(displayHud, std::bind(&Weapons::Gun::getMagsRemaining, myPlayer->getGun()));
   infoWidget.init(displayHud);
 
-
 }
 
 void Gamemode::initialisePlayer() {

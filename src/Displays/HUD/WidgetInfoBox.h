@@ -21,12 +21,12 @@ namespace Widgets {
         void setTexts(std::string title, std::string message); // update the text of the widget
 
     private:
-        std::string title;
-        std::string message;
+        std::string title = "None";
+        std::string message = "None";
 
         // last states so we know if we need to redraw
-        std::string lastTitle;
-        std::string lastMessage;
+        std::string lastTitle = "None";
+        std::string lastMessage = "None";
     };
 
 } // Widgets

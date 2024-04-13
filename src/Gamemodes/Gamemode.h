@@ -54,6 +54,7 @@ protected:
     Widgets::WidgetImageData healthWidget = Widgets::WidgetImageData(Images::img_heart, 60);
     Widgets::WidgetImageData ammoWidget = Widgets::WidgetImageData(Images::img_bullet, 85);
     Widgets::WidgetImageData magsWidget = Widgets::WidgetImageData(Images::img_mag, 110);
+    Widgets::WidgetImageData magsWidget2 = Widgets::WidgetImageData(Images::img_mag, 1);
     Widgets::WidgetInfoBox infoWidget = Widgets::WidgetInfoBox(0);
 };
 
