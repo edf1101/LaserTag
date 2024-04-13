@@ -14,7 +14,7 @@ Gun::Gun(int gunId, std::string gunName, std::string gunAcronym,
          int magSize, int magStartCount, int magReloadTime, ReloadType magReloadType,
          int damage, int fireRateNormal, int fireRateFast, int fireRateSlow, int shotsPerBurst,
          bool defaultSuppressed, float volume,
-         XT_Wav_Class* gunSound){
+         XT_Wav_Class *gunSound) {
 
 
   // Move over the default characteristics from the constructor to the class variables
@@ -190,7 +190,7 @@ std::string Gun::getName() {
   return gunName;
 }
 
-XT_Wav_Class* Gun::getSound() {
+XT_Wav_Class *Gun::getSound() {
   // Return the gun's sound
   return gunSound;
 }
@@ -198,4 +198,19 @@ XT_Wav_Class* Gun::getSound() {
 int Gun::getDamage() {
   // Return the gun's damage
   return damage;
+}
+
+int Gun::getAmmoRemaining() {
+  // Returns ammo remaining for the gun
+  return bulletsInMag;
+}
+
+int Gun::getMagsRemaining() {
+  // Returns mags remaining for the gun
+  return magsRemaining;
+}
+
+std::string Gun::getAcronym() {
+  // Returns guns acronym
+  return gunAcronym;
 }

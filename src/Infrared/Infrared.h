@@ -16,27 +16,32 @@
 #include "soc/rmt_reg.h"
 
 struct irPacketStruct { // order of fields gets reversed when sent, so bit sequence will be control,unitnum,weapon,checksum with msb of each sent first
-    uint16_t checksum:4;
+    uint16_t checksum: 4;
     // uint16_t extra:1;
-    uint16_t weapon:4;
-    uint16_t unitnum:7;
-    uint16_t control:1;
+    uint16_t weapon: 4;
+    uint16_t unitnum: 7;
+    uint16_t control: 1;
 } __attribute__ ((packed));
 
-class Infrared
-{
+class Infrared {
 public:
     Infrared();
+
     void init(gpio_num_t irPinIn, gpio_num_t irPinOut);
+
     void sendIR(uint8_t control, uint8_t unitnum, uint8_t weapon);//,uint8_t extra);
     int receiveIR();
-    uint8_t infraredReceived=0;
-    uint8_t crcValid=0;
+
+    uint8_t infraredReceived = 0;
+    uint8_t crcValid = 0;
     struct irPacketStruct irPacketIn;
+
     void setPower(char power);
+
 private:
     int32_t processIR(rmt_item32_t *item, size_t size);
-    rmt_config_t rmtConfigOut,rmtConfigIn;
+
+    rmt_config_t rmtConfigOut, rmtConfigIn;
     rmt_item32_t rmtDataOut[17]; // data to send
     RingbufHandle_t buffer = NULL;
 };

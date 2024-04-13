@@ -11,8 +11,8 @@
 
 #include <functional>
 #include "Arduino.h"
-#include "Displays/HudDisplay.h"
-#include "Displays/SideDisplay.h"
+#include "Displays/HUD/HudDisplay.h"
+#include "Displays/SideDisplay/SideDisplay.h"
 #include "Infrared/Firing.h"
 #include "Player/Player.h"
 #include "Weapons/Weapons.h"
@@ -29,11 +29,16 @@ public:
     void loop();
 
     Player *getPlayer();
+
     Buttons *getButtons();
+
     Sounds::SoundPlayer *getSoundPlayer();
+
     Gamemode *getGamemode();
+
     HudDisplay *getHudDisplay();
 
+    void updateHUD();
 
 private:
     // Objects for main hardware components of the gun

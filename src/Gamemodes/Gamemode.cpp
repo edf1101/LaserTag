@@ -10,25 +10,35 @@
 
 Gamemode::Gamemode(LaserTag *_mySystem) {
   mySystem = _mySystem;
+  myPlayer = mySystem->getPlayer();
   displayHud = mySystem->getHudDisplay();
+  displayHud->setInfoStateCounts(2); // 2 states: display name, display gun
+
+  // Initialise the widgets after the constructor has got pointers for display player, etc
+
+  revivesWidget.init(displayHud, std::bind(&Player::getRevives, myPlayer));
+  healthWidget.init(displayHud, std::bind(&Player::getHealth, myPlayer));
+  ammoWidget.init(displayHud, std::bind(&Weapons::Gun::getAmmoRemaining, myPlayer->getGun()));
+  magsWidget.init(displayHud, std::bind(&Weapons::Gun::getMagsRemaining, myPlayer->getGun()));
+  infoWidget.init(displayHud);
+
+
 }
 
 void Gamemode::initialisePlayer() {
   // This function sets up the player so it's ready to play when the game starts
-  Player *player = mySystem->getPlayer();
 
-  player->setHealth(100);
-  player->setRevives(playerStartingRevives);
-  player->setKills(0);
-  player->setCarryingFlag(false);
+  myPlayer->setHealth(100);
+  myPlayer->setRevives(playerStartingRevives);
+  myPlayer->setKills(0);
+  myPlayer->setCarryingFlag(false);
 
   // If the player is on a team, set the team
-    if (teamBased) {
-        player->setTeam(0);
-    }
-    else{
-      player->setTeam(-1);
-    }
+  if (teamBased) {
+    myPlayer->setTeam(0);
+  } else {
+    myPlayer->setTeam(-1);
+  }
 }
 
 void Gamemode::startGame() {
@@ -59,13 +69,25 @@ void Gamemode::onDropFlag() {
 }
 
 
-
 std::string Gamemode::getName() {
   return name;
 }
 
 void Gamemode::drawHUD() {
-  displayHud->getDisplay()->clearDisplay();
-  displayHud->drawRevives();
+  // This function is called to draw the HUD for the gamemode
+
+  infoWidget.setTexts("Name", myPlayer->getName());
+
+  revivesWidget.draw();
+  healthWidget.draw();
+  ammoWidget.draw();
+  magsWidget.draw();
+  infoWidget.draw();
+
   displayHud->getDisplay()->display();
+}
+
+void Gamemode::loop() {
+  // This function is called each time the main loop is called
+
 }

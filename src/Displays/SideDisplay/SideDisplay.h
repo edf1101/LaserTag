@@ -12,9 +12,9 @@
 #include <SPI.h>
 #include <Wire.h>
 #include "Adafruit_GFX.h"
-#include <Adafruit_ST7735.h>  // Hardware-specific library for ST7735
-#include "ImageData.h"
-#include "../Pins.h"
+#include "Adafruit_ST7735.h"  // Hardware-specific library for ST7735
+#include "Displays/ImageData.h"
+#include "Pins.h"
 
 // Pin definitions for the side display
 

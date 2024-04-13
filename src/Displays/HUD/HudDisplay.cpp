@@ -66,17 +66,28 @@ Adafruit_SSD1306 *HudDisplay::getDisplay() {
   return &hudDisplay;
 }
 
-void HudDisplay::drawRevives(int yStart) {
-  // Draw the player's name to the HUD
+void HudDisplay::loop() {
+  // This function is called each time the main loop is called
 
-  int revives = 5;
+  // try not to do any drawing in here as it's called a lot
 
-  hudDisplay.setTextSize(2);               // Normal 1:1 pixel scale
-  hudDisplay.setTextColor(SSD1306_WHITE);  // Draw white text
-  hudDisplay.setCursor(20, 0);             // Start at top-left corner
-  hudDisplay.cp437(true);                  // Use full 256 char 'Code Page 437' font
-  char buf[10];
-  itoa(revives, buf, 10);
-  hudDisplay.write(buf);
-  drawImage(0, 0, Images::img_revive, Images::TOP_LEFT);
+  // deal with the top HUD scrolling info
+  if (millis() - lastHudInfoUpdate > HUD_INFO_UPDATE_INTERVAL) {
+    hudInfoState = (hudInfoState + 1) % (hudInfoStateCount);
+    lastHudInfoUpdate = millis();
+  }
+
 }
+
+void HudDisplay::setInfoStateCounts(int count) {
+  // Set the number of states the HUD info can be in
+  hudInfoStateCount = count;
+  hudInfoState = 0;
+}
+
+int HudDisplay::getInfoStateCurrent() {
+  // Return the current state of the HUD info
+  return hudInfoState;
+}
+
+

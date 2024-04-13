@@ -37,7 +37,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
             int damage,
             int fireRateNormal, int fireRateFast, int fireRateSlow,
             int shotsPerBurst, bool defaultSuppressed, float volume,
-            XT_Wav_Class* gunSound
+            XT_Wav_Class *gunSound
         );
 
         void resetCharacteristics(); // Reset the gun's characteristics to default
@@ -55,8 +55,11 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         void setFireRate(FireRate _fireRate); // Set the fire rate of the gun
 
         std::string getName(); // Get the gun's name
+        std::string getAcronym(); // Get the guns acronym
         XT_Wav_Class *getSound(); // Get the gun's sound effect so it can be played back elsewhere
         int getDamage(); // Get the gun's damage
+        int getAmmoRemaining(); // Get the remaining ammo in the mag currently
+        int getMagsRemaining(); // get the mags left for the gun
 
         int createHash(); // Create a hash of the gun's characteristics for the anti-cheat system
 
@@ -81,7 +84,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         bool defaultSuppressed; // Whether the gun is suppressed by default
         float volume; // The volume of the gun (0-1)
-        XT_Wav_Class* gunSound;
+        XT_Wav_Class *gunSound;
 
         // Gun instance variables
         int magsRemaining; // How many mags are left

@@ -9,13 +9,17 @@
 #define LASERTAG_HUD_H
 
 #include <Arduino.h>
+#include <string>
 #include <SPI.h>
 #include <Wire.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
+#include "Player/Player.h"
 
 // includes for images
-#include "ImageData.h"
+#include "Displays/ImageData.h"
+
+#define HUD_INFO_UPDATE_INTERVAL 6000
 
 
 namespace HUD_STATE { // container for the HUD_STATE enum
@@ -35,15 +39,29 @@ public:
 
     void setState(HUD_STATE::HUD_STATE newState); // Set the state of the HUD via enum either (SPLASH, GAME, IMAGE)
     void updatePlayerState(); // Update the player state on the HUD
+    void loop(); // The main loop function for the HUD
+
     Adafruit_SSD1306 *getDisplay(); // Get the display object
-    void drawRevives(int yStart = 0);
+    void drawInfoBoxWidget(std::string topText, std::string bottomText, int xStart, int yStart = 0);
+
+    // info box functions
+    void setInfoStateCounts(int count);
+
+    int getInfoStateCurrent();
+
+    void drawImage(int x, int y, Images::ImageData image,
+                   Images::OFFSET orientation = Images::TOP_LEFT);
 
 private:
     HUD_STATE::HUD_STATE state; // The current state of the HUD
     Adafruit_SSD1306 hudDisplay; // OLED testDisplay object
     void setBackdrop(Images::ImageData image); // Set a whole screen image on the HUD
-    void drawImage(int x, int y, Images::ImageData image,
-                   Images::OFFSET orientation = Images::TOP_LEFT); // Draw an image on the HUD
+    // Draw an image on the HUD
     void updateSplash(); // Update the splash screen (rotate through the animation frames)};
+
+    int hudInfoState = 0; // The current state of the HUD info (eg. which player's stats to show)
+    unsigned long lastHudInfoUpdate = 0; // The last time the HUD info was updated
+    int hudInfoStateCount = 1;
 };
+
 #endif //LASERTAG_HUD_H

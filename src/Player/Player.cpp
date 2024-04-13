@@ -129,4 +129,3 @@ void Player::loop() {
     respawning = false;
   }
 }
-

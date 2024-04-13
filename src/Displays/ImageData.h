@@ -28,6 +28,8 @@ namespace Images {
 
 #include "Images/img_Bullet.h"
 #include "Images/img_Revive.h"
+#include "Images/img_Heart.h"
+#include "Images/img_Magazine.h"
 
 }
 #endif //LASERTAG_IMAGEDATA_H

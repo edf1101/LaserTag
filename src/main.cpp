@@ -11,13 +11,13 @@
 LaserTag laserTag;
 
 void setup() {
-    // Gets called once at the start of the program
+  // Gets called once at the start of the program
 
-    laserTag.init();
+  laserTag.init();
 }
 
 void loop() {
-    // Gets called repeatedly by the microcontroller
+  // Gets called repeatedly by the microcontroller
 
-    laserTag.loop();
+  laserTag.loop();
 }

@@ -28,7 +28,7 @@ void SideDisplay::drawImage(int x, int y, Images::ImageData image,
     y = y - (image.height / 2);
   }
   side_Display.drawBitmap((short) x, (short) y, image.MyImage,
-                            (short) image.width, (short) image.height, color);
+                          (short) image.width, (short) image.height, color);
 }
 
 void SideDisplay::pollEncoder() {

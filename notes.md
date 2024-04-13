@@ -1,7 +1,12 @@
-# Notes
+# Notes & Ideas
 
-_Notes about the project / ideas_
+## Notes
 
+- To list serial ports on windows:
+```Get-CimInstance -Class Win32_SerialPort | Select-Object Name, Description, DeviceID```
+- To list on mac ```dmesg | grep tty   ```
+
+## Ideas
 - Anticheat (If everyone doesn't have a certain weapon then it can't be used)
 - System to check no overlapping unitnums, else it will be modified.
 - FastLED stuff

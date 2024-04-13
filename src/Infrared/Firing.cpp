@@ -132,7 +132,11 @@ void Firing::Fire() {
   if (!myGun->tryFire()) { // If the gun can't fire then skip past this
     return;
   }
-  Serial.println("Firing");
+
+  // Send the actual data over IR
+  int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
+  int unitnum = player->getUnitnum();; // unit number (MAX 2^7 = 128)
+  infraredTransciever.sendIR(0, (uint8_t) unitnum, (uint8_t) weapon);
 
   // Do muzzle flash / sound effect if not suppressed
   if (!myGun->getSuppressed()) {
@@ -142,10 +146,8 @@ void Firing::Fire() {
     mySystem->getSoundPlayer()->playSound(myGun->getSound());
   }
 
-  // Send the actual data over IR
-  int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
-  int unitnum = player->getUnitnum();; // unit number (MAX 2^7 = 128)
-  infraredTransciever.sendIR(0, (uint8_t) unitnum, (uint8_t) weapon);
+
+  mySystem->updateHUD();
 
 }
 
