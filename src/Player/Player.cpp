@@ -4,15 +4,16 @@
  *  This class will be used to store the Player's data and stats.
 */
 
-#include "Player.h"
-
 #include <utility>
+#include "Player.h"
+#include "../LaserTag.h"
 
 // constructor for player
-void Player::init(int _unitnum, int _team) {
+void Player::init(LaserTag *_mySystem, int _unitnum, int _team) {
   unitnum = _unitnum;
   team = _team;
   name = "Player" + std::to_string(unitnum);
+  mySystem = _mySystem;
 }
 
 // getter and setter for unitnum
@@ -99,21 +100,29 @@ void Player::takeDamage(int _gunIndex) {
   // deal damage to the player
 
   int gunDamage = myGuns.getGun(_gunIndex)->getDamage(); // get the gun that shot the player
-
+#if DEBUG
+  Serial.print("Player took damage: ");
+  Serial.println(gunDamage);
+#endif
   health -= gunDamage;
   if (health <= 0) {
     health = 0;
-    revives = max(0, revives - 1); // make sure we don't go below 0 revives
+    mySystem->getGamemode()->onPlayerDeath();
+    if (revives > 0) {
+      respawn();
+    }
   }
+  mySystem->updateHUD(); // update the HUD that we took damage
 }
 
 void Player::respawn() {
   respawning = true;
+  respawnStartTime = millis();
 }
 
 float Player::getRespawnStatus() {
   // return the progress of the respawn: 0 if not respawning, 0-1 if respawning
-  if (respawning) {
+  if (!respawning) {
     return 0;
   } else {
     return (float) (millis() - respawnStartTime) / RESPAWN_TIME;
@@ -125,7 +134,23 @@ void Player::loop() {
 
   // Deal with respawn logic
   if (respawning && (millis() - respawnStartTime > RESPAWN_TIME)) {
+#if DEBUG
+    Serial.println("Player respawned");
+#endif
     health = 100;
+    revives--;
     respawning = false;
   }
+}
+
+bool Player::canTakeDamage(int shooterUnitnum) {
+  // Returns true if the player can take damage
+
+  if (respawning) return false; // if the player is respawning they can't take damage
+
+  if (shooterUnitnum == unitnum) return false; // if the shooter is the same as the player they can't take damage
+
+  if (revives == 0 && health <= 0) return false; // if the player has no revives left and is dead they can't take damage
+
+  return true; // passed all checks so return true
 }

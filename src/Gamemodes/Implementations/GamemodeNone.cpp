@@ -40,3 +40,8 @@ bool GamemodeNone::canFire() {
 void GamemodeNone::initialisePlayer() {
     // Do nothing
 }
+
+bool GamemodeNone::canTakeDamage(int shooterUnitnum) {
+  // Can't take damage in this gamemode as it's not a game
+  return false;
+}

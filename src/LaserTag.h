@@ -9,6 +9,7 @@
 #ifndef LASERTAG_LASERTAG_H
 #define LASERTAG_LASERTAG_H
 
+
 #include <functional>
 #include "Arduino.h"
 #include "Displays/HUD/HudDisplay.h"
@@ -19,6 +20,7 @@
 #include "Buttons/Buttons.h"
 #include "Sound/SoundPlayer.h"
 #include "Gamemodes/GamemodeManager.h"
+#include "config.h"
 
 
 class LaserTag {
@@ -27,6 +29,12 @@ public:
 
     void loop();
 
+    bool canFire();
+    bool canTakeDamage(int shooterUnitnum);
+
+    void updateHUD();
+
+// Getters for Pointers to various system components (below)
     Player *getPlayer();
 
     Buttons *getButtons();
@@ -37,7 +45,6 @@ public:
 
     HudDisplay *getHudDisplay();
 
-    void updateHUD();
 
 private:
     // Objects for main hardware components of the gun

@@ -11,7 +11,7 @@
 
 #include "Arduino.h"
 #include "XT_DAC_Audio.h"
-#include "../Pins.h"
+#include "../config.h"
 
 namespace Sounds {
 

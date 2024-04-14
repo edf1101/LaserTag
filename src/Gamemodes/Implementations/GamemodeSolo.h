@@ -14,9 +14,14 @@
     class GamemodeSolo : public Gamemode {
     public:
         GamemodeSolo(LaserTag *_mySystem); // Constructor for the class
+        void loop(); // gets called every game loop call
+
 
         void drawHUD(); // Function to draw the HUD for the gamemode
         void setGamePauseState(bool pause); // Function to start the gamemode
+
+        void onPlayerDeath(); // Gets called when the player dies
+
 
     protected:
         enum hudStates {
@@ -30,7 +35,7 @@
 
         // HUD Widgets
         Widgets::WidgetBackdrop backdropWidget = Widgets::WidgetBackdrop(0, Images::img_deadRevive);
-        Widgets::WidgetProgress progressWidget = Widgets::WidgetProgress(0);
+        Widgets::WidgetProgress progressWidget = Widgets::WidgetProgress(110);
         Widgets::WidgetInfoBox infoBoxWidget = Widgets::WidgetInfoBox(0);
 
         Widgets::WidgetImageData revivesWidget = Widgets::WidgetImageData(Images::img_revive, 35);
@@ -38,6 +43,7 @@
         Widgets::WidgetImageData ammoWidget = Widgets::WidgetImageData(Images::img_bullet, 85);
         Widgets::WidgetImageData magsWidget = Widgets::WidgetImageData(Images::img_mag, 110);
 
+        unsigned long lastReviveHUDUpdate = 0;
     };
 
 

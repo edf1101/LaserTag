@@ -79,3 +79,12 @@ void Gamemode::loop() {
 void Gamemode::setGamePauseState(bool paused) {
   this->started = !paused;
 }
+
+bool Gamemode::canTakeDamage(int shooterUnitnum) {
+
+  if (!started) return false; // If the game hasn't started, return false
+
+  // TODO have some logic here to check teams
+
+  return true; // If passed all conditions, return true
+}

@@ -44,7 +44,7 @@ private:
                                              16, 10, 2000,
                                              Weapons::ReloadType::AUTO, 20,
                                              300, 100, 400,
-                                             -1, false, 1,
+                                             -1, true, 1,
                                              &Sounds::SoundPlayer::ArSound);
 
     Weapons::Gun SMG = Weapons::Gun(0, "SMG", "SMG",

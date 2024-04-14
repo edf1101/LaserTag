@@ -14,7 +14,7 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ST7735.h"  // Hardware-specific library for ST7735
 #include "../ImageData.h"
-#include "../../Pins.h"
+#include "../../config.h"
 
 // Pin definitions for the side display
 

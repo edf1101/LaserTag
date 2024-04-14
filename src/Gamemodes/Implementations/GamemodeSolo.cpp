@@ -25,6 +25,31 @@ GamemodeSolo::GamemodeSolo(LaserTag *_mySystem) : Gamemode(_mySystem) {
 
 }
 
+void GamemodeSolo::loop() {
+  Gamemode::loop();
+  if (currentState == HUD_REVIVING) {
+    if (millis() - lastReviveHUDUpdate > 200) {
+      lastReviveHUDUpdate = millis();
+      progressWidget.setProgress((int) (myPlayer->getRespawnStatus() * 100));
+      drawHUD();
+    }
+
+    if (myPlayer->getRespawnStatus() == 0) {
+      changeHudState(HUD_GAME);
+      drawHUD();
+    }
+  }
+}
+
+void GamemodeSolo::onPlayerDeath() {
+// when the player dies just switch to a revive screen
+  if (myPlayer->getRevives() > 0) {
+    changeHudState(HUD_REVIVING);
+    drawHUD();
+  }
+}
+
+
 void GamemodeSolo::changeHudState(GamemodeSolo::hudStates newState) {
 
   // set the current state
@@ -50,9 +75,9 @@ void GamemodeSolo::changeHudState(GamemodeSolo::hudStates newState) {
     case HUD_GAME:
       displayHud->setInfoStateCounts(2); // 2 states: display name, display gun
       infoBoxWidget.setLocation(0);
-      if(displayHud->getInfoStateCurrent() == 0){
+      if (displayHud->getInfoStateCurrent() == 0) {
         infoBoxWidget.setTexts("Name", myPlayer->getName());
-      } else if (displayHud->getInfoStateCurrent() == 1){
+      } else if (displayHud->getInfoStateCurrent() == 1) {
         infoBoxWidget.setTexts("Gun", myPlayer->getGun()->getAcronym());
       }
       infoBoxWidget.draw(true);
@@ -64,6 +89,7 @@ void GamemodeSolo::changeHudState(GamemodeSolo::hudStates newState) {
     case HUD_REVIVING:
       infoBoxWidget.setLocation(52);
       infoBoxWidget.setTexts("By", "Player1");
+      progressWidget.setProgress(0);
       backdropWidget.draw(true);
       progressWidget.draw(true);
       infoBoxWidget.draw(true);
@@ -74,9 +100,9 @@ void GamemodeSolo::changeHudState(GamemodeSolo::hudStates newState) {
 
 void GamemodeSolo::drawHUD() {
   if (currentState == HUD_GAME) {
-    if(displayHud->getInfoStateCurrent() == 0){
+    if (displayHud->getInfoStateCurrent() == 0) {
       infoBoxWidget.setTexts("Name", myPlayer->getName());
-    } else if (displayHud->getInfoStateCurrent() == 1){
+    } else if (displayHud->getInfoStateCurrent() == 1) {
       infoBoxWidget.setTexts("Gun", myPlayer->getGun()->getAcronym());
     }
     infoBoxWidget.draw(false); // draw the info box (name and gun)
@@ -85,7 +111,7 @@ void GamemodeSolo::drawHUD() {
     ammoWidget.draw(false);
     magsWidget.draw(false);
   } else if (currentState == HUD_REVIVING) {
-    backdropWidget.draw(false);
+    // don't draw the backdrop as it's already drawn behind and wont update
     progressWidget.draw(false);
     infoBoxWidget.draw(false);
   } else if (currentState == HUD_PAUSED) {

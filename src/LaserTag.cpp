@@ -12,9 +12,11 @@ void LaserTag::init() {
   // This gets called once at the start of the program
 
   Serial.begin(115200); // start serial communication for debug purposes
+#if DEBUG
   Serial.println("Started");
+#endif
   // Set up the player object
-  player.init(1, 1); // Create a player object with unitnum 1 and team 1
+  player.init(this, 1, 1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
   hudDisplay.init();
@@ -40,7 +42,7 @@ void LaserTag::loop() {
   buttons.pollButtons(); // Check the buttons for presses
   firing.FiringLoop(); // Call the firing loop function
   player.loop(); // Call the player loop function
-gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
+  gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
 
 }
 
@@ -50,6 +52,15 @@ void LaserTag::updateHUD() {
   getGamemode()->drawHUD();
 }
 
+bool LaserTag::canFire() {
+  // Returns true if the player can fire
+  return player.canFire() && getGamemode()->canFire();
+}
+
+bool LaserTag::canTakeDamage(int shooterUnitnum) {
+  // Returns true if the player can take damage
+  return getGamemode()->canTakeDamage(shooterUnitnum) && player.canTakeDamage(shooterUnitnum);
+}
 
 // Pointer Getters for the main objects so they can be accessed elsewhere
 Player *LaserTag::getPlayer() {
@@ -68,10 +79,12 @@ Sounds::SoundPlayer *LaserTag::getSoundPlayer() {
 }
 
 Gamemode *LaserTag::getGamemode() {
-
+// returns a pointer to the current game
   return gamemodeManager.getCurrentGame();
 }
 
 HudDisplay *LaserTag::getHudDisplay() {
+  // returns a pointer to the HUD display object
   return &hudDisplay;
 }
+

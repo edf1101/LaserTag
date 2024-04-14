@@ -9,7 +9,7 @@
 
 #include <Arduino.h>
 #include "Infrared.h"
-#include "../Pins.h"
+#include "../config.h"
 #include "../Player/Player.h"
 #include "../Weapons/Weapons.h"
 #include "../Buttons/Buttons.h"

@@ -8,7 +8,7 @@
 #define LASERTAG_BUTTONS_H
 
 #include "Button.h"
-#include "../Pins.h"
+#include "../config.h"
 
 
 class Buttons {

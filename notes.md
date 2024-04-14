@@ -22,5 +22,11 @@ at the top of the file to switch between the two.
 - Have a gun game mode eg COD
 - manhunt mode
 - tag / bomb mode
-- Implement fireing where it checks player is able to fire and gamemode state is allowed to fire
 - different kind of leaderboards for different games. Inheritance?
+- Need a canTakeDamage() similar to canFire()
+- also can probs simplfy the canFire() function to just have a canfire in Lasertag that contains all the individual parts
+- modifying techcamp code to run on this hardware, and having the leaderboard display on the side screen would be pretty cool.
+Would also involve removing their LEDs and replacing with our WS2182B LEDs.
+- Admin have the option to lower all volumes (dont do individual volumes as would be unfair to be stealthy), admin can also disable LEDs
+- Admin can also disable the gun from firing (kick from game ish)
+- Users should be able to enable or disable vibration motors.

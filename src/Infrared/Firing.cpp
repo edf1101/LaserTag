@@ -25,10 +25,15 @@ Firing::Firing(LaserTag *_mySystem) {
 void Firing::FiringLoop() {
   infraredTransciever.receiveIR();
   if (infraredTransciever.infraredReceived) {  // canRx bit used to be up here if any weird issues try moving back up here
-
-
+#if DEBUG
+    Serial.println("IR Received");
+#endif
     if (infraredTransciever.crcValid)  // if valid reception and we're running ... also make you invincible if you are in an admin menu, ie you cant run commands
     {
+#if DEBUG
+      Serial.println("CRC correct");
+#endif
+
       int irControl = infraredTransciever.irPacketIn.control;
 
       if (irControl == 0) {  //recieved shot control signal
@@ -41,10 +46,8 @@ void Firing::FiringLoop() {
     infraredTransciever.infraredReceived = 0;
   }
 
-  // TODO need a way to check non gun reasons if can fire, eg. in admin menu, in respawn etc.
-  if (gameButtons->triggerButton.isPressed()
-      && mySystem->getPlayer()->canFire()
-      && mySystem->getGamemode()->canFire()) {
+  if (gameButtons->triggerButton.isPressed() && mySystem->canFire()) {
+    // Check if able to fire and trigger is pressed
     Fire();
   }
 
@@ -68,24 +71,24 @@ void Firing::OnHit() {
 
   Player *player = mySystem->getPlayer();
 
-
   // Get the data recieved
   int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
   int rxWeapon = infraredTransciever.irPacketIn.weapon;
 
-  // Check if the player has been hit by their own gun, if so ignore
-  if (player->getUnitnum() == rxUnitnum) {
-    return;
-  }
-
-
+#if DEBUG
+  Serial.println("Rx Hit signal");
   Serial.print("Hit! Shot by: ");
   Serial.print(rxUnitnum);
   Serial.print(" with weapon: ");
   Serial.println(rxWeapon);
+#endif
 
-  player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
-
+  if (mySystem->canTakeDamage(rxUnitnum)) {
+#if DEBUG
+    Serial.println("Valid hit");
+#endif
+    player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
+  }
 }
 
 void Firing::OnCommand() {
@@ -95,9 +98,10 @@ void Firing::OnCommand() {
   int unitnum = infraredTransciever.irPacketIn.unitnum;
   int weapon = infraredTransciever.irPacketIn.weapon;
   int command = weapon << 7 | unitnum;
-
+#if DEBUG
   Serial.print("Control packet received: ");
   Serial.println(command);
+#endif
 
   //TODO pass this on to a callback func somewhere
 }

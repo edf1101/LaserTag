@@ -18,6 +18,7 @@
         void drawHUD(); // Draw the HUD (always displays no game message)
         void initialisePlayer(); // Initialise the player (override so does nothing)
         bool canFire(); // Can the player fire (override so always returns false)
+        bool canTakeDamage(int shooterUnitnum); // Can the player take damage (override so always returns false)
     private:
 
         // HUD Widgets

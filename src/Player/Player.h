@@ -8,15 +8,19 @@
 #define LASERTAG_PLAYER_H
 
 #include <string>
+#include <functional>
 #include "Arduino.h"
 #include "../Weapons/Weapons.h"
+#include "../config.h"
 
 #define START_LIVES 3 // The maximum number of revives a player can have
-#define RESPAWN_TIME 5000 // The time it takes for a player to respawn in milliseconds
+#define RESPAWN_TIME 8000 // The time it takes for a player to respawn in milliseconds
+
+class LaserTag;
 
 class Player {
 public:
-    void init(int _unitnum, int _team); // Default constructor
+    void init(LaserTag* _mySystem,int _unitnum, int _team); // Default constructor
     void loop(); // Function to be called every loop
 
     int getUnitnum() const; // Returns the player's unit number
@@ -44,6 +48,7 @@ public:
     Weapons::Gun *getGun(); // Returns the player's gun
 
     bool canFire(); // Returns whether the player can fire their gun
+    bool canTakeDamage(int shooterUnitnum); // Returns whether the player can take damage from a shooter
 
     void takeDamage(int _gunIndex); // Deals damage to the player
 
@@ -51,6 +56,8 @@ public:
     float getRespawnStatus(); // returns 0 if not respawning, or a value 0-1 representing progress of the respawn
 
 private:
+    LaserTag* mySystem; // Pointer to the main system object
+
     // Details about the player
     GunTypes myGuns;
     int unitnum; // The player's unit number
@@ -59,7 +66,7 @@ private:
 
     // Details about the player in this game per se
     int revives = START_LIVES; // The number of revives the player has remaining
-    u_int8_t health = 100; // The player's health 0-100 (u_int8_t is 0 - 256 so saves space)
+    int health = 100; // The player's health 0-100 (u_int8_t is 0 - 256 so saves space)
     int kills = 0; // The number of kills the player has
     bool carryingFlag = false; // Whether the player is carrying the flag
     Weapons::Gun *gun = myGuns.getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)

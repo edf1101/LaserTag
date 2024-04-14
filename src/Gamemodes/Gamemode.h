@@ -34,6 +34,8 @@ public:
     std::string getName(); // Get the name of the gamemode
 
     virtual bool canFire(); // Function to check if the player can fire according to the gamemode state
+    virtual bool canTakeDamage(int shooterUnitnum); // Function to check if the player can take damage according to the gamemode state
+
     virtual void drawHUD(); // Function to draw the HUD for the gamemode
 
     // Event functions (These get called when something happens, eg. player dies)

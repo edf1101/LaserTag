@@ -4,8 +4,11 @@
  * This file contains definitions for various pins on the ESP32 board and where they are used.
 */
 
-#ifndef LASERTAG_PINS_H
-#define LASERTAG_PINS_H
+#ifndef LASERTAG_CONFIG_H
+#define LASERTAG_CONFIG_H
+
+// Debug mode
+#define DEBUG 1
 
 // Pin definitions for the side display
 #define TFT_CS 14
@@ -30,4 +33,4 @@
 #define DAC_PIN 25
 
 
-#endif //LASERTAG_PINS_H
+#endif //LASERTAG_CONFIG_H
