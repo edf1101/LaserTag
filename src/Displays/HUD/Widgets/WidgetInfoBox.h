@@ -13,10 +13,10 @@ namespace Widgets {
     class WidgetInfoBox : public HudWidget {
     public:
         // Constructor for the class (just call base class constructor and set specific protected details)
-        WidgetInfoBox(int yCoordinate);
+        explicit WidgetInfoBox(int yCoordinate);
 
 
-        void draw() override;
+        void draw(bool force) ; // Draw the widget to the screen
 
         void setTexts(std::string title, std::string message); // update the text of the widget
 

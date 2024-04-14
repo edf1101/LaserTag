@@ -12,7 +12,7 @@
 #define LASERTAG_HUDWIDGET_H
 
 #include <Arduino.h>
-#include "HudDisplay.h"
+#include "../HudDisplay.h"
 
 namespace Widgets {
 
@@ -20,10 +20,13 @@ namespace Widgets {
     public:
         HudWidget(int yStart); // Constructor for the class (as base class just set the display)
 
+        ~HudWidget() { // destructor erases the widget when its destroyed
+          erase();
+        }; // Destructor for the class
         void init(HudDisplay *_disp);
 
         void setLocation(int y); // Set the location of the widget on the screen
-        virtual void draw() = 0; // Draw the widget to the screen
+        virtual void draw(bool force) = 0; // Draw the widget to the screen
         void erase(); // Erase the widget from the screen
 
     protected:

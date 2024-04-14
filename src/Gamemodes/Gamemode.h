@@ -10,8 +10,13 @@
 
 #include <string>
 #include "../Displays/HUD/HudDisplay.h"
-#include "../Displays/Hud/WidgetImageData.h"
-#include "../Displays/Hud/WidgetInfoBox.h"
+#include "../Displays/HUD/Widgets/WidgetImageData.h"
+#include "../Displays/HUD/Widgets/WidgetInfoBox.h"
+#include "../Displays/HUD/Widgets/WidgetBackdrop.h"
+#include "../Displays/HUD/Widgets/WidgetProgress.h"
+
+
+#define HUD_UPDATE_INTERVAL 5000 // Update the HUD every second
 
 class LaserTag;
 
@@ -19,15 +24,17 @@ class Gamemode {
 public:
     Gamemode(LaserTag *_mySystem); // Constructor for the base gamemode class
 
-    void initialisePlayer(); // Function to initialise the player for the gamemode
-    void startGame(); // Function to start the gamemode
-    void loop(); // This is called each time the main loop is called
+    virtual void initialisePlayer(); // Function to initialise the player for the gamemode
+
+    virtual void setGamePauseState(bool paused); // Function to set the game pause state
+
+    virtual void loop(); // This is called each time the main loop is called
 
     // Getters for gamemode details
     std::string getName(); // Get the name of the gamemode
 
-    bool canFire(); // Function to check if the player can fire according to the gamemode state
-    void drawHUD(); // Function to draw the HUD for the gamemode
+    virtual bool canFire(); // Function to check if the player can fire according to the gamemode state
+    virtual void drawHUD(); // Function to draw the HUD for the gamemode
 
     // Event functions (These get called when something happens, eg. player dies)
     virtual void onPlayerDeath(); // Called when a player dies
@@ -49,13 +56,7 @@ protected:
     // Details about the gamemode instance (often relating to the player)
     bool started = false;
 
-    // variables for info HUD widgets
-    Widgets::WidgetImageData revivesWidget = Widgets::WidgetImageData(Images::img_revive, 35);
-    Widgets::WidgetImageData healthWidget = Widgets::WidgetImageData(Images::img_heart, 60);
-    Widgets::WidgetImageData ammoWidget = Widgets::WidgetImageData(Images::img_bullet, 85);
-    Widgets::WidgetImageData magsWidget = Widgets::WidgetImageData(Images::img_mag, 110);
-    Widgets::WidgetImageData magsWidget2 = Widgets::WidgetImageData(Images::img_mag, 1);
-    Widgets::WidgetInfoBox infoWidget = Widgets::WidgetInfoBox(0);
+    unsigned long lastHudAutoUpdate= 0; // So we update the HUD every so often
 };
 
 

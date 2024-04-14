@@ -12,7 +12,7 @@ void LaserTag::init() {
   // This gets called once at the start of the program
 
   Serial.begin(115200); // start serial communication for debug purposes
-
+  Serial.println("Started");
   // Set up the player object
   player.init(1, 1); // Create a player object with unitnum 1 and team 1
 
@@ -20,12 +20,16 @@ void LaserTag::init() {
   hudDisplay.init();
   sideDisplay.init();
 
-  currentGame.startGame();
-  currentGame.drawHUD();
+  // Set up the gamemode manager after displays since it depends on the HUD
+  gamemodeManager.init();
+
+  gamemodeManager.switchGamemode(GamemodeManager::SOLO); // Set the initial gamemode to none
+  gamemodeManager.getCurrentGame()->setGamePauseState(false); // Initialise the current gamemode
+
+  updateHUD(); // Update the HUD to show the initial state of the game
 
 }
 
-long test;
 
 void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
@@ -36,17 +40,14 @@ void LaserTag::loop() {
   buttons.pollButtons(); // Check the buttons for presses
   firing.FiringLoop(); // Call the firing loop function
   player.loop(); // Call the player loop function
-  currentGame.loop(); // Call the gamemode loop function
-  if (millis() - test > HUD_INFO_UPDATE_INTERVAL) {
-    test = millis();
-    updateHUD();
-  }
+gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
 
 }
 
 void LaserTag::updateHUD() {
-  // Updates the Hud display
-  currentGame.drawHUD();
+//   Updates the Hud display
+
+  getGamemode()->drawHUD();
 }
 
 
@@ -67,7 +68,8 @@ Sounds::SoundPlayer *LaserTag::getSoundPlayer() {
 }
 
 Gamemode *LaserTag::getGamemode() {
-  return &currentGame;
+
+  return gamemodeManager.getCurrentGame();
 }
 
 HudDisplay *LaserTag::getHudDisplay() {

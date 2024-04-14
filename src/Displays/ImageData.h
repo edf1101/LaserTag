@@ -30,6 +30,7 @@ namespace Images {
 #include "Images/img_Revive.h"
 #include "Images/img_Heart.h"
 #include "Images/img_Magazine.h"
+#include "Images/img_DeadRevive.h"
 
 }
 #endif //LASERTAG_IMAGEDATA_H

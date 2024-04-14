@@ -21,22 +21,25 @@ void WidgetInfoBox::setTexts(std::string _title, std::string _message) {
   this->message = std::move(_message);
 }
 
-void WidgetInfoBox::draw() {
+void WidgetInfoBox::draw(bool force) {
   // Draw the widget to the screen
-
   if (!displayAssigned) { // check display is set
     return;
   }
 
   // check if the text has changed
-  if (title == lastTitle && message == lastMessage) {
+  if ((title == lastTitle && message == lastMessage) && !force) {
     return;
   }
+
+  lastTitle = title; // update the last title
+  lastMessage = message; // update the last message
+
 
   erase(); // erase the old stuff
 
   // start drawing the new stuff
-  Adafruit_SSD1306* actualDisplay = display->getDisplay(); // get the actual display object
+  Adafruit_SSD1306 *actualDisplay = display->getDisplay(); // get the actual display object
 
   actualDisplay->setTextSize(2);               // Normal 1:1 pixel scale
   actualDisplay->setTextColor(SSD1306_WHITE);  // Draw white text

@@ -12,7 +12,7 @@
 #include <functional>
 #include <utility>
 #include "HudWidget.h"
-#include "../ImageData.h"
+#include "../../ImageData.h"
 
 
 namespace Widgets {
@@ -26,7 +26,7 @@ namespace Widgets {
           this->dataFetcher = std::move(_dataFetcher);
         };
 
-        void draw() override;
+        void draw(bool force) ;
 
     private:
         Images::ImageData image; // The image to display

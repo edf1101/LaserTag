@@ -14,10 +14,10 @@
 #include <Wire.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
-#include "Player/Player.h"
+#include "../../Player/Player.h"
 
 // includes for images
-#include "Displays/ImageData.h"
+#include "../ImageData.h"
 
 #define HUD_INFO_UPDATE_INTERVAL 6000
 
@@ -42,7 +42,6 @@ public:
     void loop(); // The main loop function for the HUD
 
     Adafruit_SSD1306 *getDisplay(); // Get the display object
-    void drawInfoBoxWidget(std::string topText, std::string bottomText, int xStart, int yStart = 0);
 
     // info box functions
     void setInfoStateCounts(int count);
@@ -51,11 +50,11 @@ public:
 
     void drawImage(int x, int y, Images::ImageData image,
                    Images::OFFSET orientation = Images::TOP_LEFT);
+    void setBackdrop(Images::ImageData image); // Set a whole screen image on the HUD
 
 private:
     HUD_STATE::HUD_STATE state; // The current state of the HUD
     Adafruit_SSD1306 hudDisplay; // OLED testDisplay object
-    void setBackdrop(Images::ImageData image); // Set a whole screen image on the HUD
     // Draw an image on the HUD
     void updateSplash(); // Update the splash screen (rotate through the animation frames)};
 

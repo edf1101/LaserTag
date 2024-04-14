@@ -15,13 +15,6 @@ Gamemode::Gamemode(LaserTag *_mySystem) {
   displayHud->setInfoStateCounts(2); // 2 states: display name, display gun
 
   // Initialise the widgets after the constructor has got pointers for display player, etc
-
-  revivesWidget.init(displayHud, std::bind(&Player::getRevives, myPlayer));
-  healthWidget.init(displayHud, std::bind(&Player::getHealth, myPlayer));
-  ammoWidget.init(displayHud, std::bind(&Weapons::Gun::getAmmoRemaining, myPlayer->getGun()));
-  magsWidget.init(displayHud, std::bind(&Weapons::Gun::getMagsRemaining, myPlayer->getGun()));
-  infoWidget.init(displayHud);
-
 }
 
 void Gamemode::initialisePlayer() {
@@ -40,12 +33,9 @@ void Gamemode::initialisePlayer() {
   }
 }
 
-void Gamemode::startGame() {
-  started = true;
-}
-
 bool Gamemode::canFire() {
 // This checks if the gun can fire according to gamemode rules
+
   if (!started) return false; // If the game hasn't started, return false
 
   return true; // If passed all conditions, return true
@@ -67,26 +57,25 @@ void Gamemode::onDropFlag() {
 
 }
 
+void Gamemode::drawHUD() {
+}
+
 
 std::string Gamemode::getName() {
   return name;
 }
 
-void Gamemode::drawHUD() {
-  // This function is called to draw the HUD for the gamemode
-
-  infoWidget.setTexts("Name", myPlayer->getName());
-
-  revivesWidget.draw();
-  healthWidget.draw();
-  ammoWidget.draw();
-  magsWidget.draw();
-  infoWidget.draw();
-
-  displayHud->getDisplay()->display();
-}
 
 void Gamemode::loop() {
   // This function is called each time the main loop is called
 
+  // update the HUD every so often
+    if (millis() - lastHudAutoUpdate > HUD_UPDATE_INTERVAL) {
+        lastHudAutoUpdate = millis();
+        drawHUD();
+    }
+}
+
+void Gamemode::setGamePauseState(bool paused) {
+  this->started = !paused;
 }

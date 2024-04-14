@@ -18,10 +18,10 @@ WidgetImageData::WidgetImageData(Images::ImageData image, int yCoordinate) : Hud
   this->widgetHeight = 20; // Set the height of the widget to 20 pixels
 }
 
-void WidgetImageData::draw() {
+void WidgetImageData::draw(bool force) {
   // Draw the widget to the screen
 
-  if (lastData == dataFetcher()) {
+  if (lastData == dataFetcher() && !force) {
     return; // If the data hasn't changed then don't redraw
   }
 
