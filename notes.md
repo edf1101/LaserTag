@@ -40,6 +40,9 @@ to reduce writes eg. have 5 addresses for last used names and a pointer for whic
 - Make reload message pop up on info widget.
 - player struct that holds stats and the current Player class becomes a wrapper. That way when we have the wifi player data
 its more reusable
+- Have a PC Interface that communicates with a "base node" via HTTP or serial that can run some python code to display stats, run commands etc.
+If web interface uses flask then other phones etc can access it.
+- Investigate connecting to guns via wifi / bluetooth to change settings.
 
 ## Plan
 - Implement menu system for side screen (no need to add the actual menus just test classes)

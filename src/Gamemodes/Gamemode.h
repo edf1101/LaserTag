@@ -50,7 +50,7 @@ namespace Gamemodes {
 
     protected:
         LaserTag *mySystem; // Reference to the main LaserTag system object
-        Player *myPlayer; // Reference to the player object
+        PlayerWrapper *myPlayer; // Reference to the player object
         HudDisplay *displayHud = nullptr; // Reference to the display object
 
         // Details about the gamemode itself

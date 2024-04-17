@@ -15,7 +15,7 @@
 #include "Displays/HUD/HudDisplay.h"
 #include "Displays/SideDisplay/SideDisplay.h"
 #include "Infrared/Firing.h"
-#include "Players/Player.h"
+#include "Players/PlayerWrapper.h"
 #include "Weapons/Weapons.h"
 #include "Buttons/Buttons.h"
 #include "Sound/SoundPlayer.h"
@@ -35,7 +35,7 @@ public:
     void updateHUD();
 
 // Getters for Pointers to various system components (below)
-    Player *getPlayer();
+    PlayerWrapper *getPlayer();
 
     Buttons *getButtons();
 
@@ -55,7 +55,7 @@ private:
 
     // Objects for main software system components
     Firing firing = Firing(this);  // firing object
-    Player player;  // player object
+    PlayerWrapper player;  // player object
     GamemodeManager gamemodeManager = GamemodeManager(this);  // current gamemode object
 };
 

@@ -14,6 +14,7 @@ Other components can be found:
 - FastLED
 - Adafruit SSD1306
 - Adafruit ST7735
+- XT_DAC_Audio
 
 ### Installation
 #### Basic Setup (Arduino IDE)

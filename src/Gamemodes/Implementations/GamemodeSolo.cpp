@@ -16,8 +16,8 @@ namespace Gamemodes {
       backdropWidget.init(displayHud);
       progressWidget.init(displayHud);
       infoBoxWidget.init(displayHud);
-      revivesWidget.init(displayHud, std::bind(&Player::getRevives, myPlayer));
-      healthWidget.init(displayHud, std::bind(&Player::getHealth, myPlayer));
+      revivesWidget.init(displayHud, std::bind(&PlayerWrapper::getRevives, myPlayer));
+      healthWidget.init(displayHud, std::bind(&PlayerWrapper::getHealth, myPlayer));
       ammoWidget.init(displayHud, std::bind(&Weapons::Gun::getAmmoRemaining, myPlayer->getGun()));
       magsWidget.init(displayHud, std::bind(&Weapons::Gun::getMagsRemaining, myPlayer->getGun()));
 

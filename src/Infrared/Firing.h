@@ -10,7 +10,7 @@
 #include <Arduino.h>
 #include "Infrared.h"
 #include "../config.h"
-#include "../Players/Player.h"
+#include "../Players/PlayerWrapper.h"
 #include "../Weapons/Weapons.h"
 #include "../Buttons/Buttons.h"
 

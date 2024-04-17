@@ -73,7 +73,7 @@ void Firing::FiringLoop() {
 void Firing::OnHit() {
   // This gets called when the gun has been hit by an IR signal
 
-  Player *player = mySystem->getPlayer();
+  PlayerWrapper *player = mySystem->getPlayer();
 
   // Get the data recieved
   int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
@@ -135,7 +135,7 @@ void Firing::Fire() {
   // This function sends a shot signal to other guns
 
   // Get the current gun object and check it can fire
-  Player *player = mySystem->getPlayer();
+  PlayerWrapper *player = mySystem->getPlayer();
   Weapons::Gun *myGun = player->getGun();
   if (!myGun->tryFire()) { // If the gun can't fire then skip past this
     return;
@@ -168,14 +168,14 @@ void Firing::Fire() {
 
 void Firing::OnTriggerUp() {
   // This function gets called when the trigger is pressed
-  Player *player = mySystem->getPlayer();
+  PlayerWrapper *player = mySystem->getPlayer();
   Weapons::Gun *myGun = player->getGun();
   myGun->resetBurstCount();
 }
 
 void Firing::OnMagazineButtonDown() {
   // This function gets called when the magazine button is pressed
-  Player *player = mySystem->getPlayer();
+  PlayerWrapper *player = mySystem->getPlayer();
   Weapons::Gun *myGun = player->getGun();
   myGun->reloadAddBullet();
 }

@@ -61,7 +61,7 @@ bool LaserTag::canTakeDamage(int shooterUnitnum) {
 }
 
 // Pointer Getters for the main objects so they can be accessed elsewhere
-Player *LaserTag::getPlayer() {
+PlayerWrapper *LaserTag::getPlayer() {
   // returns a pointer to the player object
   return &player;
 }
