@@ -91,4 +91,11 @@ namespace Menus {
 
       menuManager->switchMenu(selectedWidget->getMenu()); // set the menu to the selected widget's menu
     }
+
+    void SelectPageMenu::resetMenu() {
+        // reset the menu so only 0th widget is highlighted
+
+      Menu::resetMenu();
+      onRotaryTurned(0);
+    }
 } // Menus

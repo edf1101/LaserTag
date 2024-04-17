@@ -34,10 +34,9 @@ void MenuManager::switchMenu(Menu *newMenu) {
 
   // erase old menu
   currentMenu->erase();
-  currentMenu->erase();
-
   // set new menu
   currentMenu = newMenu;
+  currentMenu->resetMenu();
   currentMenu->display(true);
 }
 

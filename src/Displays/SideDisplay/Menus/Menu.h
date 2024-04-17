@@ -28,7 +28,7 @@ namespace Menus {
 
         void setParentMenu(Menu* parent); // set the parent menu
 
-        void resetMenu(); // reset the menu
+        virtual void resetMenu(); // reset the menu
 
     protected:
       SideDisplay* sideDisplay; // pointer to the side display

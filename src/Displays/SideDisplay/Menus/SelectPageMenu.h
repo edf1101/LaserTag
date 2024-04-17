@@ -29,6 +29,8 @@ namespace Menus {
         void onRotaryTurned(int change); // called when the rotary encoder is turned
         void onRotaryPressed(); // called when the button is pressed
 
+        void resetMenu(); // reset the menu
+
         void addSubMenu(std::string name, Images::ImageData image, Menu *menu); // add a new sub menu widget
 
     private:
