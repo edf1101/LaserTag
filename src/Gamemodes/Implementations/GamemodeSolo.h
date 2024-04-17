@@ -10,7 +10,7 @@
 #include "../Gamemode.h"
 #include <string>
 
-
+namespace Gamemodes {
     class GamemodeSolo : public Gamemode {
     public:
         GamemodeSolo(LaserTag *_mySystem); // Constructor for the class
@@ -33,19 +33,19 @@
 
         void changeHudState(hudStates newState); // Function to change the HUD state
 
-        // HUD Widgets
-        Widgets::WidgetBackdrop backdropWidget = Widgets::WidgetBackdrop(0, Images::img_deadRevive);
-        Widgets::WidgetProgress progressWidget = Widgets::WidgetProgress(110);
-        Widgets::WidgetInfoBox infoBoxWidget = Widgets::WidgetInfoBox(0);
+        // HUD HudWidgets
+        HudWidgets::HudWidgetBackdrop backdropWidget = HudWidgets::HudWidgetBackdrop(0, Images::img_deadRevive);
+        HudWidgets::HudWidgetProgress progressWidget = HudWidgets::HudWidgetProgress(110);
+        HudWidgets::HudWidgetInfoBox infoBoxWidget = HudWidgets::HudWidgetInfoBox(0);
 
-        Widgets::WidgetImageData revivesWidget = Widgets::WidgetImageData(Images::img_revive, 35);
-        Widgets::WidgetImageData healthWidget = Widgets::WidgetImageData(Images::img_heart, 60);
-        Widgets::WidgetImageData ammoWidget = Widgets::WidgetImageData(Images::img_bullet, 85);
-        Widgets::WidgetImageData magsWidget = Widgets::WidgetImageData(Images::img_mag, 110);
+        HudWidgets::HudWidgetImageData revivesWidget = HudWidgets::HudWidgetImageData(Images::img_revive, 35);
+        HudWidgets::HudWidgetImageData healthWidget = HudWidgets::HudWidgetImageData(Images::img_heart, 60);
+        HudWidgets::HudWidgetImageData ammoWidget = HudWidgets::HudWidgetImageData(Images::img_bullet, 85);
+        HudWidgets::HudWidgetImageData magsWidget = HudWidgets::HudWidgetImageData(Images::img_mag, 110);
 
         unsigned long lastReviveHUDUpdate = 0;
     };
-
+}
 
 
 #endif //FIRING_CPP_GAMEMODESOLO_H

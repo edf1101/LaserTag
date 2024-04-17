@@ -1,7 +1,7 @@
 /*
  * Created by Ed Fillingham on 08/04/2024.
  *
- *  This is a bullet image file that will be displayed on the OLED HUD (heads up display)
+ *  This is an image file that will be displayed on the OLED HUD (heads up display)
 */
 
 #ifndef LASERTAG_IMG_TEMPLATE_H

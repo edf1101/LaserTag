@@ -31,6 +31,14 @@ namespace Images {
 #include "Images/img_Heart.h"
 #include "Images/img_Magazine.h"
 #include "Images/img_DeadRevive.h"
+#include "Images/img_menuAdmin.h"
+#include "Images/img_menuGun.h"
+#include "Images/img_MenuLeaderboard.h"
+#include "Images/img_menuSettings.h"
+#include "Images/img_menuMessages.h"
+#include "Images/img_menuName.h"
+#include "Images/img_menuTurnOff.h"
+#include "Images/img_menuReturn.h"
 
 }
 #endif //LASERTAG_IMAGEDATA_H

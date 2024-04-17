@@ -5,11 +5,11 @@
  * This will be used to display the player's health, ammo etc.
 */
 
-#include "WidgetImageData.h"
+#include "HudWidgetImageData.h"
 
-using namespace Widgets;
+using namespace HudWidgets;
 
-WidgetImageData::WidgetImageData(Images::ImageData image, int yCoordinate) : HudWidget(yCoordinate) {
+HudWidgetImageData::HudWidgetImageData(Images::ImageData image, int yCoordinate) : HudWidget(yCoordinate) {
 
   // This is a constructor for the class that sets the image and text to display
   // We use initializer list to set the display and yCoordinate to the base class
@@ -18,7 +18,7 @@ WidgetImageData::WidgetImageData(Images::ImageData image, int yCoordinate) : Hud
   this->widgetHeight = 20; // Set the height of the widget to 20 pixels
 }
 
-void WidgetImageData::draw(bool force) {
+void HudWidgetImageData::draw(bool force) {
   // Draw the widget to the screen
 
   if (lastData == dataFetcher() && !force) {

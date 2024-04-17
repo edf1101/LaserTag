@@ -8,7 +8,7 @@
 
 #include "HudWidget.h"
 
-using namespace Widgets;
+using namespace HudWidgets;
 
 HudWidget::HudWidget(int yStart) {
   // Constructor for the class (as base class just set the display)

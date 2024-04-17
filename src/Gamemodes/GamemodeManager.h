@@ -11,7 +11,7 @@
 
 #include "Implementations/GamemodeNone.h"
 #include "Implementations/GamemodeSolo.h"
-
+using namespace Gamemodes;
 class GamemodeManager {
 
 public:

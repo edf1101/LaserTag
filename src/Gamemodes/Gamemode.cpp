@@ -8,83 +8,86 @@
 #include "Gamemode.h"
 #include "../LaserTag.h"
 
-Gamemode::Gamemode(LaserTag *_mySystem) {
-  mySystem = _mySystem;
-  myPlayer = mySystem->getPlayer();
-  displayHud = mySystem->getHudDisplay();
-  displayHud->setInfoStateCounts(2); // 2 states: display name, display gun
+namespace Gamemodes {
 
-  // Initialise the widgets after the constructor has got pointers for display player, etc
-}
+    Gamemode::Gamemode(LaserTag *_mySystem) {
+      mySystem = _mySystem;
+      myPlayer = mySystem->getPlayer();
+      displayHud = mySystem->getHudDisplay();
+      displayHud->setInfoStateCounts(2); // 2 states: display name, display gun
 
-void Gamemode::initialisePlayer() {
-  // This function sets up the player so it's ready to play when the game starts
+      // Initialise the widgets after the constructor has got pointers for display player, etc
+    }
 
-  myPlayer->setHealth(100);
-  myPlayer->setRevives(playerStartingRevives);
-  myPlayer->setKills(0);
-  myPlayer->setCarryingFlag(false);
+    void Gamemode::initialisePlayer() {
+      // This function sets up the player so it's ready to play when the game starts
 
-  // If the player is on a team, set the team
-  if (teamBased) {
-    myPlayer->setTeam(0);
-  } else {
-    myPlayer->setTeam(-1);
-  }
-}
+      myPlayer->setHealth(100);
+      myPlayer->setRevives(playerStartingRevives);
+      myPlayer->setKills(0);
+      myPlayer->setCarryingFlag(false);
 
-bool Gamemode::canFire() {
+      // If the player is on a team, set the team
+      if (teamBased) {
+        myPlayer->setTeam(0);
+      } else {
+        myPlayer->setTeam(-1);
+      }
+    }
+
+    bool Gamemode::canFire() {
 // This checks if the gun can fire according to gamemode rules
 
-  if (!started) return false; // If the game hasn't started, return false
+      if (!started) return false; // If the game hasn't started, return false
 
-  return true; // If passed all conditions, return true
-}
+      return true; // If passed all conditions, return true
+    }
 
-void Gamemode::onPlayerDeath() {
+    void Gamemode::onPlayerDeath() {
 
-}
+    }
 
-void Gamemode::onPickupRespawn() {
+    void Gamemode::onPickupRespawn() {
 
-}
+    }
 
-void Gamemode::onPickupFlag() {
+    void Gamemode::onPickupFlag() {
 
-}
+    }
 
-void Gamemode::onDropFlag() {
+    void Gamemode::onDropFlag() {
 
-}
+    }
 
-void Gamemode::drawHUD() {
-}
-
-
-std::string Gamemode::getName() {
-  return name;
-}
+    void Gamemode::drawHUD() {
+    }
 
 
-void Gamemode::loop() {
-  // This function is called each time the main loop is called
+    std::string Gamemode::getName() {
+      return name;
+    }
 
-  // update the HUD every so often
-    if (millis() - lastHudAutoUpdate > HUD_UPDATE_INTERVAL) {
+
+    void Gamemode::loop() {
+      // This function is called each time the main loop is called
+
+      // update the HUD every so often
+      if (millis() - lastHudAutoUpdate > HUD_UPDATE_INTERVAL) {
         lastHudAutoUpdate = millis();
         drawHUD();
+      }
     }
-}
 
-void Gamemode::setGamePauseState(bool paused) {
-  this->started = !paused;
-}
+    void Gamemode::setGamePauseState(bool paused) {
+      this->started = !paused;
+    }
 
-bool Gamemode::canTakeDamage(int shooterUnitnum) {
+    bool Gamemode::canTakeDamage(int shooterUnitnum) {
 
-  if (!started) return false; // If the game hasn't started, return false
+      if (!started) return false; // If the game hasn't started, return false
 
-  // TODO have some logic here to check teams
+      // TODO have some logic here to check teams
 
-  return true; // If passed all conditions, return true
+      return true; // If passed all conditions, return true
+    }
 }

@@ -5,23 +5,23 @@
  * This will be used to notify of kills,teams etc.
 */
 
-#include "WidgetInfoBox.h"
+#include "HudWidgetInfoBox.h"
 
 #include <utility>
 
-using namespace Widgets;
+using namespace HudWidgets;
 
-WidgetInfoBox::WidgetInfoBox(int yCoordinate) : HudWidget(yCoordinate) {
+HudWidgetInfoBox::HudWidgetInfoBox(int yCoordinate) : HudWidget(yCoordinate) {
   widgetHeight = 30;
 }
 
-void WidgetInfoBox::setTexts(std::string _title, std::string _message) {
+void HudWidgetInfoBox::setTexts(std::string _title, std::string _message) {
   // Set the text to display
   this->title = std::move(_title);
   this->message = std::move(_message);
 }
 
-void WidgetInfoBox::draw(bool force) {
+void HudWidgetInfoBox::draw(bool force) {
   // Draw the widget to the screen
   if (!displayAssigned) { // check display is set
     return;

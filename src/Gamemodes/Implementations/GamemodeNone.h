@@ -9,7 +9,7 @@
 
 #include "../Gamemode.h"
 
-
+namespace Gamemodes {
     class GamemodeNone : public Gamemode {
     public:
         GamemodeNone(LaserTag *_mySystem); // Constructor for this gamemode
@@ -21,9 +21,9 @@
         bool canTakeDamage(int shooterUnitnum); // Can the player take damage (override so always returns false)
     private:
 
-        // HUD Widgets
-        Widgets::WidgetInfoBox infoWidget = Widgets::WidgetInfoBox(0);
+        // HUD HudWidgets
+        HudWidgets::HudWidgetInfoBox infoWidget = HudWidgets::HudWidgetInfoBox(0);
     };
-
+}
 
 #endif //LASERTAG_GAMEMODENONE_H

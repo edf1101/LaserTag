@@ -5,17 +5,17 @@
  * Used for things like health bars, loading bars etc.
 */
 
-#ifndef LASERTAG_WIDGETPROGRESS_H
-#define LASERTAG_WIDGETPROGRESS_H
+#ifndef LASERTAG_HUDWIDGETPROGRESS_H
+#define LASERTAG_HUDWIDGETPROGRESS_H
 
 #include "HudWidget.h"
 
-namespace Widgets {
+namespace HudWidgets {
 
-    class WidgetProgress : public HudWidget{
+    class HudWidgetProgress : public HudWidget{
     public:
         // Constructor for the class (as base class just set the display)
-        explicit WidgetProgress(int yCoordinate) : HudWidget(yCoordinate) {} ;
+        explicit HudWidgetProgress(int yCoordinate) : HudWidget(yCoordinate) {} ;
 
         void setProgress(int _progress); // Set the progress of the widget
 
@@ -32,6 +32,6 @@ namespace Widgets {
         int lastProgress = -1091001; // The last progress value we displayed (set something it will never be on start)
     };
 
-} // Widgets
+} // HudWidgets
 
-#endif //LASERTAG_WIDGETPROGRESS_H
+#endif //LASERTAG_HUDWIDGETPROGRESS_H

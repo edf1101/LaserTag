@@ -14,7 +14,7 @@
 #include <Arduino.h>
 #include "../HudDisplay.h"
 
-namespace Widgets {
+namespace HudWidgets {
 
     class HudWidget {
     public:

@@ -15,7 +15,7 @@
 #include "Displays/HUD/HudDisplay.h"
 #include "Displays/SideDisplay/SideDisplay.h"
 #include "Infrared/Firing.h"
-#include "Player/Player.h"
+#include "Players/Player.h"
 #include "Weapons/Weapons.h"
 #include "Buttons/Buttons.h"
 #include "Sound/SoundPlayer.h"

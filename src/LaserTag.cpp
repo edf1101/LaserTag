@@ -12,11 +12,9 @@ void LaserTag::init() {
   // This gets called once at the start of the program
 
   Serial.begin(115200); // start serial communication for debug purposes
-#if DEBUG
   Serial.println("Started");
-#endif
   // Set up the player object
-  player.init(this, 1, 1); // Create a player object with unitnum 1 and team 1
+  player.init(this, 121, 1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
   hudDisplay.init();

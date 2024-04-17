@@ -35,6 +35,15 @@ Gun::Gun(int gunId, std::string gunName, std::string gunAcronym,
   this->volume = volume;
   this->gunSound = gunSound;
 
+  // Set the reload description based on the reload type
+  if (magReloadType == ReloadType::PRESS_PER_BULLET) {
+    this->reloadDescription = "Press x" + std::to_string(magSize);
+  } else if (magReloadType == ReloadType::PRESS_FOR_ALL) {
+    this->reloadDescription = "Press 2x";
+  } else if (magReloadType == ReloadType::AUTO) {
+    this->reloadDescription = "Automatic";
+  }
+
   resetCharacteristics();
 }
 
@@ -92,6 +101,7 @@ bool Gun::tryFire() {
     magsRemaining--;
     reloading = true;
     reloadStartTime = millis();
+    drawHUD();
   }
 
 
@@ -125,7 +135,6 @@ void Gun::reloadLoop() {
       millis() - reloadStartTime > magReloadTime) {
     reloading = false;
     bulletsInMag = magSize;
-    return;
   }
     // If it's A PRESS_FOR_ALL gun and enough presses have been made
   else if (magReloadType == ReloadType::PRESS_FOR_ALL &&
@@ -133,15 +142,15 @@ void Gun::reloadLoop() {
     reloading = false;
     bulletsInMag = magSize;
     reloadCount = 0;
-    return;
   } else if (magReloadType == ReloadType::PRESS_PER_BULLET &&
              reloadCount == magSize) {
 
     reloading = false;
     bulletsInMag = magSize;
     reloadCount = 0;
-    return;
   }
+  drawHUD();
+
   // If it's a PRESS_PER_BULLET gun and the trigger is pressed we deal with it in the Fire() function
 }
 
@@ -153,6 +162,8 @@ void Gun::reloadAddBullet() {
     return;
   }
   reloadCount++;
+  bulletsInMag = reloadCount;
+  drawHUD();
 
   reloadLoop(); // This disables reloading if the gun is done reloading
 }
@@ -213,4 +224,19 @@ int Gun::getMagsRemaining() {
 std::string Gun::getAcronym() {
   // Returns guns acronym
   return gunAcronym;
+}
+
+void Gun::setHUDFunction(std::function<void(void)> _drawHUD) {
+  // Set the function to draw the gun's HUD
+  drawHUD = _drawHUD;
+}
+
+std::string Gun::getReloadDescription() {
+    // Get the description of how the gun reloads
+  return reloadDescription;
+}
+
+bool Gun::getReloading() {
+  // Get whether the gun is currently reloading
+  return reloading;
 }

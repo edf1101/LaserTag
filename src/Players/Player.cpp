@@ -1,7 +1,7 @@
 /*
  *  Created by Ed Fillingham on 09/04/2024.
  *
- *  This class will be used to store the Player's data and stats.
+ *  This class will be used to store the Players's data and stats.
 */
 
 #include <utility>
@@ -12,8 +12,10 @@
 void Player::init(LaserTag *_mySystem, int _unitnum, int _team) {
   unitnum = _unitnum;
   team = _team;
-  name = "Player" + std::to_string(unitnum);
+  name = "Players" + std::to_string(unitnum);
   mySystem = _mySystem;
+
+  setGun(DEFAULT_GUN);
 }
 
 // getter and setter for unitnum
@@ -85,10 +87,6 @@ Weapons::Gun *Player::getGun() {
   return gun;
 }
 
-void Player::setGun(Weapons::Gun *_gun) {
-  gun = _gun;
-}
-
 bool Player::canFire() {
   if (health <= 0) return false; // if the player is dead they can't fire
   if (revives < 0) return false; // if the player has no revives left they can't fire
@@ -101,7 +99,7 @@ void Player::takeDamage(int _gunIndex) {
 
   int gunDamage = myGuns.getGun(_gunIndex)->getDamage(); // get the gun that shot the player
 #if DEBUG
-  Serial.print("Player took damage: ");
+  Serial.print("Players took damage: ");
   Serial.println(gunDamage);
 #endif
   health -= gunDamage;
@@ -135,7 +133,7 @@ void Player::loop() {
   // Deal with respawn logic
   if (respawning && (millis() - respawnStartTime > RESPAWN_TIME)) {
 #if DEBUG
-    Serial.println("Player respawned");
+    Serial.println("Players respawned");
 #endif
     health = 100;
     revives--;
@@ -153,4 +151,9 @@ bool Player::canTakeDamage(int shooterUnitnum) {
   if (revives == 0 && health <= 0) return false; // if the player has no revives left and is dead they can't take damage
 
   return true; // passed all checks so return true
+}
+
+void Player::setGun(std::string gunName) {
+  gun = myGuns.getGun(gunName);
+  gun->setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem));
 }

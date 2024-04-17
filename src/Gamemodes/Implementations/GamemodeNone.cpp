@@ -7,41 +7,42 @@
 #include "GamemodeNone.h"
 #include "../../LaserTag.h"
 
+namespace Gamemodes {
+    GamemodeNone::GamemodeNone(LaserTag *_mySystem) : Gamemode(_mySystem) {
+      // Set up gamemode level variables
+      name = "None";
+      teamBased = false;
+      playerStartingRevives = 0;
 
-GamemodeNone::GamemodeNone(LaserTag *_mySystem) : Gamemode(_mySystem) {
-  // Set up gamemode level variables
-  name = "None";
-  teamBased = false;
-  playerStartingRevives = 0;
+      // init the widgets
+      infoWidget.init(displayHud);
 
-  // init the widgets
-  infoWidget.init(displayHud);
+      // Start drawing the HUD
+      displayHud->getDisplay()->clearDisplay(); // empty the display
+      infoWidget.setTexts("Game", "Not chosen");
+    }
 
-  // Start drawing the HUD
-  displayHud->getDisplay()->clearDisplay(); // empty the display
-  infoWidget.setTexts("Game", "Not chosen");
-}
+    void GamemodeNone::setGamePauseState(bool paused) {
+      // Do nothing
+    }
 
-void GamemodeNone::setGamePauseState(bool paused) {
-  // Do nothing
-}
+    void GamemodeNone::drawHUD() {
+      // always display no game message
+      infoWidget.draw(false);
 
-void GamemodeNone::drawHUD() {
-  // always display no game message
-  infoWidget.draw(false);
+      displayHud->getDisplay()->display();
+    }
 
-  displayHud->getDisplay()->display();
-}
+    bool GamemodeNone::canFire() {
+      return false;
+    }
 
-bool GamemodeNone::canFire() {
-  return false;
-}
+    void GamemodeNone::initialisePlayer() {
+      // Do nothing
+    }
 
-void GamemodeNone::initialisePlayer() {
-    // Do nothing
-}
-
-bool GamemodeNone::canTakeDamage(int shooterUnitnum) {
-  // Can't take damage in this gamemode as it's not a game
-  return false;
+    bool GamemodeNone::canTakeDamage(int shooterUnitnum) {
+      // Can't take damage in this gamemode as it's not a game
+      return false;
+    }
 }

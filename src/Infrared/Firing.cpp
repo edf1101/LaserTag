@@ -20,15 +20,18 @@ Firing::Firing(LaserTag *_mySystem) {
 
   // set up muzzle flash LED
   pinMode(MUZZLE_LED, OUTPUT);
+  pinMode(VIBRATE_PIN, OUTPUT);
 }
 
 void Firing::FiringLoop() {
-  infraredTransciever.receiveIR();
-  if (infraredTransciever.infraredReceived) {  // canRx bit used to be up here if any weird issues try moving back up here
+  // This gets called every call of the main loop and deals with things related to firing and IR signals
+
+  infraredTransciever.receiveIR(); // check for IR signals in
+  if (infraredTransciever.infraredReceived) {
 #if DEBUG
     Serial.println("IR Received");
 #endif
-    if (infraredTransciever.crcValid)  // if valid reception and we're running ... also make you invincible if you are in an admin menu, ie you cant run commands
+    if (infraredTransciever.crcValid)
     {
 #if DEBUG
       Serial.println("CRC correct");
@@ -36,7 +39,7 @@ void Firing::FiringLoop() {
 
       int irControl = infraredTransciever.irPacketIn.control;
 
-      if (irControl == 0) {  //recieved shot control signal
+      if (irControl == 0) {  // received shot control signal
         OnHit();
       }
       if (irControl == 1) {
@@ -56,6 +59,10 @@ void Firing::FiringLoop() {
     muzzleFlash = false;
     digitalWrite(MUZZLE_LED, LOW);
   }
+  if (vibrating && millis() - lastVibrate > VIBRATE_TIME) {
+    vibrating = false;
+    digitalWrite(VIBRATE_PIN, LOW);
+  }
 
   // Deal with gun reloading object
   // May not actually be reloading but that's dealt with in the gun object
@@ -65,9 +72,6 @@ void Firing::FiringLoop() {
 
 void Firing::OnHit() {
   // This gets called when the gun has been hit by an IR signal
-
-  // TODO have callback func if required by gamemode (gamemode should have a special callback on top of this)
-  //  usual gamemodes won't need as this will handle lives remove and if teams / friendly fire etc.
 
   Player *player = mySystem->getPlayer();
 
@@ -137,9 +141,11 @@ void Firing::Fire() {
     return;
   }
 
+  digitalWrite(MUZZLE_LED,LOW); // Turn it off in case was still on from last shot (so doesn't interfere with IR signal)
+  digitalWrite(VIBRATE_PIN, LOW); // Same as above
   // Send the actual data over IR
   int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
-  int unitnum = player->getUnitnum();; // unit number (MAX 2^7 = 128)
+  int unitnum = player->getUnitnum(); // unit number (MAX 2^7 = 128)
   infraredTransciever.sendIR(0, (uint8_t) unitnum, (uint8_t) weapon);
 
   // Do muzzle flash / sound effect if not suppressed
@@ -149,7 +155,12 @@ void Firing::Fire() {
     digitalWrite(MUZZLE_LED, HIGH);
     mySystem->getSoundPlayer()->playSound(myGun->getSound());
   }
-
+  // Deal with vibrations
+  if(allowVibrations){
+    digitalWrite(VIBRATE_PIN, HIGH);
+    vibrating = true;
+    lastVibrate = millis();
+  }
 
   mySystem->updateHUD();
 

@@ -2,18 +2,18 @@
  * Created by Ed on 13/04/2024.
 */
 
-#ifndef LASERTAG_WIDGETINFOBOX_H
-#define LASERTAG_WIDGETINFOBOX_H
+#ifndef LASERTAG_HUDWIDGETINFOBOX_H
+#define LASERTAG_HUDWIDGETINFOBOX_H
 
 #include "HudWidget.h"
 #include <string>
 
-namespace Widgets {
+namespace HudWidgets {
 
-    class WidgetInfoBox : public HudWidget {
+    class HudWidgetInfoBox : public HudWidget {
     public:
         // Constructor for the class (just call base class constructor and set specific protected details)
-        explicit WidgetInfoBox(int yCoordinate);
+        explicit HudWidgetInfoBox(int yCoordinate);
 
 
         void draw(bool force) ; // Draw the widget to the screen
@@ -29,6 +29,6 @@ namespace Widgets {
         std::string lastMessage = "None";
     };
 
-} // Widgets
+} // HudWidgets
 
-#endif //LASERTAG_WIDGETINFOBOX_H
+#endif //LASERTAG_HUDWIDGETINFOBOX_H

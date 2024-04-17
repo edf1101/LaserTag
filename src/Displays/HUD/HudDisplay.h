@@ -14,7 +14,8 @@
 #include <Wire.h>
 #include "Adafruit_GFX.h"
 #include "Adafruit_SSD1306.h"
-#include "../../Player/Player.h"
+#include "../../Players/Player.h"
+#include "../../config.h"
 
 // includes for images
 #include "../ImageData.h"

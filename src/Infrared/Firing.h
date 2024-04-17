@@ -10,13 +10,14 @@
 #include <Arduino.h>
 #include "Infrared.h"
 #include "../config.h"
-#include "../Player/Player.h"
+#include "../Players/Player.h"
 #include "../Weapons/Weapons.h"
 #include "../Buttons/Buttons.h"
 
 class LaserTag; // Forward declaration
 
 #define MUZZLE_FLASH_TIME 50 // Time in ms for the muzzle flash to be on
+#define VIBRATE_TIME 200 // Time in ms for the muzzle flash to be on
 
 class Firing {
 public:
@@ -38,6 +39,10 @@ private:
 
     bool muzzleFlash = false; // Is the muzzle flash on
     unsigned long lastMuzzleFlash = 0; // The time it turned on
+
+    bool allowVibrations =true;
+    bool vibrating = false;
+    unsigned long lastVibrate = 0;
 };
 
 

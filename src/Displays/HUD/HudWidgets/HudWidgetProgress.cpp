@@ -5,15 +5,15 @@
  * Used for things like health bars, loading bars etc.
 */
 
-#include "WidgetProgress.h"
+#include "HudWidgetProgress.h"
 
-using namespace Widgets;
+using namespace HudWidgets;
 
-void WidgetProgress::setProgress(int _progress) {
+void HudWidgetProgress::setProgress(int _progress) {
   progress = _progress;
 }
 
-void WidgetProgress::erase() {
+void HudWidgetProgress::erase() {
   // Erase the widget from the screen
   if (!displayAssigned) {
     return;
@@ -25,7 +25,7 @@ void WidgetProgress::erase() {
   display->getDisplay()->fillRect(x, y, barWidth, barHeight, SSD1306_BLACK);
 }
 
-void WidgetProgress::draw(bool force) {
+void HudWidgetProgress::draw(bool force) {
   // Draw the widget to the screen
   if (!displayAssigned) {
     return;

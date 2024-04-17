@@ -8,13 +8,14 @@
 #define LASERTAG_BUTTONS_H
 
 #include "Button.h"
+#include "Arduino.h"
 #include "../config.h"
 
 
 class Buttons {
 public:
     Button triggerButton = Button(TRIGGER_BUTTON);
-    Button magazineButton = Button(MAGAZINE_BUTTON, INPUT_PULLUP);
+    Button magazineButton = Button(MAGAZINE_BUTTON, INPUT_PULLDOWN);
 
     void pollButtons() {
       // Polls all the buttons for updates

@@ -2,17 +2,17 @@
  * Created by Ed Fillingham on 13/04/2024.
 */
 
-#ifndef LASERTAG_WIDGETBACKDROP_H
-#define LASERTAG_WIDGETBACKDROP_H
+#ifndef LASERTAG_HUDWIDGETBACKDROP_H
+#define LASERTAG_HUDWIDGETBACKDROP_H
 
 #include "HudWidget.h"
 #include "../../ImageData.h"
 
-namespace Widgets {
+namespace HudWidgets {
 
-    class WidgetBackdrop : public HudWidget {
+    class HudWidgetBackdrop : public HudWidget {
     public:
-        WidgetBackdrop(int yStart, Images::ImageData background); // Constructor for the class (as base class just set the display)
+        HudWidgetBackdrop(int yStart, Images::ImageData background); // Constructor for the class (as base class just set the display)
 
         void draw(bool force); // Draw the widget to the screen
 
@@ -22,6 +22,6 @@ namespace Widgets {
         Images::ImageData background; // The image to display
     };
 
-} // Widgets
+} // HudWidgets
 
-#endif //LASERTAG_WIDGETBACKDROP_H
+#endif //LASERTAG_HUDWIDGETBACKDROP_H

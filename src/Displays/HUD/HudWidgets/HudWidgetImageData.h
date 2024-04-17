@@ -5,8 +5,8 @@
  * This will be used to display the player's health, ammo etc.
 */
 
-#ifndef LASERTAG_WIDGETIMAGEDATA_H
-#define LASERTAG_WIDGETIMAGEDATA_H
+#ifndef LASERTAG_HUDWIDGETIMAGEDATA_H
+#define LASERTAG_HUDWIDGETIMAGEDATA_H
 
 #include <string>
 #include <functional>
@@ -15,11 +15,11 @@
 #include "../../ImageData.h"
 
 
-namespace Widgets {
+namespace HudWidgets {
 
-    class WidgetImageData : public HudWidget {
+    class HudWidgetImageData : public HudWidget {
     public:
-        WidgetImageData(Images::ImageData image, int yCoordinate);
+        HudWidgetImageData(Images::ImageData image, int yCoordinate);
 
         void init(HudDisplay *_disp, std::function<int(void)> _dataFetcher) {
           HudWidget::init(_disp);
@@ -35,6 +35,6 @@ namespace Widgets {
         int lastData = -1091001; // The last data value we displayed (set something it will never be on start)
     };
 
-} // Widgets
+} // HudWidgets
 
-#endif //LASERTAG_WIDGETIMAGEDATA_H
+#endif //LASERTAG_HUDWIDGETIMAGEDATA_H

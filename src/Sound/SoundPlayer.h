@@ -7,7 +7,7 @@
 #ifndef FIRING_CPP_SOUNDPLAYER_H
 #define FIRING_CPP_SOUNDPLAYER_H
 
-#define SOUND_ON 0
+
 
 #include "Arduino.h"
 #include "XT_DAC_Audio.h"
