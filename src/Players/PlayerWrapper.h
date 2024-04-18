@@ -11,7 +11,7 @@
 #include <functional>
 #include "Arduino.h"
 #include "Player.h"
-#include "../Weapons/Weapons.h"
+#include "Weapons/WeaponsManager.h"
 #include "../config.h"
 
 #define START_LIVES 3 // The maximum number of revives a player can have
@@ -60,11 +60,11 @@ private:
     LaserTag* mySystem; // Pointer to the main system object
 
     // Details about the player
-    GunTypes myGuns;
+    WeaponsManager myGuns;
     Player player; // The player's data
 
     // Details about the player in this game per se
-    Weapons::Gun *gun = myGuns.getGun(DEFAULT_GUN); // The player's gun (default is the Assault Rifle)
+    Weapons::Gun *gun = myGuns.getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)
     bool respawning = false; // Whether the player is currently respawning
     unsigned long respawnStartTime = 0; // The time the player started respawning
 };

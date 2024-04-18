@@ -11,6 +11,8 @@ using namespace Sounds;
 // Define sounds here
 XT_Wav_Class SoundPlayer::ArSound = XT_Wav_Class(ARwav);
 XT_Wav_Class SoundPlayer::SmgSound = XT_Wav_Class(SMGwav);
+XT_Wav_Class SoundPlayer::ShotgunSound = XT_Wav_Class(shotgunWav);
+XT_Wav_Class SoundPlayer::PistolSound = XT_Wav_Class(pistolWav);
 
 void SoundPlayer::soundLoop() {
 // This is called every main system loop

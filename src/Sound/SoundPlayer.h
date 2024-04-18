@@ -16,6 +16,8 @@
 namespace Sounds {
 
 #include "Sounds/ArSound.h"
+#include "Sounds/PistolSound.h"
+#include "Sounds/ShotgunSound.h"
 #include "Sounds/SmgSound.h"
 
     class SoundPlayer {
@@ -27,6 +29,8 @@ namespace Sounds {
         // declare all sounds here, then declare them in the .cpp file
         static XT_Wav_Class ArSound;
         static XT_Wav_Class SmgSound;
+        static XT_Wav_Class ShotgunSound;
+        static XT_Wav_Class PistolSound;
 
     private:
         // Create the sound low level object

@@ -51,7 +51,6 @@ If web interface uses flask then other phones etc can access it.
 - Create gun menu system
 - Create demo messages menu + messageQueue class
 - create name selector menu / admin password menu (should be same class ish)
-- Start LED effects
 - create wifi player management system.
 - create leaderboard menu
 - create command system / menu

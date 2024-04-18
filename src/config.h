@@ -44,8 +44,4 @@
 #define NEOPIXEL_LEDS_PIN 4
 #define NEOPIXEL_LEDS_COUNT 5 // If there are more than 5 LEDs put here and will scale
 
-// Gun settings
-#define DEFAULT_GUN "Assault Rifle"
-
-
 #endif //LASERTAG_CONFIG_H

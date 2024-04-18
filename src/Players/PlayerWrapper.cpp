@@ -20,7 +20,7 @@ void PlayerWrapper::init(LaserTag *_mySystem, int _unitnum, int _team) {
 
   mySystem = _mySystem;
 
-  setGun(DEFAULT_GUN);
+  setGun("Assault Rifle"); // defualt gun
   player.gunIndex = getGun()->getIndex();
 }
 
