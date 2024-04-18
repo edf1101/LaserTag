@@ -43,6 +43,8 @@ private:
     bool allowVibrations =true;
     bool vibrating = false;
     unsigned long lastVibrate = 0;
+
+    unsigned long lastTurnOffNeopixels; // used to reactivate neopixels after a period of firing
 };
 
 

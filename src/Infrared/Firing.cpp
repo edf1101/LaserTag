@@ -31,8 +31,7 @@ void Firing::FiringLoop() {
 #if DEBUG
     Serial.println("IR Received");
 #endif
-    if (infraredTransciever.crcValid)
-    {
+    if (infraredTransciever.crcValid) {
 #if DEBUG
       Serial.println("CRC correct");
 #endif
@@ -62,6 +61,10 @@ void Firing::FiringLoop() {
   if (vibrating && millis() - lastVibrate > VIBRATE_TIME) {
     vibrating = false;
     digitalWrite(VIBRATE_PIN, LOW);
+  }
+
+  if (millis() - lastTurnOffNeopixels > MUZZLE_FLASH_TIME) {
+    mySystem->getLEDManager()->setLEDState(true);
   }
 
   // Deal with gun reloading object
@@ -141,8 +144,12 @@ void Firing::Fire() {
     return;
   }
 
-  digitalWrite(MUZZLE_LED,LOW); // Turn it off in case was still on from last shot (so doesn't interfere with IR signal)
+  digitalWrite(MUZZLE_LED,
+               LOW); // Turn it off in case was still on from last shot (so doesn't interfere with IR signal)
   digitalWrite(VIBRATE_PIN, LOW); // Same as above
+  mySystem->getLEDManager()->setLEDState(false); // same as above
+  lastTurnOffNeopixels = millis();
+
   // Send the actual data over IR
   int weapon = myGun->getIndex(); // weapon number  (MAX 2^4 = 16)
   int unitnum = player->getUnitnum(); // unit number (MAX 2^7 = 128)
@@ -156,7 +163,7 @@ void Firing::Fire() {
     mySystem->getSoundPlayer()->playSound(myGun->getSound());
   }
   // Deal with vibrations
-  if(allowVibrations){
+  if (allowVibrations) {
     digitalWrite(VIBRATE_PIN, HIGH);
     vibrating = true;
     lastVibrate = millis();

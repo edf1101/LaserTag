@@ -43,16 +43,18 @@ its more reusable
 - Have a PC Interface that communicates with a "base node" via HTTP or serial that can run some python code to display stats, run commands etc.
 If web interface uses flask then other phones etc can access it.
 - Investigate connecting to guns via wifi / bluetooth to change settings.
+- Grenade???
+- For LEDs have a stack ish system so it doesn't overwrite long effects if it was doing a quick fire effect or something.
 
 ## Plan
-- Implement menu system for side screen (no need to add the actual menus just test classes)
+- Create gun group system
+- Create gun menu system
+- Create demo messages menu + messageQueue class
+- create name selector menu / admin password menu (should be same class ish)
 - Start LED effects
-- Test a bigger speaker etc ie more watts so it doesn't get destroyed by amp.
-- build prototype breadboard guns when parts arrive
-- test vibration motors or LED in place of vibration motors for time being
 - create wifi player management system.
-- create gun group system
-- create actual menus
+- create leaderboard menu
+- create command system / menu
 - add team DM game
 - design latch circuit
 - build enclosure / pcbs

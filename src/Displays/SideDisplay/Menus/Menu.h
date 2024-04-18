@@ -25,6 +25,7 @@ namespace Menus {
         virtual void onRotaryPressed(); // called when the button is pressed
 
         bool getCanTakeDamage(); // get whether you can take damage in this menu
+        bool getRequiresAdmin(); // get whether the menu requires admin access
 
         void setParentMenu(Menu* parent); // set the parent menu
 
@@ -34,6 +35,7 @@ namespace Menus {
       SideDisplay* sideDisplay; // pointer to the side display
 
       bool canTakeDamage = true; // whether you can take damage in this menu
+      bool requiresAdmin = false; // whether the menu requires admin access
 
       Menu* parentMenu = nullptr; // pointer to the parent menu
       bool hasParentMenu = false; // whether the menu has a parent menu

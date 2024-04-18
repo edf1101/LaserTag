@@ -21,6 +21,7 @@
 #include "Sound/SoundPlayer.h"
 #include "Gamemodes/GamemodeManager.h"
 #include "config.h"
+#include "LEDs/LEDManager.h"
 
 
 class LaserTag {
@@ -45,13 +46,16 @@ public:
 
     HudDisplay *getHudDisplay();
 
+    LEDs::LEDManager* getLEDManager();
+
 
 private:
-    // Objects for main hardware components of the gun
-    Buttons buttons;  // object representing all buttons on the gun
-    HudDisplay hudDisplay;  // display objects
-    SideDisplay sideDisplay;
-    Sounds::SoundPlayer soundPlayer;  // sound player object
+    // Objects for main hardware components of the gun.
+    Buttons buttons;  // object representing all buttons on the gun.
+    HudDisplay hudDisplay;  // HUD display object.
+    SideDisplay sideDisplay; // Side display object.
+    Sounds::SoundPlayer soundPlayer;  // sound player object.
+    LEDs::LEDManager ledManager; // LED manager object.
 
     // Objects for main software system components
     Firing firing = Firing(this);  // firing object

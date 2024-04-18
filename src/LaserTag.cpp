@@ -20,6 +20,8 @@ void LaserTag::init() {
   hudDisplay.init();
   sideDisplay.init();
 
+  ledManager.init(); // set up the LED manager
+
   // Set up the gamemode manager after displays since it depends on the HUD
   gamemodeManager.init();
 
@@ -35,6 +37,7 @@ void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
 
   soundPlayer.soundLoop(); // Check if any sounds need to be played / fill buffer
+  ledManager.loop();
   sideDisplay.pollEncoder(); // Check the rotary encoder for movements
   hudDisplay.loop(); // Call the HUD loop function
   buttons.pollButtons(); // Check the buttons for presses
@@ -85,4 +88,10 @@ HudDisplay *LaserTag::getHudDisplay() {
   // returns a pointer to the HUD display object
   return &hudDisplay;
 }
+
+LEDs::LEDManager *LaserTag::getLEDManager() {
+  return &ledManager;
+}
+
+
 

@@ -62,5 +62,10 @@ namespace Menus {
       rawDisplay->fillScreen(ST7735_BLACK);
     }
 
+    bool Menu::getRequiresAdmin() {
+      // get whether the menu requires admin access
+      return requiresAdmin;
+    }
+
 
 } // Menus

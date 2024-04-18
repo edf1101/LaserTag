@@ -11,9 +11,10 @@
 // General config settings
 #define DEBUG 1  // Whether we print to the serial monitor or not
 #define SOUND_ON 1 // Whether we play sounds or not
+#define ADMIN_PASS 0000 // Must be 4 digit num
 
 // Config settings for the OLED display
-#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#define SCREEN_ADDRESS 0x3C // 0x3D or 0x3C
 
 // Pin definitions for the side display
 #define TFT_CS 14
@@ -37,6 +38,11 @@
 
 // Speaker pins
 #define DAC_PIN 25
+
+// Cosmetic LED Pins
+#define NEOPIXEL_ON 1 // 1 for true 0 for false
+#define NEOPIXEL_LEDS_PIN 4
+#define NEOPIXEL_LEDS_COUNT 5 // If there are more than 5 LEDs put here and will scale
 
 // Gun settings
 #define DEFAULT_GUN "Assault Rifle"
