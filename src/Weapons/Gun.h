@@ -59,14 +59,27 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         std::string getName(); // Get the gun's name
         std::string getAcronym(); // Get the guns acronym
         std::string getReloadDescription(); // Get the description of how the gun reloads
+
         XT_Wav_Class *getSound(); // Get the gun's sound effect so it can be played back elsewhere
         int getDamage(); // Get the gun's damage
+
         int getAmmoRemaining(); // Get the remaining ammo in the mag currently
         int getMagsRemaining(); // get the mags left for the gun
+
+        int getInitialMags(); // Get the number of mags the gun starts with
+        int getInitialAmmo(); // Get the number of bullets the gun starts with
+
+        void setAmmoAndMags(int ammo, int mags); // Set the ammo and mags for the gun
+
 
         int createHash(); // Create a hash of the gun's characteristics for the anti-cheat system
 
         void setHUDFunction(std::function<void(void)> _drawHUD); // Set the function to draw the gun's HUD
+
+        int getFireSpeed(); // Get the fire speed of the gun
+        std::string getFireType() const; // Get the fire type of the gun
+
+        Images::ImageData getImage(); // Get the gun's image
 
     private:
         // Gun default Characteristics

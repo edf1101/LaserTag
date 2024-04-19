@@ -4,6 +4,7 @@
  * This file manages weapons within the game
 */
 
+
 #include "WeaponsManager.h"
 
 #include <utility>
@@ -11,14 +12,14 @@
 
 using namespace Weapons;
 
-Weapons::Gun *WeaponsManager::getGun(const std::string &gunName) {
+Weapons::Gun WeaponsManager::getGun(const std::string &gunName) {
   // Get a pointer to a gun by its name
 
   findAllGuns(); // make sure the list of guns is up-to-date
 
   for (auto &gun: allGuns) {
-    Serial.println(gun->getName().c_str());
-    if (gun->getName() == gunName) {
+    Serial.println(gun.getName().c_str());
+    if (gun.getName() == gunName) {
       return gun;
     }
   }
@@ -26,13 +27,13 @@ Weapons::Gun *WeaponsManager::getGun(const std::string &gunName) {
   throw std::invalid_argument("Gun not found");
 }
 
-Weapons::Gun *WeaponsManager::getGun(int gunId) {
+Weapons::Gun WeaponsManager::getGun(int gunId) {
   // Get a pointer to a gun by its index
 
   findAllGuns(); // make sure the list of guns is up-to-date
 
   for (auto &gun: allGuns) {
-    if (gun->getIndex() == gunId) {
+    if (gun.getIndex() == gunId) {
       return gun;
     }
   }
@@ -52,16 +53,16 @@ void WeaponsManager::findAllGuns() {
     }
 
     for (auto &gun: gunGroup->getWeapons()) { // add all the guns from this group
-      if (std::count(checkedIds.begin(), checkedIds.end(), gun->getIndex())){
+      if (std::count(checkedIds.begin(), checkedIds.end(), gun->getIndex())) {
         continue; // skip this gun if we have already added it
       }
-      allGuns.push_back(gun);
+      allGuns.push_back(*gun);
     }
   }
 
   // If there are no guns (ie no groups selected) then add the default gun
   if (allGuns.empty()) {
-    allGuns.push_back(&AssaultRifle);
+    allGuns.push_back(AssaultRifle);
   }
 }
 
@@ -90,10 +91,21 @@ Weapons::GunGroup *WeaponsManager::getGunGroup(std::string groupName) {
 void WeaponsManager::setGroupUseState(std::string groupName, bool state) {
   // Set whether a group is in use or not
   getGunGroup(std::move(groupName))->setInUse(state);
+
+  if (setCallback){
+    updateMenuOfChanges(); // update the menu of changes (if the callback has been set
+  }
 }
 
-std::vector<Weapons::Gun *> WeaponsManager::getAllGuns() {
+std::vector<Weapons::Gun > WeaponsManager::getAllGuns() {
   // Return all active guns
   findAllGuns();
   return allGuns;
+}
+
+void WeaponsManager::setUpdateMenuCallback(std::function<void(void)> callback) {
+  // set the update the menu of changes callback
+
+  updateMenuOfChanges = std::move(callback);
+  setCallback = true;
 }

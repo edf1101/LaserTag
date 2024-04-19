@@ -31,17 +31,30 @@ namespace SideWidgets {
         return;
       }
 
+
+      // Overwrite old text
+      Adafruit_ST7735 *rawDisplay = myDisplay->getRawDisplay();
+      rawDisplay->setTextSize(textSize); // Set the text size
+      rawDisplay->setTextColor(ST7735_BLACK); // Set the text colour
+      rawDisplay->setTextWrap(false); // Wrap the text
+      rawDisplay->setCursor(xStart, yStart); // Set the cursor to the top left corner of the widget
+      rawDisplay->print(lastText.c_str()); // Print the text
+
       lastText = text; // Set the last text to the current text
       lastTextSize = textSize; // Set the last text size to the current text size
       lastTextColor = textColor; // Set the last text colour to the current text colour
 
       // Actually draw the text
-      Adafruit_ST7735 *rawDisplay = myDisplay->getRawDisplay();
       rawDisplay->setTextSize(textSize); // Set the text size
       rawDisplay->setTextColor(textColor); // Set the text colour
       rawDisplay->setTextWrap(false); // Wrap the text
       rawDisplay->setCursor(xStart, yStart); // Set the cursor to the top left corner of the widget
       rawDisplay->print(text.c_str()); // Print the text
 
+    }
+
+    void SideWidgetText::setImage(std::string newText) {
+      // update the text field
+      text = std::move(newText);
     }
 } // SideWidgets

@@ -7,6 +7,8 @@
 
 #include "MenuManager.h"
 #include "../SideDisplay.h"
+#include <functional>
+#include "../../../LaserTag.h"
 
 MenuManager::MenuManager(SideDisplay *_sideDisplay) {
   sideDisplay = _sideDisplay; // assign the pointer to the side display
@@ -50,15 +52,17 @@ void MenuManager::init() {
   mainMenu.init(sideDisplay);
   mainMenu.addSubMenu("Scores", Images::img_menuLeaderboard, nullptr);
   mainMenu.addSubMenu("Msgs", Images::img_menuMessages, nullptr);
-  mainMenu.addSubMenu("Guns", Images::img_menuGuns, nullptr);
+  mainMenu.addSubMenu("Guns", Images::img_menuGuns, &gunMenu);
   mainMenu.addSubMenu("Settings", Images::img_menuSettings, &settingsMenu);
   mainMenu.addSubMenu("Admin", Images::img_menuAdmin, nullptr);
 
   settingsMenu.init(sideDisplay);
   settingsMenu.addSubMenu("Name", Images::img_menuName, nullptr);
-  settingsMenu.addSubMenu("Turn Off", Images::img_menuTurnOff, nullptr);
+  settingsMenu.addFunction("Turn Off", Images::img_menuTurnOff, std::bind(&LaserTag::turnOff));
   settingsMenu.addSubMenu("Admin #", Images::img_menuAdmin, nullptr);
   settingsMenu.addSubMenu("Return", Images::img_menuReturn, &mainMenu);
+
+  gunMenu.init(sideDisplay,&mainMenu);
 
   display(true); // display the menu
 }

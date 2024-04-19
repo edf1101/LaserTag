@@ -45,8 +45,8 @@ public:
     void setCarryingFlag(bool carryingFlag); // Sets whether the player is carrying the flag
     bool getCarryingFlag() const; // Returns whether the player is carrying the flag
 
-    void setGun(std::string gunName); // Sets the player's gun
     Weapons::Gun *getGun(); // Returns the player's gun
+    void swapGun(std::string gunName); // Swaps the player's gun
 
     bool canFire(); // Returns whether the player can fire their gun
     bool canTakeDamage(int shooterUnitnum); // Returns whether the player can take damage from a shooter
@@ -60,11 +60,10 @@ private:
     LaserTag* mySystem; // Pointer to the main system object
 
     // Details about the player
-    WeaponsManager myGuns;
     Player player; // The player's data
 
     // Details about the player in this game per se
-    Weapons::Gun *gun = myGuns.getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)
+    Weapons::Gun gun = WeaponsManager::getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)
     bool respawning = false; // Whether the player is currently respawning
     unsigned long respawnStartTime = 0; // The time the player started respawning
 };

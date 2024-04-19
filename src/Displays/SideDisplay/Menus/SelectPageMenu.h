@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "../../config.h"
 #include "SideWidgets/SideWidgetMenuSelect.h"
+#include "SideWidgets/SideWidgetFunctionSelect.h"
 #include "SideWidgets/SideWidgetText.h"
 
 class MenuManager;
@@ -32,11 +33,12 @@ namespace Menus {
         void resetMenu(); // reset the menu
 
         void addSubMenu(std::string name, Images::ImageData image, Menu *menu); // add a new sub menu widget
+        void addFunction(std::string name, Images::ImageData image, std::function<void(void)> func);
 
     private:
         MenuManager* menuManager; // pointer to the menu manager
 
-        std::vector<SideWidgets::SideWidgetMenuSelect> menuWidgets; // a list of the submenu tile widgets
+        std::vector<SideWidgets::SideWidgetSelector*> menuWidgets; // a list of the submenu tile widgets
         SideWidgets::SideWidgetText titleWidget; // Widget to show the title
     };
 

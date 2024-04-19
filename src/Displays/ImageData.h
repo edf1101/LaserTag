@@ -39,6 +39,17 @@ namespace Images {
 #include "Images/img_menuName.h"
 #include "Images/img_menuTurnOff.h"
 #include "Images/img_menuReturn.h"
+#include "Images/img_LeftArrow.h"
+#include "Images/img_RightArrow.h"
+#include "Images/img_subMenuReturn.h"
+#include "Images/img_subMenuSelect.h"
+#include "Images/img_gunAR.h"
+#include "Images/img_gunShotgun.h"
+#include "Images/img_gunSniper.h"
+#include "Images/img_gunPistol.h"
+#include "Images/img_gunPisSup.h"
+#include "Images/img_gunMAC11.h"
+
 
 }
 #endif //LASERTAG_IMAGEDATA_H

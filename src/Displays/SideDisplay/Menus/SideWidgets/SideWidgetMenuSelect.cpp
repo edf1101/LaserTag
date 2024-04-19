@@ -8,7 +8,7 @@
 namespace SideWidgets {
     SideWidgetMenuSelect::SideWidgetMenuSelect(int yStart, int xStart,
                                                std::string name, Images::ImageData image)
-            : SideWidget(yStart, xStart) {
+            : SideWidgetSelector(yStart, xStart) {
       // Constructor fo the SideWidgetMenuSelect class
       width = 40;
       height = 40;
@@ -44,12 +44,7 @@ namespace SideWidgets {
 
     }
 
-    void SideWidgetMenuSelect::setHighlighted(bool highlighted) {
-      // Set the highlighted state of the widget
 
-      this->highlighted = highlighted;
-
-    }
 
     Menu *SideWidgetMenuSelect::getMenu() {
       // Get the menu that this widget is associated with

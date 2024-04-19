@@ -19,6 +19,8 @@ namespace Sounds {
 #include "Sounds/PistolSound.h"
 #include "Sounds/ShotgunSound.h"
 #include "Sounds/SmgSound.h"
+#include "Sounds/DeagleSound.h"
+#include "Sounds/GlockSound.h"
 
     class SoundPlayer {
     public:
@@ -30,7 +32,9 @@ namespace Sounds {
         static XT_Wav_Class ArSound;
         static XT_Wav_Class SmgSound;
         static XT_Wav_Class ShotgunSound;
-        static XT_Wav_Class PistolSound;
+        static XT_Wav_Class SniperSound;
+        static XT_Wav_Class DeagleSound;
+        static XT_Wav_Class GlockSound;
 
     private:
         // Create the sound low level object

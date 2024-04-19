@@ -65,6 +65,12 @@ bool LaserTag::canTakeDamage(int shooterUnitnum) {
   return getGamemode()->canTakeDamage(shooterUnitnum) && player.canTakeDamage(shooterUnitnum);
 }
 
+void LaserTag::turnOff() {
+  // Turns off the gun with the latch circuit
+  // TODO implement this once latch stuff done.
+  Serial.println("Turning off");
+}
+
 // Pointer Getters for the main objects so they can be accessed elsewhere
 PlayerWrapper *LaserTag::getPlayer() {
   // returns a pointer to the player object
@@ -94,6 +100,3 @@ HudDisplay *LaserTag::getHudDisplay() {
 LEDs::LEDManager *LaserTag::getLEDManager() {
   return &ledManager;
 }
-
-
-

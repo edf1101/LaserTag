@@ -13,7 +13,7 @@ namespace Menus {
     class Menu {
     public:
         Menu(); // constructor for the Menu class
-        void init(SideDisplay *_sideDisplay);
+        virtual void init(SideDisplay *_sideDisplay);
 
 
         virtual void display(bool force); // display the menu

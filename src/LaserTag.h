@@ -35,31 +35,33 @@ public:
 
     void updateHUD();
 
-// Getters for Pointers to various system components (below)
-    PlayerWrapper *getPlayer();
+    static void turnOff();
 
-    Buttons *getButtons();
+    // Getters for Pointers to various system components (below)
+    static PlayerWrapper *getPlayer();
 
-    Sounds::SoundPlayer *getSoundPlayer();
+    static Buttons *getButtons();
+
+    static Sounds::SoundPlayer *getSoundPlayer();
 
     Gamemode* getGamemode();
 
-    HudDisplay *getHudDisplay();
+    static HudDisplay *getHudDisplay();
 
-    LEDs::LEDManager* getLEDManager();
+    static LEDs::LEDManager* getLEDManager();
 
 
 private:
     // Objects for main hardware components of the gun.
-    Buttons buttons;  // object representing all buttons on the gun.
-    HudDisplay hudDisplay;  // HUD display object.
-    SideDisplay sideDisplay; // Side display object.
-    Sounds::SoundPlayer soundPlayer;  // sound player object.
-    LEDs::LEDManager ledManager; // LED manager object.
+    inline static Buttons buttons;  // object representing all buttons on the gun.
+    inline static HudDisplay hudDisplay;  // HUD display object.
+    inline static SideDisplay sideDisplay; // Side display object.
+    inline static Sounds::SoundPlayer soundPlayer;  // sound player object.
+    inline static LEDs::LEDManager ledManager; // LED manager object.
 
     // Objects for main software system components
     Firing firing = Firing(this);  // firing object
-    PlayerWrapper player;  // player object
+    inline static PlayerWrapper player;  // player object
     GamemodeManager gamemodeManager = GamemodeManager(this);  // current gamemode object
 };
 

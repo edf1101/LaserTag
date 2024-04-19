@@ -9,8 +9,6 @@
 ## Ideas
 - Anticheat (If everyone doesn't have a certain weapon then it can't be used)
 - System to check no overlapping unitnums, else it will be modified.
-- FastLED stuff
-- Optional Vibration motors
 - Have a define to turn on or off Serial debug
 - Anticheat could work by making a hash of all the weapons and checking if each gun has the same total weapon hash.
 - Would be nice if beacon code was in this same repository and you just changed a define 
@@ -45,13 +43,15 @@ If web interface uses flask then other phones etc can access it.
 - Investigate connecting to guns via wifi / bluetooth to change settings.
 - Grenade???
 - For LEDs have a stack ish system so it doesn't overwrite long effects if it was doing a quick fire effect or something.
+- Sort out the canTakeDamage / need admin fields of menus
+- make things more staticy where poss
 
 ## Plan
-- Create gun group system
 - Create gun menu system
+- basic unitnum system (read eeprom else select random)
 - Create demo messages menu + messageQueue class
 - create name selector menu / admin password menu (should be same class ish)
-- create wifi player management system.
+- create wifi player management system. (includes unitnum clash detection)
 - create leaderboard menu
 - create command system / menu
 - add team DM game
@@ -67,3 +67,6 @@ If web interface uses flask then other phones etc can access it.
 - Add new manhunt gamemode
 - Add new tag gamemode
 - modify techcamp code to run on this hardware
+
+## Tests
+- Try changing the gun group while a player is viewing a gun in choice menu that that has been disallowed

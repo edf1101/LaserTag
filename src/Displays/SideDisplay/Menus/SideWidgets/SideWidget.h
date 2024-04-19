@@ -20,7 +20,7 @@ namespace SideWidgets {
     public:
         SideWidget(int yStart, int xStart); // constructor for the class
 
-        void init(SideDisplay *sideDisplay);
+        virtual void init(SideDisplay *sideDisplay);
 
         void erase(); // Erase the widget from the screen
         virtual void draw(bool force) = 0; // Draw the widget to the screen

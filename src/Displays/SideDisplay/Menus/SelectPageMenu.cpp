@@ -14,6 +14,11 @@
 
 namespace Menus {
 
+    template<typename Base, typename T>
+    inline bool instanceof(const T *ptr) {
+      return dynamic_cast<const Base*>(ptr) != nullptr;
+    }
+
     SelectPageMenu::SelectPageMenu(MenuManager *menuManager, std::string title)
             : titleWidget(SideWidgets::SideWidgetText(2, 2, std::move(title), 2, ST7735_WHITE)) {
       // constructor for the SelectPageMenu class
@@ -34,7 +39,7 @@ namespace Menus {
       titleWidget.draw(force);
 
       for (auto &menuWidget: menuWidgets) {
-        menuWidget.draw(force);
+        menuWidget->draw(force);
       }
     }
 
@@ -44,11 +49,11 @@ namespace Menus {
 
       // loop through all the menu widgets
       for (auto &menuWidget: menuWidgets) {
-        menuWidget.setHighlighted(false); // set them all to not highlighted
+        menuWidget->setHighlighted(false); // set them all to not highlighted
       }
 
       // highlight the current menu widget
-      menuWidgets[rotaryCounter].setHighlighted(true);
+      menuWidgets[rotaryCounter]->setHighlighted(true);
     }
 
     void SelectPageMenu::addSubMenu(std::string name, Images::ImageData image, Menu *menu) {
@@ -74,7 +79,35 @@ namespace Menus {
         newWidget->setMenu(menu);
       }
 
-      menuWidgets.push_back(*newWidget); // put it in the list (vector technically)
+      menuWidgets.push_back(newWidget); // put it in the list (vector technically)
+
+      setRotaryMax(menuWidgets.size()); // update the rotary counter that there's a new menu
+    }
+
+    void SelectPageMenu::addFunction(std::string name, Images::ImageData image, std::function<void(void)> func) {
+      // add a new sub function to the list of sub menus
+
+      // calculate its position on the screen
+
+      int currentMenuCount = menuWidgets.size();
+      int xCount = currentMenuCount % 3;
+      int yCount = currentMenuCount / 3;
+
+      int x = 5 + (xCount * 54);
+      int y = 23 + (yCount * 55);
+
+      // Create the instance of the new widget
+      auto *newWidget = new SideWidgets::SideWidgetFunctionSelect(y, x, name, image);
+      newWidget->init(sideDisplay);
+      if (currentMenuCount == 0) {
+        newWidget->setHighlighted(true);
+      }
+
+      if (func != nullptr) { // if the menu pointer is not null set the menu pointer
+        newWidget->setFunction(func);
+      }
+
+      menuWidgets.push_back(newWidget); // put it in the list (vector technically)
 
       setRotaryMax(menuWidgets.size()); // update the rotary counter that there's a new menu
     }
@@ -83,13 +116,16 @@ namespace Menus {
       // called when the button is pressed
 
       Menu::onRotaryPressed();
-      SideWidgets::SideWidgetMenuSelect *selectedWidget = &menuWidgets[rotaryCounter];
+      SideWidgets::SideWidgetSelector *selectedWidget = menuWidgets[rotaryCounter];
 
-      if (!selectedWidget->hasMenuPointer()) { // if the selected widget doesn't have a menu pointer return
-        return;
+      if (selectedWidget->hasMenuPointer()) { // if the selected widget doesn't have a menu pointer return
+        menuManager->switchMenu(selectedWidget->getMenu()); // set the menu to the selected widget's menu
+      }
+      else if (selectedWidget->hasFunctionPointer()){
+        std::function<void(void)> func = *selectedWidget->getFunction(); // get the function
+        func(); // run it
       }
 
-      menuManager->switchMenu(selectedWidget->getMenu()); // set the menu to the selected widget's menu
     }
 
     void SelectPageMenu::resetMenu() {

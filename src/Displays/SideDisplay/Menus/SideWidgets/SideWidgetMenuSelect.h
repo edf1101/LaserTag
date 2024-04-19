@@ -6,17 +6,17 @@
 #define LASERTAG_SIDEWIDGETMENUSELECT_H
 
 #include "Arduino.h"
-#include "SideWidget.h"
+#include "SideWidgetSelector.h"
 
 
 namespace SideWidgets {
 
-    class SideWidgetMenuSelect : public SideWidget {
+    class SideWidgetMenuSelect : public SideWidgetSelector {
     public:
         SideWidgetMenuSelect(int yStart, int xStart,
                              std::string name, Images::ImageData image); // Constructor for the class
 
-        void setHighlighted(bool highlighted); // Set the highlighted state of the widget
+
         void setMenu(Menus::Menu *menu); // Set the menu that this widget is associated with
         void draw(bool force); // Draw the widget to the screen
 
@@ -29,9 +29,7 @@ namespace SideWidgets {
         Menus::Menu *menu; // The menu that this widget is associated with
         bool hasMenu = false; // Whether the widget has a menu associated with it
 
-        // Highlighted state of the widget
-        bool highlighted = false; // Whether the widget is currently highlighted
-        bool lastHighlighted = false; // Whether the widget was highlighted last time it was drawn
+
     };
 
 } // SideWidgets

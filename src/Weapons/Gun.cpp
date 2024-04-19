@@ -240,4 +240,45 @@ namespace Weapons {
       // Get whether the gun is currently reloading
       return reloading;
     }
+
+    int Gun::getFireSpeed() {
+      // Get the fire speed of the gun
+      return fireRateNormal;
+    }
+
+    std::string Gun::getFireType() const {
+      // returns a string describing the fire type of the gun
+
+      std::string fireType;
+      if (shotsPerBurst == -1) {
+        fireType = "AUTO";
+      } else if (shotsPerBurst == 1) {
+        fireType = "SEMI";
+      } else {
+        fireType = "BURST";
+      }
+      return fireType;
+    }
+
+    Images::ImageData Gun::getImage() {
+      // Get the gun's image
+      return gunImage;
+    }
+
+    int Gun::getInitialMags() {
+      // Get the number of mags the gun starts with
+      return magStartCount;
+    }
+
+    int Gun::getInitialAmmo() {
+      // return the number of bullets the gun starts with in each mag
+      return magSize;
+    }
+
+    void Gun::setAmmoAndMags(int ammo, int mags) {
+      // Sets the ammo and mags for the gun (only used for swapping guns
+
+      bulletsInMag = ammo;
+      magsRemaining = mags;
+    }
 }

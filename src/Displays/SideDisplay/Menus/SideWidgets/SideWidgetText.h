@@ -16,7 +16,7 @@ namespace SideWidgets {
     class SideWidgetText : public SideWidget{
     public:
         SideWidgetText(int yStart, int xStart, std::string text, int textSize, uint16_t textColor = ST7735_WHITE); // Constructor for the class
-
+        void setImage(std::string newText); // Set the text to display
         void draw(bool force); // Draw the widget to the screen
     private:
         uint16_t textColor; // The colour of the text

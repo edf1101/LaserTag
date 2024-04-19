@@ -9,6 +9,7 @@
 
 #include "Menu.h"
 #include "SelectPageMenu.h"
+#include "GunMenu.h"
 #include "../../ImageData.h"
 
 class SideDisplay;
@@ -36,6 +37,7 @@ private:
     // Put the menus here
     SelectPageMenu mainMenu = SelectPageMenu(this,"Main Menu");
     SelectPageMenu settingsMenu = SelectPageMenu(this,"Settings");
+    GunMenu gunMenu = GunMenu(this);
 
 };
 

@@ -20,7 +20,8 @@ void PlayerWrapper::init(LaserTag *_mySystem, int _unitnum, int _team) {
 
   mySystem = _mySystem;
 
-  setGun("Assault Rifle"); // defualt gun
+  gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
+
   player.gunIndex = getGun()->getIndex();
 }
 
@@ -90,7 +91,7 @@ void PlayerWrapper::setCarryingFlag(bool _carryingFlag) {
 
 // getter & setter for gun
 Weapons::Gun *PlayerWrapper::getGun() {
-  return gun;
+  return &gun;
 }
 
 bool PlayerWrapper::canFire() {
@@ -103,7 +104,7 @@ bool PlayerWrapper::canFire() {
 void PlayerWrapper::takeDamage(int _gunIndex) {
   // deal damage to the player
 
-  int gunDamage = myGuns.getGun(_gunIndex)->getDamage(); // get the gun that shot the player
+  int gunDamage = WeaponsManager::getGun(_gunIndex).getDamage(); // get the gun that shot the player
 #if DEBUG
   Serial.print("Players took damage: ");
   Serial.println(gunDamage);
@@ -160,7 +161,23 @@ bool PlayerWrapper::canTakeDamage(int shooterUnitnum) {
   return true; // passed all checks so return true
 }
 
-void PlayerWrapper::setGun(std::string gunName) {
-  gun = myGuns.getGun(gunName);
-  gun->setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem));
+
+void PlayerWrapper::swapGun(std::string gunName) {
+  // Fairly swap guns for the player
+
+  // calculate the percentage of mags remaining
+  int currentMags = gun.getMagsRemaining();
+  int startMags = gun.getInitialMags();
+  float magsRatio = (float) currentMags / (float) startMags;
+
+  // set the new gun so that it has the same percentage of mags remaining
+  Weapons::Gun newGun = WeaponsManager::getGun(gunName);
+  int newGunMagsRemaining = ((int) ((float) magsRatio * newGun.getInitialMags()));
+  int newGunAmmoRemaining = (newGunMagsRemaining > 0) ? newGun.getInitialAmmo() : 0;
+  newGun.setAmmoAndMags(newGunAmmoRemaining, newGunMagsRemaining);
+
+  gun = newGun; // assign the new gun to the player
+
+  gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
+
 }

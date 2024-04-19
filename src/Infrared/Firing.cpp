@@ -138,7 +138,7 @@ void Firing::Fire() {
   // This function sends a shot signal to other guns
 
   // Get the current gun object and check it can fire
-  PlayerWrapper *player = mySystem->getPlayer();
+  PlayerWrapper *player = LaserTag::getPlayer();
   Weapons::Gun *myGun = player->getGun();
   if (!myGun->tryFire()) { // If the gun can't fire then skip past this
     return;
@@ -147,7 +147,7 @@ void Firing::Fire() {
   digitalWrite(MUZZLE_LED,
                LOW); // Turn it off in case was still on from last shot (so doesn't interfere with IR signal)
   digitalWrite(VIBRATE_PIN, LOW); // Same as above
-  mySystem->getLEDManager()->setLEDState(false); // same as above
+  LaserTag::getLEDManager()->setLEDState(false); // same as above
   lastTurnOffNeopixels = millis();
 
   // Send the actual data over IR
