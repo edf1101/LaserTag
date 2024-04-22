@@ -26,6 +26,9 @@ void LaserTag::init() {
   sideDisplay.init();
 
   ledManager.init(); // set up the LED manager
+  auto effect = new LEDs::PulseColour();
+  effect->setInfinite(true); // Set the effect to be infinite
+  ledManager.pushLEDEffect(effect); // Set the initial LED effect
 
   // Set up the gamemode manager after displays since it depends on the HUD
   gamemodeManager.init();

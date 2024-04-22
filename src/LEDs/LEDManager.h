@@ -9,7 +9,7 @@
 
 #include <stack>
 #include "Arduino.h"
-#include <Adafruit_NeoPixel.h>
+#include "../Adafruit_NeoPixel/Adafruit_NeoPixel.h"
 #include "../config.h"
 #include "AllLEDEffects.h"
 

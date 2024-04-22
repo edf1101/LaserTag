@@ -45,6 +45,7 @@ If web interface uses flask then other phones etc can access it.
 - For LEDs have a stack ish system so it doesn't overwrite long effects if it was doing a quick fire effect or something.
 - Sort out the canTakeDamage / need admin fields of menus
 - make things more staticy where poss
+- Could install all libs in the src code so that it can be run on any computer without needing to install anything.
 
 ## Plan
 - create name selector menu / admin password menu (should be same class ish)
