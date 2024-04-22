@@ -14,11 +14,6 @@
 
 namespace Menus {
 
-    template<typename Base, typename T>
-    inline bool instanceof(const T *ptr) {
-      return dynamic_cast<const Base*>(ptr) != nullptr;
-    }
-
     SelectPageMenu::SelectPageMenu(MenuManager *menuManager, std::string title)
             : titleWidget(SideWidgets::SideWidgetText(2, 2, std::move(title), 2, ST7735_WHITE)) {
       // constructor for the SelectPageMenu class

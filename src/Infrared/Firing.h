@@ -11,7 +11,7 @@
 #include "Infrared.h"
 #include "../config.h"
 #include "../Players/PlayerWrapper.h"
-#include "Weapons/WeaponsManager.h"
+#include "../Weapons/WeaponsManager.h"
 #include "../Buttons/Buttons.h"
 
 class LaserTag; // Forward declaration

@@ -22,6 +22,7 @@
 #include "Gamemodes/GamemodeManager.h"
 #include "config.h"
 #include "LEDs/LEDManager.h"
+#include "Network/Network.h"
 
 
 class LaserTag {
@@ -31,6 +32,7 @@ public:
     void loop();
 
     bool canFire();
+
     bool canTakeDamage(int shooterUnitnum);
 
     void updateHUD();
@@ -44,12 +46,13 @@ public:
 
     static Sounds::SoundPlayer *getSoundPlayer();
 
-    Gamemode* getGamemode();
+    Gamemode *getGamemode();
 
     static HudDisplay *getHudDisplay();
 
-    static LEDs::LEDManager* getLEDManager();
+    static LEDs::LEDManager *getLEDManager();
 
+    static Networks::Network *getNetworkManager();
 
 private:
     // Objects for main hardware components of the gun.
@@ -58,6 +61,7 @@ private:
     inline static SideDisplay sideDisplay; // Side display object.
     inline static Sounds::SoundPlayer soundPlayer;  // sound player object.
     inline static LEDs::LEDManager ledManager; // LED manager object.
+    inline static Networks::Network networkManager; // Network object.
 
     // Objects for main software system components
     Firing firing = Firing(this);  // firing object

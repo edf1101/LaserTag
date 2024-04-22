@@ -7,10 +7,10 @@
 #ifndef LASERTAG_MENUMANAGER_H
 #define LASERTAG_MENUMANAGER_H
 
-#include "Menu.h"
+#include "../../ImageData.h"
 #include "SelectPageMenu.h"
 #include "GunMenu.h"
-#include "../../ImageData.h"
+#include "MessageMenu.h"
 
 class SideDisplay;
 
@@ -38,6 +38,8 @@ private:
     SelectPageMenu mainMenu = SelectPageMenu(this,"Main Menu");
     SelectPageMenu settingsMenu = SelectPageMenu(this,"Settings");
     GunMenu gunMenu = GunMenu(this);
+    MessageMenu messageMenu = MessageMenu(this);
+
 
 };
 

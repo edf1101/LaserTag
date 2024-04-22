@@ -67,13 +67,13 @@ void Menus::GunMenu::resetMenu() {
   int fireRate = (int) round(1.0 / ((float) currentGun.getFireSpeed() / 1000.0));
   std::string suppressed = currentGun.getSuppressed() ? "TRUE" : "FALSE";
   gunImage.setImage(currentGun.getImage());
-  gunName.setImage("Name: " + currentGun.getName());
-  gunAmmo.setImage("Ammo: " + std::to_string(currentGun.getAmmoRemaining()));
-  gunMags.setImage("Mags: " + std::to_string(currentGun.getMagsRemaining()));
-  gunFireType.setImage("Type: " + currentGun.getFireType());
-  gunFireRate.setImage("Speed: " + std::to_string(fireRate) + " bullets/s");
-  gunDamage.setImage("Damage: " + std::to_string(currentGun.getDamage()));
-  gunSuppressed.setImage("Suppressed?: " + suppressed);
+  gunName.setText("Name: " + currentGun.getName());
+  gunAmmo.setText("Ammo: " + std::to_string(currentGun.getAmmoRemaining()));
+  gunMags.setText("Mags: " + std::to_string(currentGun.getMagsRemaining()));
+  gunFireType.setText("Type: " + currentGun.getFireType());
+  gunFireRate.setText("Speed: " + std::to_string(fireRate) + " bullets/s");
+  gunDamage.setText("Damage: " + std::to_string(currentGun.getDamage()));
+  gunSuppressed.setText("Suppressed?: " + suppressed);
 }
 
 void Menus::GunMenu::init(SideDisplay *sideDisplay, Menu *previousMenu) {
@@ -108,13 +108,13 @@ void Menus::GunMenu::subMenuCounterChanged(int item) {
   int fireRate = (int) round(1.0 / ((float) currentGun.getFireSpeed() / 1000.0));
   std::string suppressed = currentGun.getSuppressed() ? "TRUE" : "FALSE";
   gunImage.setImage(currentGun.getImage());
-  gunName.setImage("Name: " + currentGun.getName());
-  gunAmmo.setImage("Ammo: " + std::to_string(currentGun.getAmmoRemaining()));
-  gunMags.setImage("Mags: " + std::to_string(currentGun.getMagsRemaining()));
-  gunFireType.setImage("Type: " + currentGun.getFireType());
-  gunFireRate.setImage("Speed: " + std::to_string(fireRate) + " bullets/s");
-  gunDamage.setImage("Damage: " + std::to_string(currentGun.getDamage()));
-  gunSuppressed.setImage("Suppressed?: " + suppressed);
+  gunName.setText("Name: " + currentGun.getName());
+  gunAmmo.setText("Ammo: " + std::to_string(currentGun.getAmmoRemaining()));
+  gunMags.setText("Mags: " + std::to_string(currentGun.getMagsRemaining()));
+  gunFireType.setText("Type: " + currentGun.getFireType());
+  gunFireRate.setText("Speed: " + std::to_string(fireRate) + " bullets/s");
+  gunDamage.setText("Damage: " + std::to_string(currentGun.getDamage()));
+  gunSuppressed.setText("Suppressed?: " + suppressed);
 
   display(false);
 }

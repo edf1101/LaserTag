@@ -11,7 +11,7 @@
 #include <functional>
 #include "Arduino.h"
 #include "Player.h"
-#include "Weapons/WeaponsManager.h"
+#include "../Weapons/WeaponsManager.h"
 #include "../config.h"
 
 #define START_LIVES 3 // The maximum number of revives a player can have

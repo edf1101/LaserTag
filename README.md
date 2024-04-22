@@ -11,7 +11,7 @@ Other components can be found:
 
 ## Software
 ### Libraries needed
-- FastLED
+- Adafruit Neopixel
 - Adafruit SSD1306
 - Adafruit ST7735
 - XT_DAC_Audio

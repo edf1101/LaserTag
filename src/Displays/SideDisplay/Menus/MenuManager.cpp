@@ -51,7 +51,7 @@ void MenuManager::init() {
 
   mainMenu.init(sideDisplay);
   mainMenu.addSubMenu("Scores", Images::img_menuLeaderboard, nullptr);
-  mainMenu.addSubMenu("Msgs", Images::img_menuMessages, nullptr);
+  mainMenu.addSubMenu("Msgs", Images::img_menuMessages, &messageMenu);
   mainMenu.addSubMenu("Guns", Images::img_menuGuns, &gunMenu);
   mainMenu.addSubMenu("Settings", Images::img_menuSettings, &settingsMenu);
   mainMenu.addSubMenu("Admin", Images::img_menuAdmin, nullptr);
@@ -63,6 +63,8 @@ void MenuManager::init() {
   settingsMenu.addSubMenu("Return", Images::img_menuReturn, &mainMenu);
 
   gunMenu.init(sideDisplay,&mainMenu);
+
+  messageMenu.init(sideDisplay,&mainMenu);
 
   display(true); // display the menu
 }

@@ -11,7 +11,7 @@
 #include "Arduino.h"
 #include <Adafruit_NeoPixel.h>
 #include "../config.h"
-#include "LEDs/AllLEDEffects.h"
+#include "AllLEDEffects.h"
 
 #define NEOPIXEL_UPDATE_INTERVAL 100
 namespace LEDs {

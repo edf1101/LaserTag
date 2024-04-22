@@ -9,3 +9,4 @@
 
 # don't need to upload the output of arduino IDE formatted files
 /arduino_builds/LaserTag
+.DS_Store

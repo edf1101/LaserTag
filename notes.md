@@ -47,9 +47,6 @@ If web interface uses flask then other phones etc can access it.
 - make things more staticy where poss
 
 ## Plan
-- Create gun menu system
-- basic unitnum system (read eeprom else select random)
-- Create demo messages menu + messageQueue class
 - create name selector menu / admin password menu (should be same class ish)
 - create wifi player management system. (includes unitnum clash detection)
 - create leaderboard menu

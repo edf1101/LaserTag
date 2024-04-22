@@ -15,8 +15,11 @@ void LaserTag::init() {
   Serial.begin(115200); // start serial communication for debug purposes
   Serial.println("Started");
 #endif
+
+  networkManager.init(); // Set up the network manager
+
   // Set up the player object
-  player.init(this, 121, 1); // Create a player object with unitnum 1 and team 1
+  player.init(this, random(1, 127), 1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
   hudDisplay.init();
@@ -99,4 +102,8 @@ HudDisplay *LaserTag::getHudDisplay() {
 
 LEDs::LEDManager *LaserTag::getLEDManager() {
   return &ledManager;
+}
+
+Networks::Network *LaserTag::getNetworkManager() {
+  return &networkManager;
 }

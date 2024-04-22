@@ -26,15 +26,14 @@ namespace SideWidgets {
       if (!displayAssigned) return; // If the display hasn't been assigned, return
 
       // return if text, text size, colour is different to the last time the widget was drawn or force more
+      Serial.print("drawing:force=");Serial.print(force);Serial.print("Text=");Serial.println(text.c_str());
 
-      if (!(text != lastText || textSize != lastTextSize || textColor != lastTextColor || force)) {
-        return;
-      }
+      if (text == lastText && textSize == lastTextSize && textColor == lastTextColor && !force) return;
 
 
       // Overwrite old text
       Adafruit_ST7735 *rawDisplay = myDisplay->getRawDisplay();
-      rawDisplay->setTextSize(textSize); // Set the text size
+      rawDisplay->setTextSize(lastTextSize); // Set the text size
       rawDisplay->setTextColor(ST7735_BLACK); // Set the text colour
       rawDisplay->setTextWrap(false); // Wrap the text
       rawDisplay->setCursor(xStart, yStart); // Set the cursor to the top left corner of the widget
@@ -53,7 +52,7 @@ namespace SideWidgets {
 
     }
 
-    void SideWidgetText::setImage(std::string newText) {
+    void SideWidgetText::setText(std::string newText) {
       // update the text field
       text = std::move(newText);
     }
