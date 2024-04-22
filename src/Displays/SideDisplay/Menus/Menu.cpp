@@ -58,6 +58,9 @@ namespace Menus {
     }
 
     void Menu::erase() {
+      // erase the whole screen of menu
+
+      delay(5);
       Adafruit_ST7735 *rawDisplay = sideDisplay->getRawDisplay();
       delay(3);
       rawDisplay->fillScreen(ST7735_BLACK);

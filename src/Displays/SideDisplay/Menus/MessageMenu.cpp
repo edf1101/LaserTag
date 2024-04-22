@@ -29,7 +29,6 @@ namespace Menus {
       // set the rotary counter max
       int rotaryMax = ((int) timeList->size() + 1) - 4;
 
-      Serial.println(rotaryMax);
       setRotaryMax(rotaryMax);
 
       titleWidget.init(sideDisplay); // initialise the title widget

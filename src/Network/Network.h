@@ -8,6 +8,8 @@
 #define LASERTAG_NETWORK_H
 
 #include "MessageQueue.h"
+#include "../config.h"
+#include <string>
 
 namespace Networks {
 
@@ -15,10 +17,15 @@ namespace Networks {
     public:
         void init(); // Initialises the network
 
+        static void tryMakeAdmin(std::string adminCode); // Setter for the admin status
+        static bool getAdminStatus() { return adminStatus; } // Getter for the admin status
+
         // pointer getters to important objects
         MessageQueue *getMessageQueue() { return &messageQueue; } // Getter for the message queue
     private:
         MessageQueue messageQueue; // The message queue
+
+        inline static bool adminStatus = false;
     };
 
 } // Networks

@@ -26,7 +26,6 @@ namespace SideWidgets {
       if (!displayAssigned) return; // If the display hasn't been assigned, return
 
       // return if text, text size, colour is different to the last time the widget was drawn or force more
-      Serial.print("drawing:force=");Serial.print(force);Serial.print("Text=");Serial.println(text.c_str());
 
       if (text == lastText && textSize == lastTextSize && textColor == lastTextColor && !force) return;
 

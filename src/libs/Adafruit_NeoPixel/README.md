@@ -1,0 +1,2 @@
+This is a modified version of the neopixel library so it doesn't use every RMT channel on the ESP32. Since it 
+requires quite a few lines of modification, I've included the modified library in this project so people don't have to themselves.

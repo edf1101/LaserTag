@@ -9,6 +9,7 @@
 #include "../SideDisplay.h"
 #include <functional>
 #include "../../../LaserTag.h"
+#include "../../../Network/Network.h"
 
 MenuManager::MenuManager(SideDisplay *_sideDisplay) {
   sideDisplay = _sideDisplay; // assign the pointer to the side display
@@ -57,14 +58,20 @@ void MenuManager::init() {
   mainMenu.addSubMenu("Admin", Images::img_menuAdmin, nullptr);
 
   settingsMenu.init(sideDisplay);
-  settingsMenu.addSubMenu("Name", Images::img_menuName, nullptr);
+  settingsMenu.addSubMenu("Name", Images::img_menuName, &nameMenu);
   settingsMenu.addFunction("Turn Off", Images::img_menuTurnOff, std::bind(&LaserTag::turnOff));
-  settingsMenu.addSubMenu("Admin #", Images::img_menuAdmin, nullptr);
+  settingsMenu.addSubMenu("Admin #", Images::img_menuAdmin, &adminPasswordMenu);
   settingsMenu.addSubMenu("Return", Images::img_menuReturn, &mainMenu);
 
-  gunMenu.init(sideDisplay,&mainMenu);
+  gunMenu.init(sideDisplay, &mainMenu);
 
-  messageMenu.init(sideDisplay,&mainMenu);
+  messageMenu.init(sideDisplay, &mainMenu);
+
+  nameMenu.init(sideDisplay, &settingsMenu);
+  nameMenu.setCallback(std::bind(&LaserTag::setPlayerName, std::placeholders::_1));
+
+  adminPasswordMenu.init(sideDisplay, &settingsMenu);
+  adminPasswordMenu.setCallback(std::bind(&Networks::Network::tryMakeAdmin, std::placeholders::_1));
 
   display(true); // display the menu
 }

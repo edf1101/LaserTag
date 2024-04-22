@@ -48,7 +48,6 @@ If web interface uses flask then other phones etc can access it.
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
 
 ## Plan
-- create name selector menu / admin password menu (should be same class ish)
 - create wifi player management system. (includes unitnum clash detection)
 - create leaderboard menu
 - create command system / menu

@@ -8,6 +8,8 @@
 
 #include "LaserTag.h"
 
+#include <utility>
+
 void LaserTag::init() {
   // This gets called once at the start of the program
 
@@ -75,6 +77,13 @@ void LaserTag::turnOff() {
   // Turns off the gun with the latch circuit
   // TODO implement this once latch stuff done.
   Serial.println("Turning off");
+}
+
+void LaserTag::setPlayerName(std::string name) {
+  // set name of player
+
+  player.setName(std::move(name));
+
 }
 
 // Pointer Getters for the main objects so they can be accessed elsewhere

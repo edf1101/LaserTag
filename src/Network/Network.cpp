@@ -8,11 +8,23 @@ namespace Networks {
 
 
     void Network::init() {
+      // set up the network class
+
+      adminStatus = false;
 
       // Set up the message Queue
-      for(int i = 0; i<16;i++){
+      for (int i = 0; i < 16; i++) {
         messageQueue.pushMessage("");
       }
 
-     }
+    }
+
+    void Network::tryMakeAdmin(std::string adminCode) {
+      // check if the admin code is correct
+
+      if (adminCode == ADMIN_PASS) {
+        Serial.println("Admin status granted");
+        adminStatus = true;
+      }
+    }
 } // Networks

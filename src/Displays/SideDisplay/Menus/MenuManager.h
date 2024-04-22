@@ -11,6 +11,7 @@
 #include "SelectPageMenu.h"
 #include "GunMenu.h"
 #include "MessageMenu.h"
+#include "TypingMenu.h"
 
 class SideDisplay;
 
@@ -39,6 +40,8 @@ private:
     SelectPageMenu settingsMenu = SelectPageMenu(this,"Settings");
     GunMenu gunMenu = GunMenu(this);
     MessageMenu messageMenu = MessageMenu(this);
+    TypingMenu nameMenu = TypingMenu(this ,"Name","ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    TypingMenu adminPasswordMenu = TypingMenu(this, "Admin Code","0123456789",true);
 
 
 };
