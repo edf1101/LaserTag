@@ -9,9 +9,14 @@
 #define LASERTAG_CONFIG_H
 
 // General config settings
-#define DEBUG 1  // Whether we print to the serial monitor or not
+#define DEBUG_SERIAL 1  // Whether we print to the serial monitor or not
 #define SOUND_ON 1 // Whether we play sounds or not
-#define ADMIN_PASS "0000" // Must be 4 digit num as a string
+#define ADMIN_PASS "0000" // Must be number between 1-8 chars written as a string
+
+// Mesh network settings
+#define MESH_SSID "LaserTag"
+#define MESH_PASSWORD "LaserTag"
+#define MESH_PORT 5555
 
 // Config settings for the OLED display
 #define SCREEN_ADDRESS 0x3C // 0x3D or 0x3C

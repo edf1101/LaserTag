@@ -7,13 +7,12 @@
 */
 
 #include "LaserTag.h"
-
 #include <utility>
 
 void LaserTag::init() {
   // This gets called once at the start of the program
 
-#if DEBUG
+#if DEBUG_SERIAL
   Serial.begin(115200); // start serial communication for debug purposes
   Serial.println("Started");
 #endif
@@ -54,6 +53,7 @@ void LaserTag::loop() {
   firing.FiringLoop(); // Call the firing loop function
   player.loop(); // Call the player loop function
   gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
+  networkManager.loop(); // Call the network loop function
 
 }
 
@@ -77,6 +77,7 @@ void LaserTag::turnOff() {
   // Turns off the gun with the latch circuit
   // TODO implement this once latch stuff done.
   Serial.println("Turning off");
+  networkManager.disconnectNetwork();
 }
 
 void LaserTag::setPlayerName(std::string name) {

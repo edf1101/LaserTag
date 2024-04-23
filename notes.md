@@ -46,6 +46,8 @@ If web interface uses flask then other phones etc can access it.
 - Sort out the canTakeDamage / need admin fields of menus
 - make things more staticy where poss
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
+- Make it scan for I2C devices and use that to choose the screen address.
+- Must use a larger program size for ESP32 (I used 'huge APP' partition)
 
 ## Plan
 - create wifi player management system. (includes unitnum clash detection)
@@ -64,6 +66,9 @@ If web interface uses flask then other phones etc can access it.
 - Add new manhunt gamemode
 - Add new tag gamemode
 - modify techcamp code to run on this hardware
+
+## Potential issues if recreating
+- The 128x64 OLED screen sometimes has different addresses / pin layouts be aware of pin layouts if using this PCB
 
 ## Tests
 - Try changing the gun group while a player is viewing a gun in choice menu that that has been disallowed

@@ -28,14 +28,14 @@ namespace Menus {
       // called when the rotary encoder is turned
       rotaryCounter =
               (rotaryCounter + change + maxRotaryCounter) % maxRotaryCounter; // add the change to the rotary counter
-#if DEBUG
+#if DEBUG_SERIAL
       Serial.println("menu.h: Rotary Turned position now: " + String(rotaryCounter));
 #endif
     }
 
     void Menu::onRotaryPressed() {
       // called when the button is pressed
-#if DEBUG
+#if DEBUG_SERIAL
       Serial.println("Menu.h: Rotary Pressed");
 #endif
     }

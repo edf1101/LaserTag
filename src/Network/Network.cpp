@@ -10,6 +10,8 @@ namespace Networks {
     void Network::init() {
       // set up the network class
 
+      meshManager.init();
+
       adminStatus = false;
 
       // Set up the message Queue
@@ -26,5 +28,18 @@ namespace Networks {
         Serial.println("Admin status granted");
         adminStatus = true;
       }
+    }
+
+    void Network::loop() {
+      // update the network
+
+      meshManager.loop();
+    }
+
+    void Network::disconnectNetwork(){
+      // disconnect from the network
+
+      meshManager.disconnect();
+
     }
 } // Networks

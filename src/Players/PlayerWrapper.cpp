@@ -105,7 +105,7 @@ void PlayerWrapper::takeDamage(int _gunIndex) {
   // deal damage to the player
 
   int gunDamage = WeaponsManager::getGun(_gunIndex).getDamage(); // get the gun that shot the player
-#if DEBUG
+#if DEBUG_SERIAL
   Serial.print("Players took damage: ");
   Serial.println(gunDamage);
 #endif
@@ -139,7 +139,7 @@ void PlayerWrapper::loop() {
 
   // Deal with respawn logic
   if (respawning && (millis() - respawnStartTime > RESPAWN_TIME)) {
-#if DEBUG
+#if DEBUG_SERIAL
     Serial.println("Players respawned");
 #endif
     player.health = 100;

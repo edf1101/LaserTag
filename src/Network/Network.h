@@ -10,12 +10,17 @@
 #include "MessageQueue.h"
 #include "../config.h"
 #include <string>
+#include "MeshManager.h"
 
 namespace Networks {
 
     class Network {
     public:
         void init(); // Initialises the network
+        void loop(); // The main loop function for the network
+
+        void disconnectNetwork();
+
 
         static void tryMakeAdmin(std::string adminCode); // Setter for the admin status
         static bool getAdminStatus() { return adminStatus; } // Getter for the admin status
@@ -25,7 +30,10 @@ namespace Networks {
     private:
         MessageQueue messageQueue; // The message queue
 
+        MeshManager meshManager; // The mesh manager object
+
         inline static bool adminStatus = false;
+
     };
 
 } // Networks

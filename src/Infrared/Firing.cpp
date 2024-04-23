@@ -28,11 +28,11 @@ void Firing::FiringLoop() {
 
   infraredTransciever.receiveIR(); // check for IR signals in
   if (infraredTransciever.infraredReceived) {
-#if DEBUG
+#if DEBUG_SERIAL
     Serial.println("IR Received");
 #endif
     if (infraredTransciever.crcValid) {
-#if DEBUG
+#if DEBUG_SERIAL
       Serial.println("CRC correct");
 #endif
 
@@ -82,7 +82,7 @@ void Firing::OnHit() {
   int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
   int rxWeapon = infraredTransciever.irPacketIn.weapon;
 
-#if DEBUG
+#if DEBUG_SERIAL
   Serial.println("Rx Hit signal");
   Serial.print("Hit! Shot by: ");
   Serial.print(rxUnitnum);
@@ -91,7 +91,7 @@ void Firing::OnHit() {
 #endif
 
   if (mySystem->canTakeDamage(rxUnitnum)) {
-#if DEBUG
+#if DEBUG_SERIAL
     Serial.println("Valid hit");
 #endif
     player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
@@ -105,7 +105,7 @@ void Firing::OnCommand() {
   int unitnum = infraredTransciever.irPacketIn.unitnum;
   int weapon = infraredTransciever.irPacketIn.weapon;
   int command = weapon << 7 | unitnum;
-#if DEBUG
+#if DEBUG_SERIAL
   Serial.print("Control packet received: ");
   Serial.println(command);
 #endif
