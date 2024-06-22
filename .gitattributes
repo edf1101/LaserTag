@@ -1,2 +1,3 @@
 src/Sound/Sounds/* linguist-vendored
 src/Displays/Images/* linguist-vendored
+"src/Libs/**" linguist-vendored
