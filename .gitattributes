@@ -1,3 +1,12 @@
 src/Sound/Sounds/* linguist-vendored
 src/Displays/Images/* linguist-vendored
-"src/Libs/**" linguist-vendored
+
+src/Libs/ESP32RotaryEncoder/* linguist-vendored
+
+src/Libs/Adafruit_NeoPixel/* linguist-vendored
+
+src/Libs/painlessMesh/* linguist-vendored
+src/Libs/painlessMesh/arduino/* linguist-vendored
+src/Libs/painlessMesh/boost/* linguist-vendored
+src/Libs/painlessMesh/painlessmesh/* linguist-vendored
+src/Libs/painlessMesh/plugin/* linguist-vendored

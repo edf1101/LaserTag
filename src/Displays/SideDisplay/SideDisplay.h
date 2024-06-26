@@ -16,12 +16,14 @@
 #include "../ImageData.h"
 #include "../../config.h"
 #include "Menus/MenuManager.h"
+#include "../../Libs/ESP32RotaryEncoder/ESP32RotaryEncoder.h"
 
 
 class SideDisplay {
 public:
     SideDisplay() : menuManager(MenuManager(this)) {
     }
+
     void init(); // Initialize the side display
     void pollEncoder(); // Poll the rotary encoder for input
 
@@ -30,7 +32,7 @@ public:
     void drawImage(int x, int y, Images::ImageData image,
                    uint16_t color, Images::OFFSET orientation);
 
-    Adafruit_ST7735* getRawDisplay(); // Get the display object
+    Adafruit_ST7735 *getRawDisplay(); // Get the display object
 
 private:
     Adafruit_ST7735 sideDisplay = Adafruit_ST7735(TFT_CS, TFT_DC,
@@ -42,6 +44,12 @@ private:
     bool lastStateA = false;
     bool lastPress = false;
     unsigned long lastPressTime = 0;
+
+    // variables for controlling the rotary encoder
+    RotaryEncoder myRotaryEncoder = RotaryEncoder(ROT_OUT_A, ROT_OUT_B);
+    int rotaryChange = 0; // This flag is used to state the change recorded by the rotary encoder
+    void knobCallback(long value); // This is the lightweight callback function for the rotary encoder
+
 };
 
 

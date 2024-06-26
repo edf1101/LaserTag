@@ -27,10 +27,8 @@ namespace Menus {
 
       // get the name for all the commands and put them in a list
       this->commandLists = Command::getCommandsByGroup(_commandGroup);
-      Serial.println("Got commands by group");
       for (auto &command : this->commandLists) {
         commandNames.push_back(command->getCommandName());
-        Serial.println(command->getCommandName().c_str());
       }
 
       // set the rotary counter max
