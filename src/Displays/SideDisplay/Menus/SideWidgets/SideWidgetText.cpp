@@ -17,7 +17,7 @@ namespace SideWidgets {
       this->textSize = textSize;
       this->textColor = textColor;
       this->width = textSize * text.length() * 8;
-        this->height = textSize * 8;
+      this->height = textSize * 8;
     }
 
     void SideWidgetText::draw(bool force) {

@@ -10,8 +10,28 @@
 #include "Arduino.h"
 #include "../libs/painlessMesh/src/painlessMesh.h"
 #include "../config.h"
+#include <vector>
+#include <set>
+
+using namespace std;
 
 namespace Networks {
+
+    enum ControlTypes { // Different types of control messages
+        COMMAND,
+        NAME_CHANGE,
+        KILL_CONFIRM,
+        UPDATE,
+        JOIN,
+        JOIN_ACKNOWLEDGE
+    };
+
+    enum JoinAckStates{ // Different states for the join acknowledge message
+        REJECT_INVALID_SUM,
+        REJECT_BANNED,
+        ACCEPT_NEW_GUN,
+        ACCEPT_EXISTING_GUN
+    };
 
     class MeshManager {
     public:
@@ -21,10 +41,11 @@ namespace Networks {
 
         void disconnect();
 
+        void sendJoinRequest();
 
     private:
         Scheduler userScheduler; // to control your personal task
-        painlessMesh  mesh;
+        painlessMesh mesh;
         long lastMsg;
 
         void nodeTimeAdjustedCallback(int32_t offset);
@@ -37,6 +58,11 @@ namespace Networks {
 
         void sendMessage();
 
+        set<uint32_t> connectedNodes; // List of nodes that are connected
+        set<uint32_t> activeNodes; // List of nodes that are active (recently sent a message)
+        void handleLobbyJoinRequest(uint32_t from);
+
+        void handleJoinLobbyAck(String jsonData); // Handle the join lobby acknowledge message
     };
 
 

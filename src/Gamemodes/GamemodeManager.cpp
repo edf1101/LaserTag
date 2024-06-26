@@ -6,17 +6,10 @@
 
 #include "GamemodeManager.h"
 
-
-GamemodeManager::GamemodeManager(LaserTag *laserTag) {
-  // constructor for the gamemode manager
-  mySystem = laserTag; // assign the pointer to the main system object
-
-
-}
-
-void GamemodeManager::init() {
+void GamemodeManager::init(LaserTag *system) {
   // Set the initial gamemode to none
-  currentGamemode = new GamemodeSolo(mySystem);
+  mySystem = system; // assign the pointer to the main system object
+  currentGamemode = new GamemodeNone(mySystem);
 }
 
 Gamemode *GamemodeManager::getCurrentGame() {
@@ -39,6 +32,13 @@ void GamemodeManager::switchGamemode(GamemodeManager::GamemodeOptions _option) {
       break;
   }
 
+}
+
+void GamemodeManager::switchGamemodeByInt(int _option) {
+  // Switch the gamemode to the specified option (the integer refers to the enum index)
+
+  Serial.println("Switching to" + String(_option) + " gamemode.");
+  switchGamemode((GamemodeOptions) _option);
 }
 
 

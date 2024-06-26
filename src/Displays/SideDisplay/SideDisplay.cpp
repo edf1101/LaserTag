@@ -72,7 +72,7 @@ void SideDisplay::pollEncoder() {
   lastStateA = currentStateA;
 
   // Put in a slight delay to help debounce the reading
-  delay(1);
+//  delay(1);
 }
 
 void SideDisplay::displayMenu() {

@@ -48,15 +48,24 @@ If web interface uses flask then other phones etc can access it.
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
 - Make it scan for I2C devices and use that to choose the screen address.
 - Must use a larger program size for ESP32 (I used 'huge APP' partition)
+- Have an option to select which 'lobby' to be in. This would be useful for if you have multiple games going on at once. 
+This must be sent with the wifi data so commands don't get mixed up and also with the IR data (need to fit in.)
+- 
 
 ## Plan
-- create wifi player management system. (includes unitnum clash detection)
+- menu / submenu system for commands (implement just gamemode stuff for now)
+- Make players rejoining mechanics work
+- make admin rejoining / multiple admins mechanics work
+- Have player status updating work
+- Have player name change work
+- Have player kill confirm work
+- add teams
+- Can only join if gun orders are the same.
 - create leaderboard menu
-- create command system / menu
+- implement rest of commands
 - add team DM game
 - design latch circuit
 - build enclosure / pcbs
-- Test mode for guns
 - anticheat system
 - Add new gun game gamemode
 - create flag / respawn point (pcb code & enclosure)
@@ -65,7 +74,6 @@ If web interface uses flask then other phones etc can access it.
 - create bomb defusal game
 - Add new manhunt gamemode
 - Add new tag gamemode
-- modify techcamp code to run on this hardware
 
 ## Potential issues if recreating
 - The 128x64 OLED screen sometimes has different addresses / pin layouts be aware of pin layouts if using this PCB

@@ -20,18 +20,18 @@ public:
         SOLO
     };
 
-    explicit GamemodeManager(LaserTag *system);
-
-    void init(); // Initialise the gamemode manager
+    void init(LaserTag *system); // Initialise the gamemode manager
 
     Gamemode *getCurrentGame();
     void switchGamemode(GamemodeOptions _option);
+    void switchGamemodeByInt(int _option);
 
 
 private:
     LaserTag *mySystem; // Pointer to the main system object
 
     Gamemode *currentGamemode; // Pointer to the current gamemode object
+
 };
 
 

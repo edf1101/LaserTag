@@ -18,11 +18,28 @@ void HudDisplay::init() {
   // create the display object
   hudDisplay = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-  // Try to set it up, else loop forever as without it the gun is useless.f
-  if (!hudDisplay.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
-    Serial.println(F("SSD1306 allocation failed"));
-    for (;;); // Don't proceed, loop forever
+  // scan for devices
+#if DEBUG_SERIAL
+  Serial.println("Scanning for I2C devices ...");
+#endif
+  uint8_t foundDevice = 0;
+  Wire.begin();
+  for (byte address = 0x01; address < 0x7f; address++) {
+    Wire.beginTransmission(address);
+    byte error = Wire.endTransmission();
+    if (error == 0) {
+#if DEBUG_SERIAL
+      Serial.printf("I2C device found at address 0x%02X\n", address);
+#endif
+      foundDevice = address;
+    }
   }
+  Wire.end();
+
+
+  hudDisplay.begin(SSD1306_SWITCHCAPVCC, foundDevice);
+
+
   hudDisplay.setRotation(1); // rotate it so screen is portrait
 
 

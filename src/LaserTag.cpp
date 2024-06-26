@@ -9,6 +9,8 @@
 #include "LaserTag.h"
 #include <utility>
 
+using namespace Commands;
+
 void LaserTag::init() {
   // This gets called once at the start of the program
 
@@ -19,6 +21,9 @@ void LaserTag::init() {
 
   networkManager.init(); // Set up the network manager
 
+  // Set up the commands / command manager
+  commandManager.setupCommands();
+
   // Set up the player object
   player.init(this, random(1, 127), 1); // Create a player object with unitnum 1 and team 1
 
@@ -26,17 +31,17 @@ void LaserTag::init() {
   hudDisplay.init();
   sideDisplay.init();
 
+  firing.init(this); // Set up the firing object
+
   ledManager.init(); // set up the LED manager
   auto effect = new LEDs::PulseColour();
   effect->setInfinite(true); // Set the effect to be infinite
   ledManager.pushLEDEffect(effect); // Set the initial LED effect
 
   // Set up the gamemode manager after displays since it depends on the HUD
-  gamemodeManager.init();
-
-  gamemodeManager.switchGamemode(GamemodeManager::SOLO); // Set the initial gamemode to none
-  gamemodeManager.getCurrentGame()->setGamePauseState(false); // Initialise the current gamemode
-
+  gamemodeManager.init(this);
+  gamemodeManager.switchGamemode(GamemodeManager::GamemodeOptions::SOLO); // Set the initial gamemode to none
+  gamemodeManager.getCurrentGame()->setGamePauseState(false);
   updateHUD(); // Update the HUD to show the initial state of the game
 
 }
@@ -54,7 +59,6 @@ void LaserTag::loop() {
   player.loop(); // Call the player loop function
   gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
   networkManager.loop(); // Call the network loop function
-
 }
 
 void LaserTag::updateHUD() {
@@ -119,4 +123,16 @@ LEDs::LEDManager *LaserTag::getLEDManager() {
 
 Networks::Network *LaserTag::getNetworkManager() {
   return &networkManager;
+}
+
+GamemodeManager *LaserTag::getGamemodeManager() {
+  return &gamemodeManager;
+}
+
+Firing *LaserTag::getFiring() {
+  return &firing;
+}
+
+Commands::CommandManager *LaserTag::getCommandManager() {
+  return &commandManager;
 }

@@ -5,9 +5,12 @@
 #include "Firing.h"
 #include "../LaserTag.h"
 
-Firing::Firing(LaserTag *_mySystem) {
+void Firing::init(LaserTag *_mySystem) {
+  // This function is called once at the start of the game
+  // It sets up the firing system
   // constructor to link the whole laserTag system to this firing class
   // This is important, so it can access sounds, player data, etc.
+
   mySystem = _mySystem;
 
   // set up buttons

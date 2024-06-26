@@ -25,23 +25,23 @@ namespace Menus {
         virtual void onRotaryPressed(); // called when the button is pressed
 
         bool getCanTakeDamage(); // get whether you can take damage in this menu
+        void setRequiresAdmin(bool requiresAdmin); // set whether the menu requires admin access
         bool getRequiresAdmin(); // get whether the menu requires admin access
 
-        void setParentMenu(Menu* parent); // set the parent menu
+        void setParentMenu(Menu *parent); // set the parent menu
 
         virtual void resetMenu(); // reset the menu
 
     protected:
-      SideDisplay* sideDisplay; // pointer to the side display
+        SideDisplay *sideDisplay; // pointer to the side display
 
-      bool canTakeDamage = true; // whether you can take damage in this menu
-      bool requiresAdmin = false; // whether the menu requires admin access
+        bool requiresAdmin = false; // whether the menu requires admin access
 
-      Menu* parentMenu = nullptr; // pointer to the parent menu
-      bool hasParentMenu = false; // whether the menu has a parent menu
+        Menu *parentMenu = nullptr; // pointer to the parent menu
+        bool hasParentMenu = false; // whether the menu has a parent menu
 
-      int rotaryCounter = 0; // The current counter on the rotary encoder
-      int maxRotaryCounter = 1; // The maximum counter on the rotary encoder
+        int rotaryCounter = 0; // The current counter on the rotary encoder
+        int maxRotaryCounter = 1; // The maximum counter on the rotary encoder
 
     };
 

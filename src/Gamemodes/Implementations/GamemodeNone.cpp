@@ -28,6 +28,13 @@ namespace Gamemodes {
 
     void GamemodeNone::drawHUD() {
       // always display no game message
+
+      if (!LaserTag::getNetworkManager()->getInLobby()){
+        infoWidget.setTexts("Gun", "No Lobby");
+      } else {
+        infoWidget.setTexts("Game", "Not started");
+      }
+
       infoWidget.draw(false);
 
       displayHud->getDisplay()->display();

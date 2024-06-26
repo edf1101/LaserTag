@@ -41,7 +41,11 @@ namespace Menus {
     }
 
     bool Menu::getCanTakeDamage() {
-      return canTakeDamage; // get whether you can take damage in this menu
+
+      // TODO DO THIS!
+      // iterate through parents until get to root or somewhere that has admin required access.
+      return true;
+
     }
 
     void Menu::setParentMenu(Menu *parent) {
@@ -66,10 +70,14 @@ namespace Menus {
       rawDisplay->fillScreen(ST7735_BLACK);
     }
 
-    bool Menu::getRequiresAdmin() {
-      // get whether the menu requires admin access
-      return requiresAdmin;
+    void Menu::setRequiresAdmin(bool _requiresAdmin) {
+      // Setter for requires admin
+      this->requiresAdmin = _requiresAdmin;
     }
 
+    bool Menu::getRequiresAdmin() {
+      // Getter for requires admin
+      return this->requiresAdmin;
+    }
 
 } // Menus

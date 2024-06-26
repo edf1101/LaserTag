@@ -11,6 +11,7 @@
 #include "../config.h"
 #include <string>
 #include "MeshManager.h"
+#include "../Players/Player.h"
 
 namespace Networks {
 
@@ -25,14 +26,22 @@ namespace Networks {
         static void tryMakeAdmin(std::string adminCode); // Setter for the admin status
         static bool getAdminStatus() { return adminStatus; } // Getter for the admin status
 
+        static void joinLobby(bool alreadyInGame, Player *myPlayer = nullptr); // Join the lobby
+        static bool getInLobby() { return inLobby; } // Getter for the inLobby status
+
         // pointer getters to important objects
         MessageQueue *getMessageQueue() { return &messageQueue; } // Getter for the message queue
+        MessageQueue *getDebugMessageQueue() { return &debugMessageQueue; } // Getter for the message queue
     private:
         MessageQueue messageQueue; // The message queue
+        MessageQueue debugMessageQueue; // The message queue
 
         MeshManager meshManager; // The mesh manager object
 
         inline static bool adminStatus = false;
+        inline static bool inLobby = false; // If the gun is in the lobby
+
+        unsigned long lastJoinRequestSent = 0; // The last time a join request was sent
 
     };
 

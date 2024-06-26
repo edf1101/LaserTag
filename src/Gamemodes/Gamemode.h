@@ -33,7 +33,7 @@ namespace Gamemodes {
         virtual void loop(); // This is called each time the main loop is called
 
         // Getters for gamemode details
-        std::string getName(); // Get the name of the gamemode
+        static std::string getName(); // Get the name of the gamemode
 
         virtual bool canFire(); // Function to check if the player can fire according to the gamemode state
         virtual bool canTakeDamage(
@@ -54,7 +54,7 @@ namespace Gamemodes {
         HudDisplay *displayHud = nullptr; // Reference to the display object
 
         // Details about the gamemode itself
-        std::string name = "Base Gamemode";
+        inline static std::string name = "Base Gamemode";
         bool teamBased = false;
         int playerStartingRevives = 3;
 

@@ -12,6 +12,7 @@
 #include <string>
 #include "Arduino.h"
 #include "SideWidgets/SideWidgetText.h"
+#include "../../../Network/MessageQueue.h"
 
 class MenuManager; // forward declaration
 
@@ -21,7 +22,7 @@ namespace Menus {
     public:
         explicit MessageMenu(MenuManager* menuManager); // constructor for the MessageMenu class
 
-        void init(SideDisplay *_sideDisplay, Menu* parentMenu); // This initialises the menu
+        void init(SideDisplay *_sideDisplay, Menu* parentMenu, Networks::MessageQueue* myQueue); // This initialises the menu
 
         void display(bool force); // display the new menu
 
@@ -31,6 +32,8 @@ namespace Menus {
     private:
         MenuManager* menuManager; // pointer to the menu manager
         Menu *parentMenu; // pointer to the parent menu
+
+        Networks::MessageQueue* myQueue; // pointer to the message queue
 
         std::vector<std::string>* messageList; // a list of messages
         std::vector<unsigned long>* timeList; // a list of times

@@ -12,6 +12,7 @@
 
 #include <functional>
 #include "Arduino.h"
+#include "Commands/Command.h"
 #include "Displays/HUD/HudDisplay.h"
 #include "Displays/SideDisplay/SideDisplay.h"
 #include "Infrared/Firing.h"
@@ -23,6 +24,7 @@
 #include "config.h"
 #include "LEDs/LEDManager.h"
 #include "Network/Network.h"
+#include "Commands/CommandManager.h"
 
 
 class LaserTag {
@@ -48,13 +50,19 @@ public:
 
     static Sounds::SoundPlayer *getSoundPlayer();
 
-    Gamemode *getGamemode();
+    static Gamemode *getGamemode();
 
     static HudDisplay *getHudDisplay();
 
     static LEDs::LEDManager *getLEDManager();
 
     static Networks::Network *getNetworkManager();
+
+    static GamemodeManager *getGamemodeManager();
+
+    static Firing *getFiring();
+
+    static Commands::CommandManager *getCommandManager();
 
 private:
     // Objects for main hardware components of the gun.
@@ -66,9 +74,10 @@ private:
     inline static Networks::Network networkManager; // Network object.
 
     // Objects for main software system components
-    Firing firing = Firing(this);  // firing object
+    inline static Firing firing;  // firing object
     inline static PlayerWrapper player;  // player object
-    GamemodeManager gamemodeManager = GamemodeManager(this);  // current gamemode object
+    inline static GamemodeManager gamemodeManager;  // current gamemode object
+    inline static Commands::CommandManager commandManager;  // command manager object
 };
 
 

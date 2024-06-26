@@ -18,9 +18,6 @@
 #define MESH_PASSWORD "LaserTag"
 #define MESH_PORT 5555
 
-// Config settings for the OLED display
-#define SCREEN_ADDRESS 0x3C // 0x3D or 0x3C
-
 // Pin definitions for the side display
 #define TFT_CS 14
 #define TFT_RST 15

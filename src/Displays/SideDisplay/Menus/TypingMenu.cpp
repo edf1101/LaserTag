@@ -126,7 +126,7 @@ namespace Menus {
 
         if (!completeString.empty()) {
           completeString.pop_back();
-          completeStringWidget.setText(completeString);
+          completeStringWidget.setText(hideCompleteString ? std::string(completeString.size(), '*') : completeString);
         }
         Serial.println("Backspace");
       } else { // add a character to the string

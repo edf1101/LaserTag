@@ -7,7 +7,6 @@
 #include "MessageMenu.h"
 #include "MenuManager.h"
 #include "../SideDisplay.h"
-#include "../../../LaserTag.h"
 
 namespace Menus {
     MessageMenu::MessageMenu(MenuManager *menuManager) {
@@ -15,19 +14,19 @@ namespace Menus {
       this->menuManager = menuManager;
     }
 
-    void MessageMenu::init(SideDisplay *_sideDisplay, Menu *parentMenu) {
+    void MessageMenu::init(SideDisplay *_sideDisplay, Menu *parentMenu, Networks::MessageQueue *myQueue) {
       // This initialises the menu
 
       this->parentMenu = parentMenu;
-
+      this->myQueue = myQueue;
       Menu::init(_sideDisplay);
 
       // get the message list and time list
-      timeList = LaserTag::getNetworkManager()->getMessageQueue()->getMessageTimes();
-      messageList = LaserTag::getNetworkManager()->getMessageQueue()->getMessages();
+      timeList = myQueue->getMessageTimes();
+      messageList = myQueue->getMessages();
 
       // set the rotary counter max
-      int rotaryMax = ((int) timeList->size() + 1) - 4;
+      int rotaryMax = ((int) timeList->size() + 1);
 
       setRotaryMax(rotaryMax);
 
@@ -41,7 +40,6 @@ namespace Menus {
                                                                                  (i == 0) ? ST7735_WHITE : ST7735_RED);
         messageWidget.init(sideDisplay);
         messageWidget2.init(sideDisplay);
-
         messageWidgets.emplace_back(messageWidget);
         messageWidgets.emplace_back(messageWidget2);
       }
@@ -76,7 +74,32 @@ namespace Menus {
       if (rotaryCounter > maxRotaryCounter - 1) rotaryCounter = maxRotaryCounter - 1;
 
       for (int i = 0; i < 5; i++) {
-        int index = rotaryCounter + i;
+
+        int index = 0;
+        if (rotaryCounter >= messageList->size() - 4) {
+          index = (int) messageList->size() - 4 + i;
+
+          // update highlight
+          for (int j = 0; j < 5; j++) {
+            messageWidgets[j * 2].setColour(ST7735_RED);
+            messageWidgets[j * 2 + 1].setColour(ST7735_RED);
+          }
+          int highlightIndex = rotaryCounter - (int) messageList->size() + 4;
+
+          messageWidgets[highlightIndex * 2].setColour(ST7735_WHITE);
+          messageWidgets[highlightIndex * 2 + 1].setColour(ST7735_WHITE);
+
+        } else {
+          index = rotaryCounter + i;
+
+          // update highlight
+          for (int j = 1; j < 5; j++) {
+            messageWidgets[j * 2].setColour(ST7735_RED);
+            messageWidgets[j * 2 + 1].setColour(ST7735_RED);
+          }
+          messageWidgets[0].setColour(ST7735_WHITE);
+          messageWidgets[1].setColour(ST7735_WHITE);
+        }
 
         if (index == 0) {
           messageWidgets[0].setText("Return to menu");
@@ -88,7 +111,8 @@ namespace Menus {
           unsigned int time = (millis() - (*timeList)[index - 1]) / 1000;
           std::string timeString = time < 60 ? std::to_string(time) + "s: " : std::to_string(time / 60) + "m: ";
           std::string msg1 = timeString + message.substr(0, min(20, (int) message.size()));
-          std::string msg2 = (message.size() > 20) ?  std::string(timeString.length()-1,' ') + message.substr(min(15, (int) message.size())) : "";
+          std::string msg2 = (message.size() > 20) ? std::string(timeString.length() - 1, ' ') +
+                                                     message.substr(min(15, (int) message.size())) : "";
 
           // put the new strings onto the text widgets
           messageWidgets[i * 2].setText(msg1);

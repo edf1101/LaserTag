@@ -192,7 +192,8 @@ namespace Weapons {
       hash += fireRateSlow;
       hash += shotsPerBurst;
       hash += defaultSuppressed;
-      hash += volume;
+      hash += (int)(volume*10.0);
+      hash*= (1+gunID); // This is most important it makes sure indexes are the same for guns
       return hash;
     }
 

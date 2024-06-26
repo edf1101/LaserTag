@@ -49,6 +49,7 @@ namespace Images {
 #include "Images/img_gunPistol.h"
 #include "Images/img_gunPisSup.h"
 #include "Images/img_gunMAC11.h"
+#include "Images/img_menuCommand.h"
 
 
 }
