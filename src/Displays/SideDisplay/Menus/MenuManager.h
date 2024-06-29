@@ -55,6 +55,7 @@ private:
     SelectPageMenu commandWeaponsMenu = SelectPageMenu(this, "Weapons");
 
     CommandScrollMenu gamesCommandMenu = CommandScrollMenu(this); // holds actual games
+    CommandScrollMenu gameModsCommandMenu = CommandScrollMenu(this); // holds game modifications (play/pause/etc)
 
 
 };

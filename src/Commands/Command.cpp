@@ -82,6 +82,12 @@ namespace Commands {
       return commandName;
     }
 
+    std::string Command::getCommandCode() {
+      // returns the command code of the command
+
+      return commandCode;
+    }
+
     bool Command::getIsWifiCommand() {
       // returns whether the command is able to be sent over Wi-Fi or not.
 
@@ -156,7 +162,7 @@ namespace Commands {
       // return a pointer to a command object by its command code. If the command doesn't exist, return nullptr
 
       for (auto &command: systemCommands) {
-        if (command->getIsIRCommand() && command->commandCode == commandCode) {
+        if (command->commandCode == commandCode) {
           return command;
         }
       }
@@ -167,7 +173,7 @@ namespace Commands {
       // return a pointer to a command object by its command index. If the command doesn't exist, return nullptr
 
       for (auto &command: systemCommands) {
-        if (command->getIsWifiCommand() && command->commandIndex == commandIndex) {
+        if (command->commandIndex == commandIndex) {
           return command;
         }
       }

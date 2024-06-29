@@ -75,15 +75,15 @@ void MenuManager::init() {
   gunMenu.init(sideDisplay, &mainMenu);
   gunMenu.setParentMenu(&mainMenu);
 
-  messageMenu.init(sideDisplay, &mainMenu, LaserTag::getNetworkManager()->getMessageQueue());
+  messageMenu.init(sideDisplay, &mainMenu, LaserTag::getNetworkManager()->getMessageQueue(), "Messages");
   messageMenu.setParentMenu(&mainMenu);
 
-  debugMsgMenu.init(sideDisplay, &settingsMenu, LaserTag::getNetworkManager()->getDebugMessageQueue());
+  debugMsgMenu.init(sideDisplay, &settingsMenu, LaserTag::getNetworkManager()->getDebugMessageQueue(), "Debug");
   debugMsgMenu.setParentMenu(&settingsMenu);
 
   nameMenu.init(sideDisplay, &settingsMenu);
   nameMenu.setParentMenu(&settingsMenu);
-  nameMenu.setCallback(std::bind(&LaserTag::setPlayerName, std::placeholders::_1));
+  nameMenu.setCallback(std::bind(&PlayerWrapper::setName, LaserTag::getPlayer(), std::placeholders::_1));
 
   adminPasswordMenu.init(sideDisplay, &settingsMenu);
   adminPasswordMenu.setParentMenu(&settingsMenu);
@@ -106,7 +106,7 @@ void MenuManager::init() {
   commandGamemodeMenu.init(sideDisplay);
   commandGamemodeMenu.setParentMenu(&commandMenu);
   commandGamemodeMenu.addSubMenu("Games", Images::img_menuCommand, &gamesCommandMenu);
-  commandGamemodeMenu.addSubMenu("Mods", Images::img_menuCommand, nullptr);
+  commandGamemodeMenu.addSubMenu("Mods", Images::img_menuCommand, &gameModsCommandMenu);
   commandGamemodeMenu.addSubMenu("Return", Images::img_menuReturn, &commandMenu);
 
   commandWeaponsMenu.init(sideDisplay);
@@ -115,8 +115,8 @@ void MenuManager::init() {
   commandWeaponsMenu.addSubMenu("Groups", Images::img_menuCommand, nullptr);
   commandWeaponsMenu.addSubMenu("Return", Images::img_menuReturn, &commandMenu);
 
-  gamesCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Test");
-
+  gamesCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Gamemodes");
+  gameModsCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Game Mods");
 
   display(true); // display the menu
 }

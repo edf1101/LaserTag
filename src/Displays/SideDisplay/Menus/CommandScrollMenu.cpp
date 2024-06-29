@@ -12,6 +12,7 @@
 namespace Menus {
 
     using namespace Commands;
+
     CommandScrollMenu::CommandScrollMenu(MenuManager *menuManager) {
       // constructor for the MessageMenu class
       this->menuManager = menuManager;
@@ -27,7 +28,7 @@ namespace Menus {
 
       // get the name for all the commands and put them in a list
       this->commandLists = Command::getCommandsByGroup(_commandGroup);
-      for (auto &command : this->commandLists) {
+      for (auto &command: this->commandLists) {
         commandNames.push_back(command->getCommandName());
       }
 
@@ -80,55 +81,35 @@ namespace Menus {
       if (rotaryCounter < 0) rotaryCounter = 0;
       if (rotaryCounter > maxRotaryCounter - 1) rotaryCounter = maxRotaryCounter - 1;
 
-      for (int i = 0; i < min(5, (int) commandNames.size()); i++) {
+      int highlightedRow = min(rotaryCounter, 4); // which row to highlight white
 
-        int index = 0;
-        if (rotaryCounter >= commandNames.size() - 4) {
-          index = (int) commandNames.size() - 4 + i;
+      // set colour of all the widgets
+      for(auto &commandTextWidget: commandTextWidgets) {
+        commandTextWidget.setColour(ST7735_RED);
+      }
+      // then set highlighted ones to white
+      commandTextWidgets[highlightedRow * 2].setColour(ST7735_WHITE);
+      commandTextWidgets[highlightedRow * 2 + 1].setColour(ST7735_WHITE);
 
-          // update highlight
-          for (int j = 0; j < 5; j++) {
-            commandTextWidgets[j * 2].setColour(ST7735_RED);
-            commandTextWidgets[j * 2 + 1].setColour(ST7735_RED);
-          }
-          int highlightIndex = rotaryCounter - (int) commandNames.size() + 4;
+      for (int row = 0; row < 5; row++) {
 
-          commandTextWidgets[highlightIndex * 2].setColour(ST7735_WHITE);
-          commandTextWidgets[highlightIndex * 2 + 1].setColour(ST7735_WHITE);
+        // displayOnRow is which command to display on the row. -1 means we are on the return button else it is the command (as array index)
+        int displayOnRow = ((rotaryCounter <= 4) ? row : row + (rotaryCounter - 4)) - 1;
 
+
+        // now set the text
+        if (displayOnRow == -1) {
+          commandTextWidgets[row * 2].setText("Return to menu");
+          commandTextWidgets[(row * 2) + 1].setText("");
+        }
+        else if (displayOnRow < (int) commandNames.size()) {
+          commandTextWidgets[row * 2].setText(commandNames[displayOnRow]);
+          commandTextWidgets[(row * 2) + 1].setText("");
         } else {
-          index = rotaryCounter + i;
-
-          // update highlight
-          for (int j = 1; j < 5; j++) {
-            commandTextWidgets[j * 2].setColour(ST7735_RED);
-            commandTextWidgets[j * 2 + 1].setColour(ST7735_RED);
-          }
-          commandTextWidgets[0].setColour(ST7735_WHITE);
-          commandTextWidgets[1].setColour(ST7735_WHITE);
+          commandTextWidgets[row * 2].setText("");
+          commandTextWidgets[(row * 2) + 1].setText("");
         }
 
-        if (index == 0) {
-          commandTextWidgets[0].setText("Return to menu");
-          commandTextWidgets[1].setText("");
-        } else {
-
-          if (index > commandNames.size()) { // If it's out of range then just clear the text
-            commandTextWidgets[i * 2].setText("");
-            commandTextWidgets[i * 2 + 1].setText("");
-            continue;
-          }
-
-          // This bit just formats the message, so it has the time in front and is split over two lines
-          std::string message = commandNames[index - 1];
-
-          std::string msg1 = message.substr(0, min(20, (int) message.size()));
-          std::string msg2 = (message.size() > 20) ? message.substr(min(15, (int) message.size())) : "";
-
-          // put the new strings onto the text widgets
-          commandTextWidgets[i * 2].setText(msg1);
-          commandTextWidgets[i * 2 + 1].setText(msg2);
-        }
       }
 
     }
@@ -141,7 +122,7 @@ namespace Menus {
         menuManager->switchMenu(parentMenu);
       } else { // otherwise call the callback function
 
-        Command* commandPressed = this->commandLists[rotaryCounter -1];
+        Command *commandPressed = this->commandLists[rotaryCounter - 1];
         LaserTag::getCommandManager()->sendCommand(commandPressed);
       }
     }

@@ -20,9 +20,10 @@ namespace Menus {
 
     class MessageMenu : public Menu {
     public:
-        explicit MessageMenu(MenuManager* menuManager); // constructor for the MessageMenu class
+        explicit MessageMenu(MenuManager *menuManager); // constructor for the MessageMenu class
 
-        void init(SideDisplay *_sideDisplay, Menu* parentMenu, Networks::MessageQueue* myQueue); // This initialises the menu
+        void init(SideDisplay *_sideDisplay, Menu *parentMenu, Networks::MessageQueue *myQueue,
+                  std::string title); // This initialises the menu
 
         void display(bool force); // display the new menu
 
@@ -30,15 +31,16 @@ namespace Menus {
         void onRotaryPressed(); // called when the button is pressed
 
     private:
-        MenuManager* menuManager; // pointer to the menu manager
+        MenuManager *menuManager; // pointer to the menu manager
         Menu *parentMenu; // pointer to the parent menu
 
-        Networks::MessageQueue* myQueue; // pointer to the message queue
+        Networks::MessageQueue *myQueue; // pointer to the message queue
 
-        std::vector<std::string>* messageList; // a list of messages
-        std::vector<unsigned long>* timeList; // a list of times
+        std::vector<std::string> *messageList; // a list of messages
+        std::vector<unsigned long> *timeList; // a list of times
 
-        SideWidgets::SideWidgetText titleWidget = SideWidgets::SideWidgetText(0, 2, "Messages", 2, ST7735_WHITE); // the title widget
+        SideWidgets::SideWidgetText titleWidget = SideWidgets::SideWidgetText(0, 2, "", 2,
+                                                                              ST7735_WHITE); // the title widget
 
         std::vector<SideWidgets::SideWidgetText> messageWidgets; // a list of the message widgets
     };

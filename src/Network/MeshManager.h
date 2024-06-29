@@ -19,14 +19,13 @@ namespace Networks {
 
     enum ControlTypes { // Different types of control messages
         COMMAND,
-        NAME_CHANGE,
         KILL_CONFIRM,
         UPDATE,
         JOIN,
         JOIN_ACKNOWLEDGE
     };
 
-    enum JoinAckStates{ // Different states for the join acknowledge message
+    enum JoinAckStates { // Different states for the join acknowledge message
         REJECT_INVALID_SUM,
         REJECT_BANNED,
         ACCEPT_NEW_GUN,
@@ -43,6 +42,10 @@ namespace Networks {
 
         void sendJoinRequest();
 
+        void sendCommand(std::string commandCode);
+
+        void sendUpdate(); // send a player state update over the network
+
     private:
         Scheduler userScheduler; // to control your personal task
         painlessMesh mesh;
@@ -56,13 +59,13 @@ namespace Networks {
 
         void receivedCallback(uint32_t from, String &msg);
 
-        void sendMessage();
-
         set<uint32_t> connectedNodes; // List of nodes that are connected
         set<uint32_t> activeNodes; // List of nodes that are active (recently sent a message)
         void handleLobbyJoinRequest(uint32_t from);
 
         void handleJoinLobbyAck(String jsonData); // Handle the join lobby acknowledge message
+
+        void handleUpdateRx(uint32_t from, String jsonData); // Handle the update message
     };
 
 

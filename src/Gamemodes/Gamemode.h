@@ -9,6 +9,8 @@
 #define FIRING_CPP_GAMEMODE_H
 
 #include <string>
+#include "ArduinoJson.h"
+#include "Players/Player.h"
 #include "../Displays/HUD/HudDisplay.h"
 #include "../Displays/HUD/HudWidgets/HudWidgetImageData.h"
 #include "../Displays/HUD/HudWidgets/HudWidgetInfoBox.h"
@@ -16,7 +18,7 @@
 #include "../Displays/HUD/HudWidgets/HudWidgetProgress.h"
 
 
-#define HUD_UPDATE_INTERVAL 5000 // Update the HUD every second
+#define HUD_UPDATE_INTERVAL 5000 // force an update on the HUD every 5 seconds automatically
 
 class LaserTag;
 
@@ -26,7 +28,6 @@ namespace Gamemodes {
     public:
         Gamemode(LaserTag *_mySystem); // Constructor for the base gamemode class
 
-        virtual void initialisePlayer(); // Function to initialise the player for the gamemode
 
         virtual void setGamePauseState(bool paused); // Function to set the game pause state
 
@@ -47,6 +48,10 @@ namespace Gamemodes {
         virtual void onPickupFlag(); // Called when a player picks up the flag
         virtual void onDropFlag(); // Called when a player drops the flag
 
+        virtual Player getPlayerTemplate(); // Returns the player template for the gamemode
+
+        virtual JsonDocument getGameDetails(); // Returns the game details for the gamemode
+        virtual void loadGameDetails(JsonDocument gameDetails); // Loads the game details for the gamemode
 
     protected:
         LaserTag *mySystem; // Reference to the main LaserTag system object

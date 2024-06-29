@@ -21,7 +21,7 @@ class LaserTag;
 
 class PlayerWrapper {
 public:
-    void init(LaserTag* _mySystem,int _unitnum, int _team); // Default constructor
+    void init(LaserTag* _mySystem, int _team); // Default constructor
     void loop(); // Function to be called every loop
 
     int getUnitnum() const; // Returns the player's unit number
@@ -56,11 +56,14 @@ public:
     void respawn(); // Respawns the player
     float getRespawnStatus(); // returns 0 if not respawning, or a value 0-1 representing progress of the respawn
 
+    static void setPlayerToTemplate(Player* target, Player templatePlayer); // Sets the target player to the template player
+    void setPlayerToTemplate(Player templatePlayer); // Sets the player to the template player
 private:
     LaserTag* mySystem; // Pointer to the main system object
 
     // Details about the player
     Player player; // The player's data
+    bool customName = false; // Whether the player has a custom name
 
     // Details about the player in this game per se
     Weapons::Gun gun = WeaponsManager::getGun("Assault Rifle"); // The player's gun (default is the Assault Rifle)

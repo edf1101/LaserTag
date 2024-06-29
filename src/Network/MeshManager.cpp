@@ -6,6 +6,8 @@
 
 #include "MeshManager.h"
 #include "Network.h"
+#include "Commands/Command.h"
+#include "LaserTag.h"
 
 namespace Networks {
     void MeshManager::init() {
@@ -47,16 +49,22 @@ namespace Networks {
       byte control = jsonIn["control"];
       if (control == ControlTypes::COMMAND) {
         // Do something on received command
+        std::string commandCode = jsonIn["code"]; // get the command code from the JSON message
 
-      } else if (control == ControlTypes::NAME_CHANGE) {
-        // Do something on received name change
+        if (!Commands::Command::commandExists(commandCode)) { return; } // if command doesn't exist return
+
+        // It must exist now so get the command
+        Commands::Command *command = Commands::Command::getCommandByCode(commandCode);
+
+        LaserTag::getCommandManager()->processCommand(command); // process the command
 
       } else if (control == ControlTypes::KILL_CONFIRM) {
         // Do something on received kill confirm
 
       } else if (control == ControlTypes::UPDATE) {
         // Do something on received update
-        // If they aren't already in the game, add them to the game (this should only happen if admin has disconnected and reconnected)
+
+        handleUpdateRx(from, msg);
 
       } else if (control == ControlTypes::JOIN) {
         // Do something on received join game command
@@ -89,25 +97,54 @@ namespace Networks {
 
       } else if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::ACCEPT_NEW_GUN) {
         // If the join was accepted and the node is a new gun
-        Network::joinLobby(false);
+
+        int newUnitnum = jsonIn["unitnum"];
+        std::string newName = jsonIn["name"];
+
+        JsonObject gamemodeData = jsonIn["gamemodeData"];
+        // switch gamemodes before we load the gamemodes default player struct
+        LaserTag::getNetworkManager()->loadGamemodeDetails(gamemodeData);
+
+        // get the default gamemode player struct and add a new unitnum to it
+        Player playerTemplate = LaserTag::getGamemodeManager()->getCurrentGame()->getPlayerTemplate();
+        playerTemplate.unitnum = newUnitnum;
+        playerTemplate.name = newName;
+
+        Network::joinLobby(playerTemplate);
 
       } else if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::ACCEPT_EXISTING_GUN) {
         // If the join was accepted and the node is an existing gun
-        // TODO implement this
-        Network::joinLobby(true, nullptr);
+
+        JsonObject gamemodeData = jsonIn["gamemodeData"];
+        // switch gamemodes before we load the player struct
+        LaserTag::getNetworkManager()->loadGamemodeDetails(gamemodeData);
+
+        // get the existing player's details from the JSON data
+        Player existingPlayer = {
+                jsonIn["data"]["unitnum"],
+                jsonIn["data"]["team"],
+                jsonIn["data"]["name"],
+                jsonIn["data"]["revives"],
+                jsonIn["data"]["health"],
+                jsonIn["data"]["kills"],
+                false,
+                0
+        };
+
+        Network::joinLobby(existingPlayer);
 
       }
 
     }
 
-    void MeshManager::sendJoinRequest(){
-        // Send a join request to the network
+    void MeshManager::sendJoinRequest() {
+      // Send a join request to the network
 
-        JsonDocument jsonOut;
-        jsonOut["control"] = ControlTypes::JOIN;
-        String msg = "";
-        serializeJson(jsonOut, msg);
-        mesh.sendBroadcast(msg);
+      JsonDocument jsonOut;
+      jsonOut["control"] = ControlTypes::JOIN;
+      String msg = "";
+      serializeJson(jsonOut, msg);
+      mesh.sendBroadcast(msg);
     }
 
     void MeshManager::handleLobbyJoinRequest(uint32_t from) {
@@ -118,10 +155,18 @@ namespace Networks {
       Serial.println("Handling join request");
       // Check if the node is already in the game
       if (connectedNodes.find(from) != connectedNodes.end()) {
-        Serial.println("Node is already in the game");
+        Serial.println("Node is already in the lobby");
         // If the node is already in the game find it's stats and send them back to make the node rejoin in last state.
         // This is useful if the node has been disconnected and reconnected and needs to rejoin the game
-        // TODO implement this
+
+        Player *existingPlayer = LaserTag::getNetworkManager()->getPlayerInMap(from); // get the existing player
+        jsonOut["data"]["unitnum"] = existingPlayer->unitnum;
+        jsonOut["data"]["team"] = existingPlayer->team;
+        jsonOut["data"]["name"] = existingPlayer->name;
+        jsonOut["data"]["revives"] = existingPlayer->revives;
+        jsonOut["data"]["health"] = existingPlayer->health;
+        jsonOut["data"]["kills"] = existingPlayer->name;
+
         jsonOut["joinState"] = JoinAckStates::ACCEPT_EXISTING_GUN;
 
       } else {
@@ -131,10 +176,22 @@ namespace Networks {
         // pick a unitnum for the node
         // TODO implement this properly
         int unitnum = random(1, 127);
-        Serial.println("Node is new Assigning it unitnum: " + String(unitnum));
+        Serial.println("Node is new, Assigning it unitnum: " + String(unitnum));
         jsonOut["unitnum"] = unitnum;
+        jsonOut["name"] = "Player" + String(unitnum);
         jsonOut["joinState"] = JoinAckStates::ACCEPT_NEW_GUN;
+
+        // add it to the network map of players
+        Player newPlayer = LaserTag::getGamemodeManager()->getCurrentGame()->getPlayerTemplate();
+        newPlayer.unitnum = unitnum;
+        newPlayer.name = "Player" + std::to_string(unitnum);
+        LaserTag::getNetworkManager()->setPlayerInMap(from, newPlayer);
       }
+
+      // Add in the gamemode data to the JSON object
+      jsonOut["gamemodeData"] = LaserTag::getGamemodeManager()->getCurrentGame()->getGameDetails();
+      int gamemodeIndex = LaserTag::getGamemodeManager()->getCurrentGamemodeOption();
+      jsonOut["gamemodeData"]["gamemodeIndex"] = gamemodeIndex;
 
       // convert JSON object to a string and send it back to the node requesting to join
       String msg = "";
@@ -160,6 +217,67 @@ namespace Networks {
 
     void MeshManager::nodeTimeAdjustedCallback(int32_t offset) {
       // Do nothing with this information
+    }
+
+    void MeshManager::sendCommand(std::string commandCode) {
+      // send a command over Wi-Fi
+      JsonDocument jsonOut;
+      jsonOut["control"] = ControlTypes::COMMAND;
+      jsonOut["code"] = commandCode;
+      Serial.println("sending the command" + String(commandCode.c_str()) + " over the mesh network");
+
+      // convert JSON object to a string and send to all nodes on the network (apart from ourselves)
+      String msg = "";
+      serializeJson(jsonOut, msg);
+      mesh.sendBroadcast(msg, false);
+    }
+
+    void MeshManager::sendUpdate() {
+      // send a player state update over the network
+
+      JsonDocument jsonOut;
+      jsonOut["control"] = ControlTypes::UPDATE;
+
+      // Put all the player's details into the JSON object
+      PlayerWrapper *myPlayer = LaserTag::getPlayer();
+
+      jsonOut["data"]["unitnum"] = myPlayer->getUnitnum();
+      jsonOut["data"]["team"] = myPlayer->getTeam();
+      jsonOut["data"]["name"] = myPlayer->getName();
+      jsonOut["data"]["revives"] = myPlayer->getRevives();
+      jsonOut["data"]["health"] = myPlayer->getHealth();
+      jsonOut["data"]["kills"] = myPlayer->getKills();
+      jsonOut["data"]["gunId"] = myPlayer->getGun()->getIndex();
+      jsonOut["data"]["carryingFlag"] = myPlayer->getCarryingFlag();
+
+      String msg = "";
+      serializeJson(jsonOut, msg);
+      mesh.sendBroadcast(msg, true); // send to all nodes on the network
+      // send to ourselves so we update our state for leaderboard too.
+    }
+
+    void MeshManager::handleUpdateRx(uint32_t from, String jsonData) {
+      // This gets called when we rx an update over the network
+
+      if (!LaserTag::getNetworkManager()->getInLobby()) // if not in a lobby ignore updates.
+        return;
+
+      JsonDocument jsonIn; // deserialize the json message
+      deserializeJson(jsonIn, jsonData);
+
+      Player updatedPlayer = { // convert the json data into a player object
+              jsonIn["data"]["unitnum"],
+              jsonIn["data"]["team"],
+              jsonIn["data"]["name"],
+              jsonIn["data"]["revives"],
+              jsonIn["data"]["health"],
+              jsonIn["data"]["kills"],
+              jsonIn["data"]["carryingFlag"],
+              jsonIn["data"]["gunId"]
+      };
+
+        // update the player in the network map
+        LaserTag::getNetworkManager()->setPlayerInMap(from, updatedPlayer);
     }
 
 } // Networks

@@ -9,10 +9,10 @@
 #include "../LaserTag.h"
 
 // constructor for player
-void PlayerWrapper::init(LaserTag *_mySystem, int _unitnum, int _team) {
-  player.unitnum = _unitnum;
+void PlayerWrapper::init(LaserTag *_mySystem, int _team) {
+  player.unitnum = random(1, 127);
   player.team = _team;
-  player.name = "Player" + std::to_string(_unitnum);
+  player.name = "Player" + std::to_string(player.unitnum);
   player.revives = START_LIVES;
   player.health = 100;
   player.kills = 0;
@@ -32,6 +32,10 @@ int PlayerWrapper::getUnitnum() const {
 
 void PlayerWrapper::setUnitnum(int _unitnum) {
   player.unitnum = _unitnum;
+
+  if (!customName) { // If we haven't set a custom name then update the name to match the unitnum
+    player.name = "Player" + std::to_string(player.unitnum);
+  }
 }
 
 // getter and setter for team
@@ -51,6 +55,7 @@ std::string PlayerWrapper::getName() const {
 void PlayerWrapper::setName(std::string _name) {
   // move the string to the name (moving instead of assigning saves memory)
   player.name = std::move(_name);
+  customName = true;
 }
 
 // getter & setter for revives
@@ -179,5 +184,29 @@ void PlayerWrapper::swapGun(std::string gunName) {
   gun = newGun; // assign the new gun to the player
 
   gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
+
+}
+
+void PlayerWrapper::setPlayerToTemplate(Player *target, Player templatePlayer) {
+  // Update the target player to match the template player's gameplay details
+  // so DON'T modify the target player's name, team, or unitnum.
+
+  target->revives = templatePlayer.revives;
+  target->health = templatePlayer.health;
+  target->kills = templatePlayer.kills;
+  target->carryingFlag = templatePlayer.carryingFlag;
+  target->gunIndex = templatePlayer.gunIndex;
+
+}
+
+void PlayerWrapper::setPlayerToTemplate(Player templatePlayer) {
+  // the non-static version of this function that sets the player to the template player
+
+  setPlayerToTemplate(&player, templatePlayer);
+
+  gun = WeaponsManager::getGun("Assault Rifle"); // reset my gun (default is the Assault Rifle)
+  gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
+  respawning = false; // reset the respawn status
+  respawnStartTime = 0;
 
 }

@@ -11,11 +11,13 @@
 
 #include "Implementations/GamemodeNone.h"
 #include "Implementations/GamemodeSolo.h"
+
 using namespace Gamemodes;
+
 class GamemodeManager {
 
 public:
-    enum GamemodeOptions{
+    enum GamemodeOptions {
         NONE,
         SOLO
     };
@@ -23,15 +25,19 @@ public:
     void init(LaserTag *system); // Initialise the gamemode manager
 
     Gamemode *getCurrentGame();
+
     void switchGamemode(GamemodeOptions _option);
+
     void switchGamemodeByInt(int _option);
+
+    int getCurrentGamemodeOption() { return (int)currentGamemodeOption; } // Get the current gamemode option
 
 
 private:
     LaserTag *mySystem; // Pointer to the main system object
 
     Gamemode *currentGamemode; // Pointer to the current gamemode object
-
+    GamemodeOptions currentGamemodeOption = GamemodeOptions::NONE; // The current gamemode option
 };
 
 

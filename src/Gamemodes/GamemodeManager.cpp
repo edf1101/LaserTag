@@ -5,6 +5,7 @@
 */
 
 #include "GamemodeManager.h"
+#include "LaserTag.h"
 
 void GamemodeManager::init(LaserTag *system) {
   // Set the initial gamemode to none
@@ -30,6 +31,19 @@ void GamemodeManager::switchGamemode(GamemodeManager::GamemodeOptions _option) {
     case SOLO:
       currentGamemode = new GamemodeSolo(mySystem);
       break;
+  }
+  currentGamemodeOption = _option; // update the current gamemode option
+
+  // make sure players are reset to the new gamemode's template player
+  // first update our own player
+  LaserTag::getPlayer()->setPlayerToTemplate(currentGamemode->getPlayerTemplate());
+
+  // update all players in our network status hashmap to the new gamemode's template player
+  std::vector<uint32_t> nodeIDs = LaserTag::getNetworkManager()->getAllPlayerNodeIDs();
+  for (uint32_t nodeID: nodeIDs) {
+    Player *playerRef = LaserTag::getNetworkManager()->getPlayerInMap(nodeID);
+    PlayerWrapper::setPlayerToTemplate(playerRef,
+                                       currentGamemode->getPlayerTemplate());
   }
 
 }

@@ -29,10 +29,10 @@ namespace Gamemodes {
     void GamemodeNone::drawHUD() {
       // always display no game message
 
-      if (!LaserTag::getNetworkManager()->getInLobby()){
+      if (!LaserTag::getNetworkManager()->getInLobby()) {
         infoWidget.setTexts("Gun", "No Lobby");
       } else {
-        infoWidget.setTexts("Game", "Not started");
+        infoWidget.setTexts("Game", "Not chosen");
       }
 
       infoWidget.draw(false);
@@ -52,4 +52,21 @@ namespace Gamemodes {
       // Can't take damage in this gamemode as it's not a game
       return false;
     }
+
+    Player GamemodeNone::getPlayerTemplate() {
+      // This template is used to reset the players to a default state when it enters a new gamemode
+
+      Player playerTemplate = {
+              .unitnum = -1, // irrelevant as this field doesn't copy from the template
+              .team = 0,// irrelevant as this field doesn't copy from the template
+              .name = "Player",// irrelevant as this field doesn't copy from the template
+              .revives = 0,
+              .health = 0,
+              .kills = 0,
+              .carryingFlag = false,
+              .gunIndex = 0 // 0 should be default gun (AR)
+      };
+      return playerTemplate;
+    }
+
 }

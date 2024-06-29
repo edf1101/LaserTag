@@ -142,4 +142,36 @@ namespace Gamemodes {
         changeHudState(HUD_GAME);
       }
     }
+
+    Player GamemodeSolo::getPlayerTemplate() {
+      // This template is used to reset the players to a default state when it enters a new gamemode
+
+      Player playerTemplate = {
+              .unitnum = -1, // irrelevant as this field doesn't copy from the template
+              .team = -1,// irrelevant as this field doesn't copy from the template
+              .name = "Player",// irrelevant as this field doesn't copy from the template
+              .revives = 3,
+              .health = 100,
+              .kills = 0,
+              .carryingFlag = false,
+              .gunIndex = 0 // 0 should be default gun (AR)
+      };
+      return playerTemplate;
+    }
+
+    void GamemodeSolo::loadGameDetails(JsonDocument gameDetails) {
+      // recreate the details saved by getGameDetails() to load the game state
+      started = gameDetails["started"];
+      setGamePauseState(!started);
+    }
+
+    JsonDocument GamemodeSolo::getGameDetails() {
+      // Return all important details about this gamemode so it can be recreated in loadGameDetails()
+
+      JsonDocument gameDetails;
+      gameDetails["started"] = started;
+
+      return gameDetails;
+    }
+
 }

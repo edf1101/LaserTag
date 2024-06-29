@@ -19,24 +19,8 @@ namespace Gamemodes {
       // Initialise the widgets after the constructor has got pointers for display player, etc
     }
 
-    void Gamemode::initialisePlayer() {
-      // This function sets up the player so it's ready to play when the game starts
-
-      myPlayer->setHealth(100);
-      myPlayer->setRevives(playerStartingRevives);
-      myPlayer->setKills(0);
-      myPlayer->setCarryingFlag(false);
-
-      // If the player is on a team, set the team
-      if (teamBased) {
-        myPlayer->setTeam(0);
-      } else {
-        myPlayer->setTeam(-1);
-      }
-    }
-
     bool Gamemode::canFire() {
-// This checks if the gun can fire according to gamemode rules
+      // This checks if the gun can fire according to gamemode rules
 
       if (!started) return false; // If the game hasn't started, return false
 
@@ -89,5 +73,35 @@ namespace Gamemodes {
       // TODO have some logic here to check teams
 
       return true; // If passed all conditions, return true
+    }
+
+    Player Gamemode::getPlayerTemplate() {
+      // This template is used to reset the players to a default state when it enters a new gamemode
+
+      Player playerTemplate = {
+              .unitnum = -1, // irrelevant as this field doesn't copy from the template
+              .team = 0,// irrelevant as this field doesn't copy from the template
+              .name = "Player",// irrelevant as this field doesn't copy from the template
+              .revives = 3,
+              .health = 100,
+              .kills = 0,
+              .carryingFlag = false,
+              .gunIndex = 0 // 0 should be default gun (AR)
+      };
+      return playerTemplate;
+    }
+
+    void Gamemode::loadGameDetails(JsonDocument gameDetails) {
+      // recreate the details saved by getGameDetails() to load the game state
+      started = gameDetails["started"];
+    }
+
+    JsonDocument Gamemode::getGameDetails() {
+      // Return all important details about this gamemode so it can be recreated in loadGameDetails()
+
+      JsonDocument gameDetails;
+      gameDetails["started"] = started;
+
+      return gameDetails;
     }
 }

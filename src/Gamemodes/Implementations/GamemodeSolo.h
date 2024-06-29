@@ -22,6 +22,10 @@ namespace Gamemodes {
 
         void onPlayerDeath(); // Gets called when the player dies
 
+        Player getPlayerTemplate(); // Returns the player template for the gamemode
+
+         JsonDocument getGameDetails(); // Returns the game details for the gamemode
+         void loadGameDetails(JsonDocument gameDetails); // Loads the game details for the gamemode
 
     protected:
         enum hudStates {
@@ -44,6 +48,8 @@ namespace Gamemodes {
         HudWidgets::HudWidgetImageData magsWidget = HudWidgets::HudWidgetImageData(Images::img_mag, 110);
 
         unsigned long lastReviveHUDUpdate = 0;
+
+
     };
 }
 

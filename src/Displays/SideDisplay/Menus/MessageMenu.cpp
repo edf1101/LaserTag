@@ -5,6 +5,8 @@
 */
 
 #include "MessageMenu.h"
+
+#include <utility>
 #include "MenuManager.h"
 #include "../SideDisplay.h"
 
@@ -14,7 +16,7 @@ namespace Menus {
       this->menuManager = menuManager;
     }
 
-    void MessageMenu::init(SideDisplay *_sideDisplay, Menu *parentMenu, Networks::MessageQueue *myQueue) {
+    void MessageMenu::init(SideDisplay *_sideDisplay, Menu *parentMenu, Networks::MessageQueue *myQueue, std::string title) {
       // This initialises the menu
 
       this->parentMenu = parentMenu;
@@ -31,6 +33,7 @@ namespace Menus {
       setRotaryMax(rotaryMax);
 
       titleWidget.init(sideDisplay); // initialise the title widget
+      titleWidget.setText(std::move(title)); // set the title widget text
 
       // create and initialise all the message widgets
       for (int i = 0; i < 5; i++) {
@@ -73,51 +76,49 @@ namespace Menus {
       if (rotaryCounter < 0) rotaryCounter = 0;
       if (rotaryCounter > maxRotaryCounter - 1) rotaryCounter = maxRotaryCounter - 1;
 
-      for (int i = 0; i < 5; i++) {
+      // deal with highlighted row
 
-        int index = 0;
-        if (rotaryCounter >= messageList->size() - 4) {
-          index = (int) messageList->size() - 4 + i;
+      int highlightedRow = min(rotaryCounter, 4); // which row to highlight white
 
-          // update highlight
-          for (int j = 0; j < 5; j++) {
-            messageWidgets[j * 2].setColour(ST7735_RED);
-            messageWidgets[j * 2 + 1].setColour(ST7735_RED);
-          }
-          int highlightIndex = rotaryCounter - (int) messageList->size() + 4;
+      // set colour of all the widgets
+      for(auto &widget: messageWidgets) {
+        widget.setColour(ST7735_RED);
+      }
+      // then set highlighted ones to white
+      messageWidgets[highlightedRow * 2].setColour(ST7735_WHITE);
+      messageWidgets[highlightedRow * 2 + 1].setColour(ST7735_WHITE);
 
-          messageWidgets[highlightIndex * 2].setColour(ST7735_WHITE);
-          messageWidgets[highlightIndex * 2 + 1].setColour(ST7735_WHITE);
 
-        } else {
-          index = rotaryCounter + i;
+      for (int row = 0; row < 5; row++) {
 
-          // update highlight
-          for (int j = 1; j < 5; j++) {
-            messageWidgets[j * 2].setColour(ST7735_RED);
-            messageWidgets[j * 2 + 1].setColour(ST7735_RED);
-          }
-          messageWidgets[0].setColour(ST7735_WHITE);
-          messageWidgets[1].setColour(ST7735_WHITE);
+        // displayOnRow is which command to display on the row. -1 means we are on the return button else it is the command (as array index)
+        int displayOnRow = ((rotaryCounter <= 4) ? row : row + (rotaryCounter - 4)) - 1;
+
+
+        // now set the text
+        if (displayOnRow == -1) {
+          messageWidgets[row * 2].setText("Return to menu");
+          messageWidgets[(row * 2) + 1].setText("");
         }
-
-        if (index == 0) {
-          messageWidgets[0].setText("Return to menu");
-          messageWidgets[1].setText("");
-        } else {
+        else if (displayOnRow < (int) (*messageList).size()) {
 
           // This bit just formats the message so it has the time in front and is split over two lines
-          std::string message = (*messageList)[index - 1];
-          unsigned int time = (millis() - (*timeList)[index - 1]) / 1000;
+          std::string message = (*messageList)[displayOnRow ];
+          unsigned int time = (millis() - (*timeList)[displayOnRow ]) / 1000;
           std::string timeString = time < 60 ? std::to_string(time) + "s: " : std::to_string(time / 60) + "m: ";
           std::string msg1 = timeString + message.substr(0, min(20, (int) message.size()));
           std::string msg2 = (message.size() > 20) ? std::string(timeString.length() - 1, ' ') +
                                                      message.substr(min(15, (int) message.size())) : "";
 
           // put the new strings onto the text widgets
-          messageWidgets[i * 2].setText(msg1);
-          messageWidgets[i * 2 + 1].setText(msg2);
+          messageWidgets[row * 2].setText(msg1);
+          messageWidgets[(row * 2) + 1].setText(msg2);
+
+        } else {
+          messageWidgets[row * 2].setText("");
+          messageWidgets[(row * 2) + 1].setText("");
         }
+
       }
 
     }

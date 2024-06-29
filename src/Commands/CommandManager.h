@@ -16,11 +16,15 @@ namespace Commands {
     class CommandManager {
     public:
         void setupCommands(); // Set up the commands in the system
-        void processCommand(Command* commandPointer); // Process the command
-        void sendCommand(Command* commandPointer); // Send the command
+        void processCommand(Command *commandPointer); // Process the command
+        void sendCommand(Command *commandPointer); // Send the command
+
+        // getters and setters for the broadcast state
+        bool getBroadcast();
+        void setBroadcast(bool broadcast);
 
     private:
-
+        bool broadcast = true; // Whether to send the command to everyone (wifi) or just the target (IR)
     };
 
 } // Commands

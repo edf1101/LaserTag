@@ -41,8 +41,6 @@ public:
 
     static void turnOff();
 
-    static void setPlayerName(std::string name);
-
     // Getters for Pointers to various system components (below)
     static PlayerWrapper *getPlayer();
 

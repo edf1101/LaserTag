@@ -28,6 +28,8 @@ namespace Commands {
 
         std::string getCommandName();
 
+        std::string getCommandCode();
+
         bool getIsWifiCommand(); // Gets whether this command is capable of being sent over Wi-Fi or not
         bool getIsIRCommand(); // Gets whether this command is capable of being sent over IR or not
 
@@ -62,7 +64,7 @@ namespace Commands {
         bool isIRCommand = false; // Whether the command is capable of being sent over IR
 // The command index (used for IR commands)
         int commandIndex = -1;
-        std::string commandCode; // The command code (used for Wi-Fi commands)
+        std::string commandCode ="!!"; // The command code (used for Wi-Fi commands)
 
         inline static std::vector<Command *> systemCommands = {}; // A list of all the commands in the system.
 

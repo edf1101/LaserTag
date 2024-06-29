@@ -25,7 +25,7 @@ void LaserTag::init() {
   commandManager.setupCommands();
 
   // Set up the player object
-  player.init(this, random(1, 127), 1); // Create a player object with unitnum 1 and team 1
+  player.init(this, 1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
   hudDisplay.init();
@@ -40,8 +40,8 @@ void LaserTag::init() {
 
   // Set up the gamemode manager after displays since it depends on the HUD
   gamemodeManager.init(this);
-  gamemodeManager.switchGamemode(GamemodeManager::GamemodeOptions::SOLO); // Set the initial gamemode to none
-  gamemodeManager.getCurrentGame()->setGamePauseState(false);
+//  gamemodeManager.switchGamemode(GamemodeManager::GamemodeOptions::SOLO); // Set the initial gamemode to none
+//  gamemodeManager.getCurrentGame()->setGamePauseState(false);
   updateHUD(); // Update the HUD to show the initial state of the game
 
 }
@@ -82,13 +82,6 @@ void LaserTag::turnOff() {
   // TODO implement this once latch stuff done.
   Serial.println("Turning off");
   networkManager.disconnectNetwork();
-}
-
-void LaserTag::setPlayerName(std::string name) {
-  // set name of player
-
-  player.setName(std::move(name));
-
 }
 
 // Pointer Getters for the main objects so they can be accessed elsewhere

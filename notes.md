@@ -50,33 +50,60 @@ If web interface uses flask then other phones etc can access it.
 - Must use a larger program size for ESP32 (I used 'huge APP' partition)
 - Have an option to select which 'lobby' to be in. This would be useful for if you have multiple games going on at once. 
 This must be sent with the wifi data so commands don't get mixed up and also with the IR data (need to fit in.)
+- Add a proper logger instead of Serial.println
+- add a name changed bit to playerwrapper so name is changed when gun joins and unum assigned , but doesnt if user already changed name.
+- each gamemode should have a player struct for starting player data. On gamemode reset all network players are reset to this data.
+- Player struct should have a static func to set its player struct to a starting player struct(in gamemode).
+- When a gamemode is set the laser tagger should reset its player data to the starting player data using the static player func above.
+- Games should have a function to return if they are rejoinable or not.
+- Game should have a function to return important game info to be sent over wifi for a rejoining player
+and a function to set the game info from the wifi data.
+- When becoming admin, the player should send out an am I admin packet to all other players. Wait 1s to see if any responses
+if not do usual thing. If so then do the join game as existing routine.
 - 
 
 ## Plan
-- menu / submenu system for commands (implement just gamemode stuff for now)
-- Make players rejoining mechanics work
-- make admin rejoining / multiple admins mechanics work
-- Have player status updating work
-- Have player name change work
 - Have player kill confirm work
-- add teams
-- Can only join if gun orders are the same.
+- make an constantly maintained active nodes vector.
 - create leaderboard menu
 - implement rest of commands
+- add it so commands can be sent as BROADCAST, IR, MYSELF. be able to set that mode in menu and update command menus accordingly.
+- add teams
 - add team DM game
+- add a logger
+- Can only join if gun default guns are same.
 - design latch circuit
 - build enclosure / pcbs
 - anticheat system
-- Add new gun game gamemode
-- create flag / respawn point (pcb code & enclosure)
-- create capture flag game
-- create domination game
-- create bomb defusal game
-- Add new manhunt gamemode
-- Add new tag gamemode
 
 ## Potential issues if recreating
 - The 128x64 OLED screen sometimes has different addresses / pin layouts be aware of pin layouts if using this PCB
 
 ## Tests
 - Try changing the gun group while a player is viewing a gun in choice menu that that has been disallowed
+
+## Commands
+### Game modifications
+- pause
+- play
+- Stop
+
+
+### Player modifications
+- Add a life
+- Remove a life
+- 0 lives
+- Inf mags on
+- Inf mags off
+- Inf ammo on
+- Inf ammo off
+- Inf Liveson
+- Inf Lives off
+- Invincible on 
+- Invincible off
+- Suppressor on
+- Suppressor off
+- Fast fire
+- slow fire
+- normal fire
+- Fake kill confirm

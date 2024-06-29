@@ -5,6 +5,8 @@
 */
 
 #include "Network.h"
+
+#include <utility>
 #include "LaserTag.h"
 
 namespace Networks {
@@ -32,6 +34,10 @@ namespace Networks {
         Serial.println("Admin status granted");
         adminStatus = true;
         inLobby = true; // If we are the admin we are automatically in the lobby
+
+        // reset my player to be the default gamemode player
+        Player playerTemplate = LaserTag::getGamemodeManager()->getCurrentGame()->getPlayerTemplate();
+        LaserTag::getPlayer()->setPlayerToTemplate(playerTemplate);
       }
     }
 
@@ -40,12 +46,20 @@ namespace Networks {
 
       meshManager.loop();
 
-      if (!inLobby && millis() - lastJoinRequestSent > 2000 + random(1, 200)) { // +random to avoid collisions
+      if (!inLobby && millis() - lastJoinRequestSent > 2000 + random(1, 200)) { // + random to avoid consistent collisions
         // If we are not in the lobby and we haven't sent a join request in the last 5 seconds
         // Send a join request
         lastJoinRequestSent = millis();
         meshManager.sendJoinRequest();
       }
+
+      if (inLobby && millis() - lastStatusUpdateSent > 5000 + random(1, 200)) { // + random to avoid consistent collisions
+        // If we are in the lobby and we haven't sent a status update in the last second
+        // Send a status update
+        lastStatusUpdateSent = millis();
+        meshManager.sendUpdate();
+      }
+
     }
 
     void Network::disconnectNetwork() {
@@ -55,12 +69,59 @@ namespace Networks {
 
     }
 
-    void Network::joinLobby(bool alreadyInGame, Player *myPlayer) {
+    void Network::joinLobby( Player myPlayerTemplate) {
       // join the lobby
 
       inLobby = true;
       Serial.println("Joined lobby");
       LaserTag::getGamemode()->drawHUD();
 
+      PlayerWrapper* myPlayer = LaserTag::getPlayer();
+      myPlayer->setPlayerToTemplate(myPlayerTemplate);
+      myPlayer->setUnitnum(myPlayerTemplate.unitnum);
+      myPlayer->setName(myPlayerTemplate.name);
+
     }
+
+    void Network::setPlayerInMap(uint32_t id, Player player) {
+      // Add a player to the map
+
+      playersMap[id] = std::move(player);
+    }
+
+    Player *Network::getPlayerInMap(uint32_t id) {
+      // Get a player from the map
+
+      return &playersMap[id];
+    }
+
+    vector<uint32_t> Network::getAllPlayerNodeIDs() {
+      // Returns all the players (keys) in the player map
+
+      std::vector<uint32_t> players;
+      for (auto const &x: playersMap) {
+        players.push_back(x.first);
+      }
+
+      return players;
+    }
+
+    void Network::sendCommand(std::string commandCode) {
+      // send a command. This is a wrapper for the mesh manager send command function,
+      // needed as mesh manager is private.
+
+      meshManager.sendCommand(commandCode);
+    }
+
+    void Network::loadGamemodeDetails(JsonObject gameData) {
+      // load into a gamemode according to network data details
+
+      int gamemodeIndex = gameData["gamemodeIndex"];
+      LaserTag::getGamemodeManager()->switchGamemodeByInt(gamemodeIndex);
+      LaserTag::getGamemodeManager()->getCurrentGame()->loadGameDetails(gameData);
+
+
+
+    }
+
 } // Networks
