@@ -60,7 +60,7 @@ This must be sent with the wifi data so commands don't get mixed up and also wit
 and a function to set the game info from the wifi data.
 - When becoming admin, the player should send out an am I admin packet to all other players. Wait 1s to see if any responses
 if not do usual thing. If so then do the join game as existing routine.
-- 
+- could have a python program to redo links to be arduino friendly
 
 ## Plan
 - Have player kill confirm work

@@ -7,7 +7,7 @@
 #include "Network.h"
 
 #include <utility>
-#include "LaserTag.h"
+#include "../LaserTag.h"
 
 namespace Networks {
 

@@ -5,7 +5,7 @@
 #include <list>
 
 #include "Arduino.h"
-#include "painlessmesh/configuration.hpp"
+#include "configuration.hpp"
 
 namespace painlessmesh {
 

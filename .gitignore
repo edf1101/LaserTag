@@ -10,3 +10,6 @@
 # don't need to upload the output of arduino IDE formatted files
 /arduino_builds/LaserTag
 .DS_Store
+
+# ignore the relative address converter backup files
+/tools/address_convert_backup

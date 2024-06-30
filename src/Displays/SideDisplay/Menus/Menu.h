@@ -6,7 +6,7 @@
 class SideDisplay;
 
 #include "Arduino.h"
-#include "../../config.h"
+#include "../../../config.h"
 
 namespace Menus {
 

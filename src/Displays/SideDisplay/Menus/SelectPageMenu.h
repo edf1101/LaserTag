@@ -11,7 +11,7 @@
 #include <string>
 #include "Arduino.h"
 #include "Menu.h"
-#include "../../config.h"
+#include "../../../config.h"
 #include "SideWidgets/SideWidgetMenuSelect.h"
 #include "SideWidgets/SideWidgetFunctionSelect.h"
 #include "SideWidgets/SideWidgetText.h"

@@ -1,11 +1,11 @@
 #ifndef _PAINLESS_MESH_PLUGIN_OTA_HPP_
 #define _PAINLESS_MESH_PLUGIN_OTA_HPP_
 
-#include "painlessmesh/configuration.hpp"
+#include "configuration.hpp"
 
-#include "painlessmesh/base64.hpp"
-#include "painlessmesh/logger.hpp"
-#include "painlessmesh/plugin.hpp"
+#include "base64.hpp"
+#include "logger.hpp"
+#include "plugin.hpp"
 
 #if defined(ESP32) || defined(ESP8266)
 #ifdef ESP32

@@ -9,7 +9,7 @@
 
 #include "Arduino.h"
 #include "Adafruit_ST7735.h"
-#include "../../Menus/Menu.h"
+#include "../Menu.h"
 #include "../../../ImageData.h"
 
 class SideDisplay;

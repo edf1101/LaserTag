@@ -4,7 +4,7 @@
 
 #include <list>
 
-#include "painlessTaskOptions.h"
+#include "../painlessTaskOptions.h"
 
 #include <TaskSchedulerDeclarations.h>
 

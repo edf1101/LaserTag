@@ -13,7 +13,7 @@
 #include <functional>
 #include "Arduino.h"
 #include "SideWidgets/SideWidgetText.h"
-#include "Commands/Command.h"
+#include "../../../Commands/Command.h"
 
 class MenuManager; // forward declaration
 using namespace std;

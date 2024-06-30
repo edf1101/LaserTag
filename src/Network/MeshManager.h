@@ -8,7 +8,7 @@
 #define LASERTAG_MESHMANAGER_H
 
 #include "Arduino.h"
-#include "../libs/painlessMesh/src/painlessMesh.h"
+#include "../Libs/painlessMesh/src/painlessMesh.h"
 #include "../config.h"
 #include <vector>
 #include <set>

@@ -9,7 +9,7 @@
 #define LASERTAG_LEDEFFECT_H
 
 #include "Arduino.h"
-#include "../../libs/Adafruit_NeoPixel/Adafruit_NeoPixel.h"
+#include "../../Libs/Adafruit_NeoPixel/Adafruit_NeoPixel.h"
 
 namespace LEDs {
 

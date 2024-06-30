@@ -4,7 +4,7 @@
 #include <list>
 #include <memory>
 
-#include "painlessmesh/protocol.hpp"
+#include "protocol.hpp"
 
 namespace painlessmesh {
 namespace layout {

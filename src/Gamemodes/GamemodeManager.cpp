@@ -5,7 +5,7 @@
 */
 
 #include "GamemodeManager.h"
-#include "LaserTag.h"
+#include "../LaserTag.h"
 
 void GamemodeManager::init(LaserTag *system) {
   // Set the initial gamemode to none

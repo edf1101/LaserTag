@@ -5,12 +5,12 @@
 
 #include "../painlessmesh/logger.hpp"
 #ifdef PAINLESSMESH_ENABLE_ARDUINO_WIFI
-#include "painlessMeshSTA.h"
+#include "../painlessMeshSTA.h"
 
-#include "painlessmesh/callback.hpp"
-#include "painlessmesh/mesh.hpp"
-#include "painlessmesh/router.hpp"
-#include "painlessmesh/tcp.hpp"
+#include "../painlessmesh/callback.hpp"
+#include "../painlessmesh/mesh.hpp"
+#include "../painlessmesh/router.hpp"
+#include "../painlessmesh/tcp.hpp"
 
 extern painlessmesh::logger::LogClass Log;
 

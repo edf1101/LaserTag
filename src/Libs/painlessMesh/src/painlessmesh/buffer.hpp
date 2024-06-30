@@ -4,7 +4,7 @@
 #include <list>
 
 #include "Arduino.h"
-#include "painlessmesh/configuration.hpp"
+#include "configuration.hpp"
 
 #ifndef TCP_MSS
 #define TCP_MSS 1024

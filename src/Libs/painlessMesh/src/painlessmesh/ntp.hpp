@@ -11,9 +11,9 @@
 
 #include "Arduino.h"
 
-#include "painlessmesh/callback.hpp"
-#include "painlessmesh/logger.hpp"
-#include "painlessmesh/router.hpp"
+#include "callback.hpp"
+#include "logger.hpp"
+#include "router.hpp"
 
 extern painlessmesh::logger::LogClass Log;
 

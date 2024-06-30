@@ -10,7 +10,7 @@
 
 #include <string>
 #include "ArduinoJson.h"
-#include "Players/Player.h"
+#include "../Players/Player.h"
 #include "../Displays/HUD/HudDisplay.h"
 #include "../Displays/HUD/HudWidgets/HudWidgetImageData.h"
 #include "../Displays/HUD/HudWidgets/HudWidgetInfoBox.h"

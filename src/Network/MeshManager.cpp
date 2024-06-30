@@ -6,8 +6,8 @@
 
 #include "MeshManager.h"
 #include "Network.h"
-#include "Commands/Command.h"
-#include "LaserTag.h"
+#include "../Commands/Command.h"
+#include "../LaserTag.h"
 
 namespace Networks {
     void MeshManager::init() {

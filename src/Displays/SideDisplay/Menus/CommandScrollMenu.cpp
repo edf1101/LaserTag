@@ -7,7 +7,7 @@
 #include "CommandScrollMenu.h"
 #include "MenuManager.h"
 #include "../SideDisplay.h"
-#include "LaserTag.h"
+#include "../../../LaserTag.h"
 
 namespace Menus {
 
