@@ -13,3 +13,6 @@
 
 # ignore the relative address converter backup files
 /tools/address_convert_backup
+
+# ignore pycache
+__pycache__
