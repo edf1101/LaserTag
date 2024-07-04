@@ -18,13 +18,6 @@ namespace Networks {
       meshManager.init();
 
       adminStatus = false;
-
-      // Set up the message Queue
-      for (int i = 0; i < 16; i++) {
-        messageQueue.pushMessage("Msg " + std::to_string(i));
-        debugMessageQueue.pushMessage("");
-      }
-
     }
 
     void Network::tryMakeAdmin(std::string adminCode) {
@@ -38,6 +31,9 @@ namespace Networks {
         // reset my player to be the default gamemode player
         Player playerTemplate = LaserTag::getGamemodeManager()->getCurrentGame()->getPlayerTemplate();
         LaserTag::getPlayer()->setPlayerToTemplate(playerTemplate);
+
+        // tell the msg queue we joined the lobby
+        LaserTag::getNetworkManager()->getMessageQueue()->pushMessage("Joined Lobby as admin");
       }
     }
 
@@ -46,14 +42,16 @@ namespace Networks {
 
       meshManager.loop();
 
-      if (!inLobby && millis() - lastJoinRequestSent > 2000 + random(1, 200)) { // + random to avoid consistent collisions
+      if (!inLobby &&
+          millis() - lastJoinRequestSent > 2000 + random(1, 200)) { // + random to avoid consistent collisions
         // If we are not in the lobby and we haven't sent a join request in the last 5 seconds
         // Send a join request
         lastJoinRequestSent = millis();
         meshManager.sendJoinRequest();
       }
 
-      if (inLobby && millis() - lastStatusUpdateSent > 5000 + random(1, 200)) { // + random to avoid consistent collisions
+      if (inLobby &&
+          millis() - lastStatusUpdateSent > 5000 + random(1, 200)) { // + random to avoid consistent collisions
         // If we are in the lobby and we haven't sent a status update in the last second
         // Send a status update
         lastStatusUpdateSent = millis();
@@ -69,14 +67,17 @@ namespace Networks {
 
     }
 
-    void Network::joinLobby( Player myPlayerTemplate) {
+    void Network::joinLobby(Player myPlayerTemplate) {
       // join the lobby
 
       inLobby = true;
       Serial.println("Joined lobby");
-      LaserTag::getGamemode()->drawHUD();
 
-      PlayerWrapper* myPlayer = LaserTag::getPlayer();
+      LaserTag::getNetworkManager()->getMessageQueue()->pushMessage("Joined Lobby"); // tell the msg queue we joined the lobby
+
+      LaserTag::getGamemode()->drawHUD(); // so it says we're in a lobby now.
+
+      PlayerWrapper *myPlayer = LaserTag::getPlayer();
       myPlayer->setPlayerToTemplate(myPlayerTemplate);
       myPlayer->setUnitnum(myPlayerTemplate.unitnum);
       myPlayer->setName(myPlayerTemplate.name);
@@ -87,12 +88,39 @@ namespace Networks {
       // Add a player to the map
 
       playersMap[id] = std::move(player);
+
+      // while we do this update the unitnum in the unitnum to node id map
+      int playerUnitnum = playersMap[id].unitnum;
+      unitnumToNodeIDMap[playerUnitnum] = id;
     }
 
     Player *Network::getPlayerInMap(uint32_t id) {
       // Get a player from the map
 
       return &playersMap[id];
+    }
+
+    uint32_t Network::getPlayerIdByUnitnum(int unitnum) {
+      // Get a node ID for a laser tagger from the map by its unitnum
+
+      if (unitnumToNodeIDMap.find(unitnum) != unitnumToNodeIDMap.end()) {
+        return unitnumToNodeIDMap[unitnum];
+      } else {
+        return -1;
+      }
+    }
+
+    Player *Network::getPlayerByUnitnum(int unitnum) {
+      // Get a player from the map by its unitnum
+
+      vector<uint32_t> allPlayers = getAllPlayerNodeIDs();
+
+      for (uint32_t playerID: allPlayers) {
+        if (playersMap[playerID].unitnum == unitnum) {
+          return &playersMap[playerID];
+        }
+      }
+      return nullptr;
     }
 
     vector<uint32_t> Network::getAllPlayerNodeIDs() {
@@ -121,7 +149,34 @@ namespace Networks {
       LaserTag::getGamemodeManager()->getCurrentGame()->loadGameDetails(gameData);
 
 
+    }
 
+    void Network::sendHitConfirmation(int shooterUnitnum, int vicitmUnitnum, bool killConfirm) {
+      // send a hit / kill confirmation. This is a wrapper for the mesh manager send hit conf function,
+      // needed as mesh manager is private.
+
+      meshManager.sendHitConfirmation(shooterUnitnum, vicitmUnitnum, killConfirm);
+    }
+
+    void Network::handleHitConfirmation(int shooterUnitnum, int victimUnitnum, bool killConfirm) {
+      // when we get a hit confirmation from the network we handle it.
+      // it gets handles here as meshmanager is more low level
+
+      Serial.println("Hit confirmation received format: Killer,Victim,died(bool) " + String(shooterUnitnum) + "," +
+                     String(victimUnitnum) + "," + String(killConfirm));
+
+      std::string shooterName = LaserTag::getNetworkManager()->getPlayerByUnitnum(shooterUnitnum)->name;
+      std::string victimName = LaserTag::getNetworkManager()->getPlayerByUnitnum(victimUnitnum)->name;
+
+      if (killConfirm) { // If the victim died put that on our message queue.
+        messageQueue.pushMessage(shooterName + " killed " + victimName + " " +  + "!");
+      }
+
+      if (shooterUnitnum ==
+          LaserTag::getPlayer()->getUnitnum()) { // If we are the shooter let the game know we hit someone.
+
+        LaserTag::getGamemodeManager()->getCurrentGame()->onHitConfirm(victimUnitnum, killConfirm);
+      }
     }
 
 } // Networks

@@ -14,7 +14,7 @@
 #include "../Weapons/WeaponsManager.h"
 #include "../config.h"
 
-#define START_LIVES 3 // The maximum number of revives a player can have
+
 #define RESPAWN_TIME 8000 // The time it takes for a player to respawn in milliseconds
 
 class LaserTag;

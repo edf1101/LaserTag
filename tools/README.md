@@ -21,3 +21,21 @@ chmod +x ./arduinoIDECompiler.sh
 
 ./arduinoIDECompiler.sh
 ```
+
+## ```#include``` path errors
+If the Arduino IDE doesn't compile this may be due to me including files in a way that PlatformIO is happy with but
+Arduino IDE isn't (addresses relative to the src folder). To fix this you could change the ```#include``` lines in the
+src code manually to be relative to the file itself or just run the python script in this folder.
+
+```bash
+chmod +x ./relativeAddressConverter.sh
+
+./relativeAddressConverter.sh
+```
+
+or 
+
+```bash
+python -m relativeAddressConverter
+```
+

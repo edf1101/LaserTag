@@ -19,15 +19,13 @@ namespace Networks {
 
     enum ControlTypes { // Different types of control messages
         COMMAND,
-        KILL_CONFIRM,
+        HIT_CONFIRM,
         UPDATE,
         JOIN,
         JOIN_ACKNOWLEDGE
     };
 
     enum JoinAckStates { // Different states for the join acknowledge message
-        REJECT_INVALID_SUM,
-        REJECT_BANNED,
         ACCEPT_NEW_GUN,
         ACCEPT_EXISTING_GUN
     };
@@ -43,6 +41,8 @@ namespace Networks {
         void sendJoinRequest();
 
         void sendCommand(std::string commandCode);
+
+        void sendHitConfirmation(int shooterUnitnum, int victimUnitnum, bool killConfirm);
 
         void sendUpdate(); // send a player state update over the network
 

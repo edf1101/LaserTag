@@ -58,8 +58,13 @@ namespace Networks {
 
         LaserTag::getCommandManager()->processCommand(command); // process the command
 
-      } else if (control == ControlTypes::KILL_CONFIRM) {
+      } else if (control == ControlTypes::HIT_CONFIRM) {
         // Do something on received kill confirm
+
+        int shooterUnitnum = jsonIn["data"]["shooterUnitnum"];
+        int victimUnitnum = jsonIn["data"]["victimUnitnum"];
+        bool killConfirm = jsonIn["data"]["killConfirm"];
+        LaserTag::getNetworkManager()->handleHitConfirmation(shooterUnitnum, victimUnitnum, killConfirm);
 
       } else if (control == ControlTypes::UPDATE) {
         // Do something on received update
@@ -87,15 +92,7 @@ namespace Networks {
       JsonDocument jsonIn; // deserialize the json message
       deserializeJson(jsonIn, jsonData);
 
-      if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::REJECT_INVALID_SUM) {
-        // If the join was rejected because of an invalid sum
-        // TODO implement this
-
-      } else if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::REJECT_BANNED) {
-        // If the join was rejected because the node is banned
-        // TODO implement this
-
-      } else if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::ACCEPT_NEW_GUN) {
+      if ((JoinAckStates) jsonIn["joinState"] == JoinAckStates::ACCEPT_NEW_GUN) {
         // If the join was accepted and the node is a new gun
 
         int newUnitnum = jsonIn["unitnum"];
@@ -253,7 +250,7 @@ namespace Networks {
       String msg = "";
       serializeJson(jsonOut, msg);
       mesh.sendBroadcast(msg, true); // send to all nodes on the network
-      // send to ourselves so we update our state for leaderboard too.
+      // send to ourselves, so we update our state for leaderboard too.
     }
 
     void MeshManager::handleUpdateRx(uint32_t from, String jsonData) {
@@ -276,8 +273,30 @@ namespace Networks {
               jsonIn["data"]["gunId"]
       };
 
-        // update the player in the network map
-        LaserTag::getNetworkManager()->setPlayerInMap(from, updatedPlayer);
+      // update the player in the network map
+      LaserTag::getNetworkManager()->setPlayerInMap(from, updatedPlayer);
+    }
+
+    void MeshManager::sendHitConfirmation(int shooterUnitnum, int victimUnitnum, bool killConfirm) {
+      // Send a signal over the network that a player has been hit/ killed.
+
+      JsonDocument jsonOut;
+      jsonOut["control"] = ControlTypes::HIT_CONFIRM;
+      jsonOut["data"]["shooterUnitnum"] = shooterUnitnum;
+      jsonOut["data"]["victimUnitnum"] = victimUnitnum;
+      jsonOut["data"]["killConfirm"] = killConfirm;
+
+      String msg = "";
+      serializeJson(jsonOut, msg);
+
+      if (killConfirm) { // if its a kill then send to all nodes on the network
+        mesh.sendBroadcast(msg, false); // send to all nodes on the network
+
+      } else { // if its just a hit then send to the shooter so we don't spam the network
+        uint32_t shooterNodeID = LaserTag::getNetworkManager()->getPlayerIdByUnitnum(shooterUnitnum);
+        mesh.sendSingle(shooterNodeID, msg);
+      }
+
     }
 
 } // Networks

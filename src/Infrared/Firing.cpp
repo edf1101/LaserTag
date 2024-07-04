@@ -98,6 +98,9 @@ void Firing::OnHit() {
     Serial.println("Valid hit");
 #endif
     player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
+
+    // send a hit signal back. if the player is respawning, set killConfirm flag to true.
+    LaserTag::getNetworkManager()->sendHitConfirmation(rxUnitnum, player->getUnitnum(), player->getHealth() == 0);
   }
 }
 

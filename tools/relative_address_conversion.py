@@ -24,7 +24,7 @@ path_to_src: str = '../src'
 
 # copy prior directory
 backup_directory: str = path.abspath('address_convert_backup')
-try:  # try remove old backup
+try:  # try to remove old backup
     shutil.rmtree(backup_directory)
 except FileNotFoundError:
     pass
@@ -100,6 +100,9 @@ for file_path in all_file_paths:  # iterate through every file in the 'all_file_
             replacement = line[:line.find('"')+1] + relative_to_current + line[line.rfind('"'):]
 
             replacements[ind] = replacement
+
+            if line != replacement:
+                print(f"Replaced: {line.strip()} with {replacement.strip()}")
 
     for line, replacement in replacements.items(): # replace all lines
         file_data[line] = replacement

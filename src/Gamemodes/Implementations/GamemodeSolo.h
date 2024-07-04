@@ -10,6 +10,8 @@
 #include "../Gamemode.h"
 #include <string>
 
+#define HIT_CONFIRM_DISPLAY_TIME 3000
+
 namespace Gamemodes {
     class GamemodeSolo : public Gamemode {
     public:
@@ -26,6 +28,8 @@ namespace Gamemodes {
 
          JsonDocument getGameDetails(); // Returns the game details for the gamemode
          void loadGameDetails(JsonDocument gameDetails); // Loads the game details for the gamemode
+
+         void onHitConfirm(int victimUnitnum, bool kill); // Function to display a hit confirmation on the HUD
 
     protected:
         enum hudStates {
@@ -48,6 +52,12 @@ namespace Gamemodes {
         HudWidgets::HudWidgetImageData magsWidget = HudWidgets::HudWidgetImageData(Images::img_mag, 110);
 
         unsigned long lastReviveHUDUpdate = 0;
+
+        // Details to show on the HUD when we hit / kill someone.
+        long lastHitConfirm = -10000;
+        bool lastHitConfirmKill = false;
+        std::string shotName; // victims player name
+        bool displayingHitConfirm = false;
 
 
     };

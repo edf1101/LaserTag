@@ -40,6 +40,8 @@ namespace Commands {
       Serial.print("Processing command: ");
       Serial.println(commandName.c_str());
 
+      Networks::MessageQueue* messageQueue = LaserTag::getNetworkManager()->getMessageQueue();
+
       if (commandGroup == "Gamemodes") { // process the gamemode commands
 
         if (commandName == "None") {
@@ -56,10 +58,13 @@ namespace Commands {
           // set the game to play
           Serial.println("Setting game to play");
           LaserTag::getGamemodeManager()->getCurrentGame()->setGamePauseState(false);
+          messageQueue->pushMessage("Game started!");
+
         } else if (commandName == "Pause") {
           // set the game to pause
           Serial.println("Setting game to paused");
           LaserTag::getGamemodeManager()->getCurrentGame()->setGamePauseState(true);
+          messageQueue->pushMessage("Game paused!");
 
         } else if (commandName == "End Game") {
           // end the game

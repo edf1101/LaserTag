@@ -1,7 +1,7 @@
 # LaserTag
 
 ## Introduction
-This contains all the files needed to build (both physically and in code) my laser tag system.
+This repository contains all the code, designs and tools needed to build (both physically and in code) my laser tag system.
 The system is designed to be uploaded easily with [Arduino IDE](https://www.arduino.cc/) compatible builds and coded 
 in a [platformio](https://platformio.org/) environment.
 
@@ -31,7 +31,7 @@ To use the code in a platformio environment:
 2. Open the code in a platformio environment.
 3. Build and upload the code.
 
-## Usage
+## Laser Tagger Usage
 
 ## Details
 

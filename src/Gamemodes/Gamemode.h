@@ -53,6 +53,8 @@ namespace Gamemodes {
         virtual JsonDocument getGameDetails(); // Returns the game details for the gamemode
         virtual void loadGameDetails(JsonDocument gameDetails); // Loads the game details for the gamemode
 
+        virtual void onHitConfirm(int victimUnitnum, bool kill); // do something when a hit/kill is confirmed
+
     protected:
         LaserTag *mySystem; // Reference to the main LaserTag system object
         PlayerWrapper *myPlayer; // Reference to the player object

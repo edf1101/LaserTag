@@ -3,6 +3,7 @@
 */
 
 #include "GamemodeSolo.h"
+#include "../../LaserTag.h"
 
 namespace Gamemodes {
     GamemodeSolo::GamemodeSolo(LaserTag *_mySystem) : Gamemode(_mySystem) {
@@ -38,6 +39,12 @@ namespace Gamemodes {
           changeHudState(HUD_GAME);
           drawHUD();
         }
+      }
+
+      // This bit of code will hide the hit confirm message after a certain amount of time
+      if (displayingHitConfirm && millis() - lastHitConfirm > HIT_CONFIRM_DISPLAY_TIME) {
+        displayingHitConfirm = false;
+        drawHUD();
       }
     }
 
@@ -82,8 +89,9 @@ namespace Gamemodes {
             } else if (displayHud->getInfoStateCurrent() == 1) {
               infoBoxWidget.setTexts("Gun", myPlayer->getGun()->getAcronym());
             }
-          }
-          else{
+          } else if (millis() - lastHitConfirm < HIT_CONFIRM_DISPLAY_TIME) {
+            infoBoxWidget.setTexts(lastHitConfirmKill ? "Killed" : "Hit", shotName);
+          } else {
             infoBoxWidget.setTexts("Rload", myPlayer->getGun()->getReloadDescription());
           }
           infoBoxWidget.draw(true);
@@ -107,13 +115,14 @@ namespace Gamemodes {
     void GamemodeSolo::drawHUD() {
       if (currentState == HUD_GAME) {
         if (!myPlayer->getGun()->getReloading()) {
-          if (displayHud->getInfoStateCurrent() == 0) {
+          if (millis() - lastHitConfirm < HIT_CONFIRM_DISPLAY_TIME) {
+            infoBoxWidget.setTexts(lastHitConfirmKill ? "Killd" : "Hit", shotName);
+          } else if (displayHud->getInfoStateCurrent() == 0) {
             infoBoxWidget.setTexts("Name", myPlayer->getName());
           } else if (displayHud->getInfoStateCurrent() == 1) {
             infoBoxWidget.setTexts("Gun", myPlayer->getGun()->getAcronym());
           }
-        }
-        else{
+        } else {
           infoBoxWidget.setTexts("Rload", myPlayer->getGun()->getReloadDescription());
         }
         infoBoxWidget.draw(false); // draw the info box (name and gun)
@@ -172,6 +181,20 @@ namespace Gamemodes {
       gameDetails["started"] = started;
 
       return gameDetails;
+    }
+
+    void GamemodeSolo::onHitConfirm(int victimUnitnum, bool kill) {
+      // display a hit confirmation on the HUD
+
+      Gamemode::onHitConfirm(victimUnitnum, kill); // call the parent function
+
+      // update details for the HUD.
+      lastHitConfirm = millis();
+      lastHitConfirmKill = kill;
+      shotName = LaserTag::getNetworkManager()->getPlayerByUnitnum(victimUnitnum)->name;
+      displayingHitConfirm = true;
+
+      drawHUD();
     }
 
 }

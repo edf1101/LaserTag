@@ -108,7 +108,7 @@ namespace Menus {
           std::string timeString = time < 60 ? std::to_string(time) + "s: " : std::to_string(time / 60) + "m: ";
           std::string msg1 = timeString + message.substr(0, min(20, (int) message.size()));
           std::string msg2 = (message.size() > 20) ? std::string(timeString.length() - 1, ' ') +
-                                                     message.substr(min(15, (int) message.size())) : "";
+                                                     message.substr(min(20, (int) message.size())) : "";
 
           // put the new strings onto the text widgets
           messageWidgets[row * 2].setText(msg1);

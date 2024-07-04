@@ -24,11 +24,11 @@ namespace Networks {
 
         void disconnectNetwork();
 
- // TODO these should probs be destatic-ed as u can access them statically thru laser tag class
+        // TODO these should probs be destatic-ed as u can access them statically thru laser tag class
         static void tryMakeAdmin(std::string adminCode); // Setter for the admin status
         static bool getAdminStatus() { return adminStatus; } // Getter for the admin status
 
-        static void joinLobby( Player myPlayerTemplate); // Join the lobby
+        static void joinLobby(Player myPlayerTemplate); // Join the lobby
         static bool getInLobby() { return inLobby; } // Getter for the inLobby status
 
         // pointer getters to important objects
@@ -37,10 +37,15 @@ namespace Networks {
 
         // functions (getters & setters) for the players map
         static void setPlayerInMap(uint32_t id, Player player); // Add a player to the map
-        static Player* getPlayerInMap(uint32_t id); // Get a player from the map
+        static Player *getPlayerInMap(uint32_t id); // Get a player from the map
+        static Player *getPlayerByUnitnum(int unitnum); // Get a player from the map by unitnum
+        static uint32_t getPlayerIdByUnitnum(int unitnum); // Get a player from the map by unitnum
         static vector<uint32_t> getAllPlayerNodeIDs(); // returns all players in the map (the keys)
 
         void sendCommand(std::string commandCode); // Send a command
+
+        void sendHitConfirmation(int shooterUnitnum, int victimUnitnum, bool killConfirm); // Send a hit confirmation
+        void handleHitConfirmation(int shooterUnitnum, int victimUnitnum, bool killConfirm); // Handle a rx hit confirmation
 
         void loadGamemodeDetails(JsonObject gameData); // load into a gamemode according to network data details
 
@@ -58,6 +63,8 @@ namespace Networks {
         // The players map is a map of the player id to the player object.
         // The idea is that you can add a player to the map, and then get a pointer to the player and modify it.
         inline static std::unordered_map<uint32_t, Player> playersMap;
+        // This map is a map of the unitnum to the node id of the player so we can more efficiently send data.
+        inline static std::unordered_map<int, uint32_t> unitnumToNodeIDMap;
 
         unsigned long lastStatusUpdateSent = 0; // The last time a status update was sent
 

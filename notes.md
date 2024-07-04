@@ -60,17 +60,19 @@ This must be sent with the wifi data so commands don't get mixed up and also wit
 and a function to set the game info from the wifi data.
 - When becoming admin, the player should send out an am I admin packet to all other players. Wait 1s to see if any responses
 if not do usual thing. If so then do the join game as existing routine.
-- could have a python program to redo links to be arduino friendly
+- could have a python program to redo links to be arduino friendly.
+- can have a shot accuracy stat
+- hit confirm as well as kill conf
+- logger have diff levels of logging
 
 ## Plan
-- Have player kill confirm work
 - make an constantly maintained active nodes vector.
 - create leaderboard menu
 - implement rest of commands
 - add it so commands can be sent as BROADCAST, IR, MYSELF. be able to set that mode in menu and update command menus accordingly.
 - add teams
 - add team DM game
-- add a logger
+- add a logger (debug messges from here)
 - Can only join if gun default guns are same.
 - design latch circuit
 - build enclosure / pcbs
