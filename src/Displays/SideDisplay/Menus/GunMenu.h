@@ -45,14 +45,14 @@ namespace Menus {
         // The sub menu widget that will be displayed on the side display
         SideWidgets::SideWidgetSubMenu subMenu = SideWidgets::SideWidgetSubMenu(160-32, 0);
 
-        SideWidgets::SideWidgetImage gunImage = SideWidgets::SideWidgetImage(2,2, Images::img_bullet,ST7735_RED);
-        SideWidgets::SideWidgetText gunName = SideWidgets::SideWidgetText(57,2, "Name: Glock-18",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunAmmo = SideWidgets::SideWidgetText(67,2, "Ammo: 30",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunMags = SideWidgets::SideWidgetText(77,2, "Mags: 100",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunFireType = SideWidgets::SideWidgetText(87,2, "Type: BURST",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunFireRate = SideWidgets::SideWidgetText(97,2, "Speed: 2 bullets/s",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunDamage = SideWidgets::SideWidgetText(107,2, "Damage: 10",1,ST7735_RED);
-        SideWidgets::SideWidgetText gunSuppressed = SideWidgets::SideWidgetText(117,2, "Suppressed?: FALSE",1,ST7735_RED);
+        SideWidgets::SideWidgetImage gunImage = SideWidgets::SideWidgetImage(2,2, Images::img_bullet,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunName = SideWidgets::SideWidgetText(57,2, "Name: Glock-18",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunAmmo = SideWidgets::SideWidgetText(67,2, "Ammo: 30",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunMags = SideWidgets::SideWidgetText(77,2, "Mags: 100",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunFireType = SideWidgets::SideWidgetText(87,2, "Type: BURST",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunFireRate = SideWidgets::SideWidgetText(97,2, "Speed: 2 bullets/s",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunDamage = SideWidgets::SideWidgetText(107,2, "Damage: 10",1,TFT_SECONDARY_COLOUR);
+        SideWidgets::SideWidgetText gunSuppressed = SideWidgets::SideWidgetText(117,2, "Suppressed?: FALSE",1,TFT_SECONDARY_COLOUR);
 
     };
 }

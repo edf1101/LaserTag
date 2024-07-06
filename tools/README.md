@@ -33,7 +33,7 @@ chmod +x ./relativeAddressConverter.sh
 ./relativeAddressConverter.sh
 ```
 
-or 
+or (If you are in the correct folder in the terminal)
 
 ```bash
 python -m relativeAddressConverter

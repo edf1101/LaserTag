@@ -16,8 +16,8 @@
 #include "../ImageData.h"
 #include "../../config.h"
 #include "Menus/MenuManager.h"
-#include "Libs/ESP32Encoder/ESP32Encoder.h"
-#include "Buttons/Button.h"
+#include "../../Libs/ESP32Encoder/ESP32Encoder.h"
+#include "../../Buttons/Button.h"
 
 
 class SideDisplay {

@@ -15,7 +15,7 @@ namespace SideWidgets {
 
     class SideWidgetText : public SideWidget{
     public:
-        SideWidgetText(int yStart, int xStart, std::string text, int textSize, uint16_t textColor = ST7735_WHITE); // Constructor for the class
+        SideWidgetText(int yStart, int xStart, std::string text, int textSize, uint16_t textColor = TFT_PRIMARY_COLOUR); // Constructor for the class
         void setText(std::string newText); // Set the text to display
         void setColour(uint16_t col){
             // Set the colour of the text

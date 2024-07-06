@@ -39,7 +39,7 @@ namespace Menus {
         vector<Commands::Command*> commandLists; // the list of command objects
 
         SideWidgets::SideWidgetText titleWidget = SideWidgets::SideWidgetText(0, 2, "", 2,
-                                                                              ST7735_WHITE); // the title widget
+                                                                              TFT_PRIMARY_COLOUR); // the title widget
 
         std::vector<SideWidgets::SideWidgetText> commandTextWidgets; // a list of the message widgets
     };

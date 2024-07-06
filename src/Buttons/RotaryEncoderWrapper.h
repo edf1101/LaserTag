@@ -6,7 +6,7 @@
 #define LASERTAG_ROTARYENCODERWRAPPER_H
 
 #include "Arduino.h"
-#include "Libs/ESP32Encoder/ESP32Encoder.h"
+#include "../Libs/ESP32Encoder/ESP32Encoder.h"
 #include <functional>
 
 class RotaryEncoderWrapper {

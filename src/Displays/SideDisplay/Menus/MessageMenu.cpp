@@ -38,9 +38,9 @@ namespace Menus {
       // create and initialise all the message widgets
       for (int i = 0; i < 5; i++) {
         SideWidgets::SideWidgetText messageWidget = SideWidgets::SideWidgetText(23 + (i * 21), 2, "", 1,
-                                                                                (i == 0) ? ST7735_WHITE : ST7735_RED);
+                                                                                (i == 0) ? TFT_PRIMARY_COLOUR : TFT_SECONDARY_COLOUR);
         SideWidgets::SideWidgetText messageWidget2 = SideWidgets::SideWidgetText(33 + (i * 21), 2, "", 1,
-                                                                                 (i == 0) ? ST7735_WHITE : ST7735_RED);
+                                                                                 (i == 0) ? TFT_PRIMARY_COLOUR : TFT_SECONDARY_COLOUR);
         messageWidget.init(sideDisplay);
         messageWidget2.init(sideDisplay);
         messageWidgets.emplace_back(messageWidget);
@@ -58,7 +58,7 @@ namespace Menus {
         // get the raw display
         Adafruit_ST7735 *display = sideDisplay->getRawDisplay();
         for (int i = 0; i < 5; i++) {
-          display->drawRect(0, 21 + (i * 21), 160, 22, ST7735_RED);
+          display->drawRect(0, 21 + (i * 21), 160, 22, TFT_SECONDARY_COLOUR);
         }
       }
 
@@ -82,11 +82,11 @@ namespace Menus {
 
       // set colour of all the widgets
       for(auto &widget: messageWidgets) {
-        widget.setColour(ST7735_RED);
+        widget.setColour(TFT_SECONDARY_COLOUR);
       }
       // then set highlighted ones to white
-      messageWidgets[highlightedRow * 2].setColour(ST7735_WHITE);
-      messageWidgets[highlightedRow * 2 + 1].setColour(ST7735_WHITE);
+      messageWidgets[highlightedRow * 2].setColour(TFT_PRIMARY_COLOUR);
+      messageWidgets[highlightedRow * 2 + 1].setColour(TFT_PRIMARY_COLOUR);
 
 
       for (int row = 0; row < 5; row++) {

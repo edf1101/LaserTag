@@ -8,8 +8,8 @@
 #include "SideDisplay.h"
 #include "Menus/MenuManager.h"
 #include <functional>
-#include "Buttons/Buttons.h"
-#include "LaserTag.h"
+#include "../../Buttons/Buttons.h"
+#include "../../LaserTag.h"
 
 void SideDisplay::init() {
   // Set up the side display

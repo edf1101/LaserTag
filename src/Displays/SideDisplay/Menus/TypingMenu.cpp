@@ -12,8 +12,8 @@
 
 namespace Menus {
     TypingMenu::TypingMenu(MenuManager *menuManager, std::string title, const std::string &allChars, bool hideString)
-            : titleWidget(2, 2, std::move(title), 2, ST7735_WHITE),
-              completeStringWidget(40, 20, "", 2, ST7735_WHITE) {
+            : titleWidget(2, 2, std::move(title), 2, TFT_PRIMARY_COLOUR),
+              completeStringWidget(40, 20, "", 2, TFT_PRIMARY_COLOUR) {
       // constructor for the TypingMenu class
 
 
@@ -38,7 +38,7 @@ namespace Menus {
 
       for (int i = 0; i < 5; i++) {  // create the character widgets and set them up
 
-        uint16_t colour = (i == 2) ? ST7735_RED : ST7735_WHITE;
+        uint16_t colour = (i == 2) ? TFT_SECONDARY_COLOUR : TFT_PRIMARY_COLOUR;
         char c;
         int index = (rotaryCounter + i + maxRotaryCounter - 2) % maxRotaryCounter;
 
@@ -71,10 +71,10 @@ namespace Menus {
         int startPosY = 100;
 
         for (int i = 0; i < 5; i++) {
-          rawDisplay->drawRect((short) (startPosX + (30 * i)), (short) startPosY, 25, 25, ST7735_WHITE);
+          rawDisplay->drawRect((short) (startPosX + (30 * i)), (short) startPosY, 25, 25, TFT_PRIMARY_COLOUR);
         }
 
-        rawDisplay->drawRect(-1, 37, 170, 20, ST7735_WHITE);
+        rawDisplay->drawRect(-1, 37, 170, 20, TFT_PRIMARY_COLOUR);
       }
 
       titleWidget.draw(force);

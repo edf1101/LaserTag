@@ -25,8 +25,8 @@ namespace SideWidgets {
       if (lastHighlighted == highlighted && !force) return; // If the widget hasn't changed, don't redraw it
       lastHighlighted = highlighted; // Update the last highlighted state
 
-      int colour = highlighted ? ST7735_WHITE
-                               : ST7735_RED; // Set the colour of the widget based on the highlighted state
+      int colour = highlighted ? TFT_PRIMARY_COLOUR
+                               : TFT_SECONDARY_COLOUR; // Set the colour of the widget based on the highlighted state
 
       Adafruit_ST7735 *rawDisplay = myDisplay->getRawDisplay();
 

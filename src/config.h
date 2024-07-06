@@ -14,7 +14,7 @@
 #define ADMIN_PASS "0000" // Must be number between 1-8 chars written as a string
 #define MINS_TO_SLEEP 20 // Time in seconds before the gun goes to sleep (atm 240s is 4 minutes)
 
-// Mesh network settings
+// Mesh network settings (To make sure other guns don't connect to you change the SSID and PASSWORD)
 #define MESH_SSID "LaserTag"
 #define MESH_PASSWORD "LaserTag"
 #define MESH_PORT 5555
@@ -23,6 +23,10 @@
 #define TFT_CS 14
 #define TFT_RST 15
 #define TFT_DC 32
+
+// Colour definitions for the side display. These are RGB565 colours.
+#define TFT_PRIMARY_COLOUR 0xFFFF // Primary is for highlighted text, icons etc.
+#define TFT_SECONDARY_COLOUR 0x07E0 // Secondary is for non-highlighted text, borders etc.
 
 // Pin definitions for the rotary encoder
 #define ROT_OUT_A 17

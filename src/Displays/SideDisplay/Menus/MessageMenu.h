@@ -40,7 +40,7 @@ namespace Menus {
         std::vector<unsigned long> *timeList; // a list of times
 
         SideWidgets::SideWidgetText titleWidget = SideWidgets::SideWidgetText(0, 2, "", 2,
-                                                                              ST7735_WHITE); // the title widget
+                                                                              TFT_PRIMARY_COLOUR); // the title widget
 
         std::vector<SideWidgets::SideWidgetText> messageWidgets; // a list of the message widgets
     };

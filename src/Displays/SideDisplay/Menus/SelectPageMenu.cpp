@@ -15,7 +15,7 @@
 namespace Menus {
 
     SelectPageMenu::SelectPageMenu(MenuManager *menuManager, std::string title)
-            : titleWidget(SideWidgets::SideWidgetText(2, 2, std::move(title), 2, ST7735_WHITE)) {
+            : titleWidget(SideWidgets::SideWidgetText(2, 2, std::move(title), 2, TFT_PRIMARY_COLOUR)) {
       // constructor for the SelectPageMenu class
 
       this->menuManager = menuManager;

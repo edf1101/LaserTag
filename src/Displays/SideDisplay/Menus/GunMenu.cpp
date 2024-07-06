@@ -103,6 +103,7 @@ void Menus::GunMenu::fetchGunsInUse() {
 }
 
 void Menus::GunMenu::subMenuCounterChanged(int item) {
+  // When the sub menu counter changes update the gun info text
 
   Weapons::Gun currentGun = gunsInUse[item];
   int fireRate = (int) round(1.0 / ((float) currentGun.getFireSpeed() / 1000.0));
