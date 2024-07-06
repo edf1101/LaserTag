@@ -42,6 +42,9 @@ namespace Networks {
       Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
 #endif
 
+      // Update the node activity map
+      nodeActivityMap[from] = millis();
+
       // Parse the JSON message
       JsonDocument jsonIn;
       deserializeJson(jsonIn, msg);
@@ -171,8 +174,19 @@ namespace Networks {
         connectedNodes.insert(from);
 
         // pick a unitnum for the node
-        // TODO implement this properly
-        int unitnum = random(1, 127);
+        vector<uint32_t> allNodes = LaserTag::getNetworkManager()->getAllPlayerNodeIDs();
+        vector<int> allUnitnums; // get all the unitnums of the players in the game so far.
+        for (uint32_t node : allNodes) {
+          Player *player = LaserTag::getNetworkManager()->getPlayerInMap(node);
+          allUnitnums.push_back(player->unitnum);
+        }
+
+        int unitnum = random(1,127); // pick a random unitnum to start with
+        while (std::find(allUnitnums.begin(), allUnitnums.end(), unitnum) != allUnitnums.end()) {
+          // if the unitnum is already in use then pick a new one
+          unitnum = random(1,127);
+        }
+
         Serial.println("Node is new, Assigning it unitnum: " + String(unitnum));
         jsonOut["unitnum"] = unitnum;
         jsonOut["name"] = "Player" + String(unitnum);
@@ -297,6 +311,20 @@ namespace Networks {
         mesh.sendSingle(shooterNodeID, msg);
       }
 
+    }
+
+    set<uint32_t> MeshManager::getActiveNodes() {
+      // Get the list of active nodes
+
+      set<uint32_t> activeNodes; // create a new set to return
+
+      for(auto & pair : nodeActivityMap){
+        if (millis() - pair.second < MESH_ACTIVITY_TIMEOUT) { // if the node has been active in the last ~20 seconds
+          activeNodes.insert(pair.first); // add it to the set
+        }
+      }
+
+      return activeNodes;
     }
 
 } // Networks

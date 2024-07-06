@@ -62,7 +62,7 @@ namespace Networks {
 
     void Network::disconnectNetwork() {
       // disconnect from the network
-
+ // TODO if you turn off your gun u lose all lives so you can't benefit from this.
       meshManager.disconnect();
 
     }

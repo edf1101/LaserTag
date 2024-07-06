@@ -16,7 +16,8 @@
 #include "../ImageData.h"
 #include "../../config.h"
 #include "Menus/MenuManager.h"
-#include "../../Libs/ESP32RotaryEncoder/ESP32RotaryEncoder.h"
+#include "Libs/ESP32Encoder/ESP32Encoder.h"
+#include "Buttons/Button.h"
 
 
 class SideDisplay {
@@ -25,7 +26,6 @@ public:
     }
 
     void init(); // Initialize the side display
-    void pollEncoder(); // Poll the rotary encoder for input
 
     void displayMenu();
 
@@ -40,16 +40,12 @@ private:
 
     MenuManager menuManager; // The menu manager object
 
-    // variables relating to the rotary encoder
-    bool lastStateA = false;
-    bool lastPress = false;
+    void onRotaryChange(int change); // Called when the rotary encoder is turned
+
+    // variables for controlling the rotary press button
+    Button* rotaryPressButton;
     unsigned long lastPressTime = 0;
-
-    // variables for controlling the rotary encoder
-    RotaryEncoder myRotaryEncoder = RotaryEncoder(ROT_OUT_A, ROT_OUT_B);
-    int rotaryChange = 0; // This flag is used to state the change recorded by the rotary encoder
-    void knobCallback(long value); // This is the lightweight callback function for the rotary encoder
-
+    void rotaryPressCallback();
 };
 
 

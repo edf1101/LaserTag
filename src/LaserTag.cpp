@@ -52,18 +52,21 @@ void LaserTag::loop() {
 
   soundPlayer.soundLoop(); // Check if any sounds need to be played / fill buffer
   ledManager.loop();
-  sideDisplay.pollEncoder(); // Check the rotary encoder for movements
   hudDisplay.loop(); // Call the HUD loop function
   buttons.pollButtons(); // Check the buttons for presses
   firing.FiringLoop(); // Call the firing loop function
   player.loop(); // Call the player loop function
   gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
   networkManager.loop(); // Call the network loop function
+
+  // turn off gun if no activity for a while
+  if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {
+    turnOff();
+  }
 }
 
 void LaserTag::updateHUD() {
 //   Updates the Hud display
-
   getGamemode()->drawHUD();
 }
 

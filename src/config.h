@@ -12,6 +12,7 @@
 #define DEBUG_SERIAL 1  // Whether we print to the serial monitor or not
 #define SOUND_ON 1 // Whether we play sounds or not
 #define ADMIN_PASS "0000" // Must be number between 1-8 chars written as a string
+#define MINS_TO_SLEEP 20 // Time in seconds before the gun goes to sleep (atm 240s is 4 minutes)
 
 // Mesh network settings
 #define MESH_SSID "LaserTag"

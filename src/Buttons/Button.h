@@ -24,6 +24,8 @@ public:
 
     bool isPressed() const;
 
+    unsigned long getLastActivity() const;
+
 private:
     int pin;
     uint8_t inputMode;
@@ -36,6 +38,8 @@ private:
     std::function<void(void)> releasedCallback;
 
     bool setReleasedCallback = false;
+
+    unsigned long lastActivity = 0; // The last time the button was pressed or released
 
 };
 

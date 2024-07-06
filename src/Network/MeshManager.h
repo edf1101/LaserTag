@@ -12,6 +12,9 @@
 #include "../config.h"
 #include <vector>
 #include <set>
+#include <unordered_map>
+
+#define MESH_ACTIVITY_TIMEOUT 20000 // Time in milliseconds before a node is considered inactive
 
 using namespace std;
 
@@ -46,6 +49,8 @@ namespace Networks {
 
         void sendUpdate(); // send a player state update over the network
 
+        set<uint32_t > getActiveNodes(); // Get the list of connected nodes
+
     private:
         Scheduler userScheduler; // to control your personal task
         painlessMesh mesh;
@@ -60,7 +65,8 @@ namespace Networks {
         void receivedCallback(uint32_t from, String &msg);
 
         set<uint32_t> connectedNodes; // List of nodes that are connected
-        set<uint32_t> activeNodes; // List of nodes that are active (recently sent a message)
+        unordered_map<uint32_t,unsigned long> nodeActivityMap; // time each node was last active (sent a message)
+
         void handleLobbyJoinRequest(uint32_t from);
 
         void handleJoinLobbyAck(String jsonData); // Handle the join lobby acknowledge message

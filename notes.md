@@ -66,7 +66,6 @@ if not do usual thing. If so then do the join game as existing routine.
 - logger have diff levels of logging
 
 ## Plan
-- make an constantly maintained active nodes vector.
 - create leaderboard menu
 - implement rest of commands
 - add it so commands can be sent as BROADCAST, IR, MYSELF. be able to set that mode in menu and update command menus accordingly.

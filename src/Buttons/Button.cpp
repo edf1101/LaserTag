@@ -38,6 +38,7 @@ void Button::poll() {
 
   if (currentState != lastState) {
     lastState = currentState;
+    lastActivity = millis();
     if (currentState == HIGH) {
 
       if (setPressedCallback) {
@@ -58,4 +59,10 @@ bool Button::isPressed() const {
     return digitalRead(pin) == LOW;
   }
   return digitalRead(pin) == HIGH;
+}
+
+unsigned long Button::getLastActivity() const {
+  // Return the last time the button was pressed or released
+
+  return lastActivity;
 }
