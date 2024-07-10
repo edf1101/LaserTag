@@ -58,6 +58,7 @@ void LaserTag::loop() {
   player.loop(); // Call the player loop function
   gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
   networkManager.loop(); // Call the network loop function
+  sideDisplay.getMenuManager()->loop(); // Call the menu manager loop function to refresh menus
 
   // turn off gun if no activity for a while
   if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {

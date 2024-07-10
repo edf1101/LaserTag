@@ -12,7 +12,7 @@
 void PlayerWrapper::init(LaserTag *_mySystem, int _team) {
   player.unitnum = random(1, 127);
   player.team = _team;
-  player.name = "Player" + std::to_string(player.unitnum);
+  player.name = "Gun" + std::to_string(player.unitnum);
   player.revives = 0;
   player.health = 100;
   player.kills = 0;

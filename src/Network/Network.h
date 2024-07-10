@@ -7,6 +7,7 @@
 #ifndef LASERTAG_NETWORK_H
 #define LASERTAG_NETWORK_H
 
+#include "Arduino.h"
 #include "MessageQueue.h"
 #include "ArduinoJson.h"
 #include "../config.h"
@@ -41,6 +42,8 @@ namespace Networks {
         static Player *getPlayerByUnitnum(int unitnum); // Get a player from the map by unitnum
         static uint32_t getPlayerIdByUnitnum(int unitnum); // Get a player from the map by unitnum
         static vector<uint32_t> getAllPlayerNodeIDs(); // returns all players in the map (the keys)
+
+        set<uint32_t > getActivePlayers(); // Get all active players
 
         void sendCommand(std::string commandCode); // Send a command
 

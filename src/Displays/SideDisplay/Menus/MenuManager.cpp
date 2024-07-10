@@ -58,11 +58,13 @@ void MenuManager::init() {
   // create the menu objects
 
   mainMenu.init(sideDisplay);
-  mainMenu.addSubMenu("Scores", Images::img_menuLeaderboard, nullptr);
+  mainMenu.addSubMenu("Scores", Images::img_menuLeaderboard, &leaderboardMenu);
   mainMenu.addSubMenu("Msgs", Images::img_menuMessages, &messageMenu);
   mainMenu.addSubMenu("Guns", Images::img_menuGuns, &gunMenu);
   mainMenu.addSubMenu("Settings", Images::img_menuSettings, &settingsMenu);
   mainMenu.addSubMenu("Admin", Images::img_menuAdmin, &adminMenu);
+
+  leaderboardMenu.init(sideDisplay, &mainMenu);
 
   settingsMenu.init(sideDisplay);
   settingsMenu.setParentMenu(&mainMenu);
@@ -118,5 +120,16 @@ void MenuManager::init() {
   gamesCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Gamemodes");
   gameModsCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Game Mods");
 
+
   display(true); // display the menu
+}
+
+void MenuManager::loop() {
+  // loop function to refresh the menu
+
+  if (millis() - lastMenuRefresh > MENU_REFRESH_TIME) {
+    currentMenu->display(false);
+    currentMenu->onRotaryTurned(0);
+    lastMenuRefresh = millis();
+  }
 }

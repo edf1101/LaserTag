@@ -109,6 +109,7 @@ namespace Gamemodes {
       // This function is called when a hit/kill is confirmed.
 
       // in this base game bit all we do is increment the kills.
-      LaserTag::getPlayer()->setKills(LaserTag::getPlayer()->getKills() + 1);
+      if (kill)// if it was a kill not just a hit
+        LaserTag::getPlayer()->setKills(LaserTag::getPlayer()->getKills() + 1);
     }
 }

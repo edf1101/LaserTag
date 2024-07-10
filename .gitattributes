@@ -1,7 +1,7 @@
 src/Sound/Sounds/* linguist-vendored
 src/Displays/Images/* linguist-vendored
 
-src/Libs/ESP32RotaryEncoder/* linguist-vendored
+src/Libs/ESP32Encoder/* linguist-vendored
 
 src/Libs/Adafruit_NeoPixel/* linguist-vendored
 

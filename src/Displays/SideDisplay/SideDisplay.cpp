@@ -70,3 +70,9 @@ void SideDisplay::onRotaryChange(int change) {
   menuManager.onRotaryTurned(change);
   menuManager.display(false);
 }
+
+MenuManager *SideDisplay::getMenuManager() {
+  // Get the menu manager object
+
+    return &menuManager;
+}

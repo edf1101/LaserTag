@@ -49,7 +49,7 @@ namespace Networks {
 
         void sendUpdate(); // send a player state update over the network
 
-        set<uint32_t > getActiveNodes(); // Get the list of connected nodes
+        set<uint32_t> getActiveNodes(); // Get the list of connected nodes
 
     private:
         Scheduler userScheduler; // to control your personal task
@@ -65,7 +65,7 @@ namespace Networks {
         void receivedCallback(uint32_t from, String &msg);
 
         set<uint32_t> connectedNodes; // List of nodes that are connected
-        unordered_map<uint32_t,unsigned long> nodeActivityMap; // time each node was last active (sent a message)
+        unordered_map<uint32_t, unsigned long> nodeActivityMap; // time each node was last active (sent a message)
 
         void handleLobbyJoinRequest(uint32_t from);
 

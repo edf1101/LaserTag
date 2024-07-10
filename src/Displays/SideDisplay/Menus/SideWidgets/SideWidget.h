@@ -22,7 +22,7 @@ namespace SideWidgets {
 
         virtual void init(SideDisplay *sideDisplay);
 
-        void erase(); // Erase the widget from the screen
+        virtual void erase(); // Erase the widget from the screen
         virtual void draw(bool force) = 0; // Draw the widget to the screen
     protected:
         SideDisplay *myDisplay; // Reference to the display object

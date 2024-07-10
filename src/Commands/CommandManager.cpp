@@ -19,7 +19,6 @@ namespace Commands {
       // Set up all the game modifications
       Command::createCommand("Game Mods", "Play", "GM_PLA");
       Command::createCommand("Game Mods", "Pause", "GM_PAU");
-      Command::createCommand("Game Mods", "End Game", "GM_END");
 
       // Set up all the player commands
 

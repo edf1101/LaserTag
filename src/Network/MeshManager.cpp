@@ -181,6 +181,9 @@ namespace Networks {
           allUnitnums.push_back(player->unitnum);
         }
 
+        // TODO have a max number of tries before giving up
+        // TODO If more than 99 players are in the game then we can't add any more
+        // TODO we can just break and not send back a response
         int unitnum = random(1,127); // pick a random unitnum to start with
         while (std::find(allUnitnums.begin(), allUnitnums.end(), unitnum) != allUnitnums.end()) {
           // if the unitnum is already in use then pick a new one
@@ -189,13 +192,13 @@ namespace Networks {
 
         Serial.println("Node is new, Assigning it unitnum: " + String(unitnum));
         jsonOut["unitnum"] = unitnum;
-        jsonOut["name"] = "Player" + String(unitnum);
+        jsonOut["name"] = "Gun" + String(unitnum);
         jsonOut["joinState"] = JoinAckStates::ACCEPT_NEW_GUN;
 
         // add it to the network map of players
         Player newPlayer = LaserTag::getGamemodeManager()->getCurrentGame()->getPlayerTemplate();
         newPlayer.unitnum = unitnum;
-        newPlayer.name = "Player" + std::to_string(unitnum);
+        newPlayer.name = "Gun" + std::to_string(unitnum);
         LaserTag::getNetworkManager()->setPlayerInMap(from, newPlayer);
       }
 

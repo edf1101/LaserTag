@@ -33,7 +33,7 @@ public:
                    uint16_t color, Images::OFFSET orientation);
 
     Adafruit_ST7735 *getRawDisplay(); // Get the display object
-
+    MenuManager* getMenuManager(); // Get the menu manager object
 private:
     Adafruit_ST7735 sideDisplay = Adafruit_ST7735(TFT_CS, TFT_DC,
                                                   TFT_RST); // The side display object (ST7735)

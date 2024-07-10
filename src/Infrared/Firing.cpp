@@ -31,13 +31,13 @@ void Firing::FiringLoop() {
 
   infraredTransciever.receiveIR(); // check for IR signals in
   if (infraredTransciever.infraredReceived) {
-#if DEBUG_SERIAL
-    Serial.println("IR Received");
-#endif
+//#if DEBUG_SERIAL
+//    Serial.println("IR Received");
+//#endif
     if (infraredTransciever.crcValid) {
-#if DEBUG_SERIAL
-      Serial.println("CRC correct");
-#endif
+//#if DEBUG_SERIAL
+//      Serial.println("CRC correct");
+//#endif
 
       int irControl = infraredTransciever.irPacketIn.control;
 

@@ -13,6 +13,9 @@
 #include "MessageMenu.h"
 #include "TypingMenu.h"
 #include "CommandScrollMenu.h"
+#include "LeaderboardMenu.h"
+
+#define MENU_REFRESH_TIME 1000
 
 class SideDisplay;
 
@@ -22,6 +25,7 @@ class MenuManager {
 public:
     explicit MenuManager(SideDisplay *_sideDisplay); // constructor for the MenuManager class
     void init(); // create the menu objects
+    void loop(); // loop function
 
     Menu *getCurrentMenu(); // get the current menu
 
@@ -57,7 +61,10 @@ private:
     CommandScrollMenu gamesCommandMenu = CommandScrollMenu(this); // holds actual games
     CommandScrollMenu gameModsCommandMenu = CommandScrollMenu(this); // holds game modifications (play/pause/etc)
 
+    LeaderboardMenu leaderboardMenu = LeaderboardMenu(this);
 
+
+    unsigned long lastMenuRefresh = 0; // the last time the menu was refreshed
 };
 
 

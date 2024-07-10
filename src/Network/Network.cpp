@@ -62,7 +62,7 @@ namespace Networks {
 
     void Network::disconnectNetwork() {
       // disconnect from the network
- // TODO if you turn off your gun u lose all lives so you can't benefit from this.
+      // TODO if you turn off your gun u lose all lives so you can't benefit from this.
       meshManager.disconnect();
 
     }
@@ -73,7 +73,8 @@ namespace Networks {
       inLobby = true;
       Serial.println("Joined lobby");
 
-      LaserTag::getNetworkManager()->getMessageQueue()->pushMessage("Joined Lobby"); // tell the msg queue we joined the lobby
+      LaserTag::getNetworkManager()->getMessageQueue()->pushMessage(
+              "Joined Lobby"); // tell the msg queue we joined the lobby
 
       LaserTag::getGamemode()->drawHUD(); // so it says we're in a lobby now.
 
@@ -169,7 +170,7 @@ namespace Networks {
       std::string victimName = LaserTag::getNetworkManager()->getPlayerByUnitnum(victimUnitnum)->name;
 
       if (killConfirm) { // If the victim died put that on our message queue.
-        messageQueue.pushMessage(shooterName + " killed " + victimName + " " +  + "!");
+        messageQueue.pushMessage(shooterName + " killed " + victimName + " " + +"!");
       }
 
       if (shooterUnitnum ==
@@ -177,6 +178,12 @@ namespace Networks {
 
         LaserTag::getGamemodeManager()->getCurrentGame()->onHitConfirm(victimUnitnum, killConfirm);
       }
+    }
+
+    set<uint32_t> Network::getActivePlayers() {
+      // return all active players. This is a wrapper for the mesh manager get active nodes function,
+
+      return meshManager.getActiveNodes();
     }
 
 } // Networks
