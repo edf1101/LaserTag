@@ -31,9 +31,12 @@ namespace Menus {
         void onRotaryTurned(int change); // called when the rotary encoder is turned
         void onRotaryPressed(); // called when the button is pressed
 
+        void resetMenu(); // reset the menu
+
     private:
         MenuManager *menuManager; // pointer to the menu manager
         Menu *parentMenu; // pointer to the parent menu
+
         string commandGroup; // the group of commands to display
         vector<string> commandNames; // the list of command names
         vector<Commands::Command*> commandLists; // the list of command objects
@@ -42,6 +45,8 @@ namespace Menus {
                                                                               TFT_PRIMARY_COLOUR); // the title widget
 
         std::vector<SideWidgets::SideWidgetText> commandTextWidgets; // a list of the message widgets
+
+        void updateCommands(); // update the commands displayed
     };
 
 } // Menus

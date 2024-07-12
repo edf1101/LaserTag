@@ -7,11 +7,18 @@
 #ifndef LASERTAG_COMMANDMANAGER_H
 #define LASERTAG_COMMANDMANAGER_H
 
-#include "CommandEnums.h"
+#define GROUP_SIZE 20
+
 #include "Command.h"
 #include <string>
 
 namespace Commands {
+
+    enum commandSendType {
+        BROADCAST,
+        SINGLE,
+        SELF
+    };
 
     class CommandManager {
     public:
@@ -19,12 +26,18 @@ namespace Commands {
         void processCommand(Command *commandPointer); // Process the command
         void sendCommand(Command *commandPointer); // Send the command
 
-        // getters and setters for the broadcast state
-        bool getBroadcast();
-        void setBroadcast(bool broadcast);
+        // getters and setters for the send type
+        commandSendType getSendType();
+
+        void setSendType(commandSendType newSendType);
+
+        void setCmdTypeBroadcast(); // Setter for the command to send as a broadcast signal
+        void setCmdTypeSingle(); // Setter for the command to send as a single signal
+        void setCmdTypeSelf(); // Setter for the command to send as a broadcast signal
 
     private:
-        bool broadcast = true; // Whether to send the command to everyone (wifi) or just the target (IR)
+        // Whether to send the command to everyone (Wi-Fi), just the target (IR) or just ourself.
+        commandSendType currentSendType = BROADCAST;
     };
 
 } // Commands

@@ -27,15 +27,7 @@ namespace Menus {
       Menu::init(_sideDisplay);
 
       // get the name for all the commands and put them in a list
-      this->commandLists = Command::getCommandsByGroup(_commandGroup);
-      for (auto &command: this->commandLists) {
-        commandNames.push_back(command->getCommandName());
-      }
-
-      // set the rotary counter max
-      int rotaryMax = ((int) commandNames.size() + 1);
-
-      setRotaryMax(rotaryMax);
+      updateCommands();
 
       titleWidget.init(sideDisplay); // initialise the title widget
       titleWidget.setText(_commandGroup); // set the title widget text
@@ -43,9 +35,11 @@ namespace Menus {
       // create and initialise all the message widgets
       for (int i = 0; i < 5; i++) {
         SideWidgets::SideWidgetText itemWidget = SideWidgets::SideWidgetText(23 + (i * 21), 2, "", 1,
-                                                                             (i == 0) ? TFT_PRIMARY_COLOUR : TFT_SECONDARY_COLOUR);
+                                                                             (i == 0) ? TFT_PRIMARY_COLOUR
+                                                                                      : TFT_SECONDARY_COLOUR);
         SideWidgets::SideWidgetText itemWidget2 = SideWidgets::SideWidgetText(33 + (i * 21), 2, "", 1,
-                                                                              (i == 0) ? TFT_PRIMARY_COLOUR : TFT_SECONDARY_COLOUR);
+                                                                              (i == 0) ? TFT_PRIMARY_COLOUR
+                                                                                       : TFT_SECONDARY_COLOUR);
         itemWidget.init(sideDisplay);
         itemWidget2.init(sideDisplay);
         commandTextWidgets.emplace_back(itemWidget);
@@ -84,7 +78,7 @@ namespace Menus {
       int highlightedRow = min(rotaryCounter, 4); // which row to highlight white
 
       // set colour of all the widgets
-      for(auto &commandTextWidget: commandTextWidgets) {
+      for (auto &commandTextWidget: commandTextWidgets) {
         commandTextWidget.setColour(TFT_SECONDARY_COLOUR);
       }
       // then set highlighted ones to white
@@ -101,8 +95,7 @@ namespace Menus {
         if (displayOnRow == -1) {
           commandTextWidgets[row * 2].setText("Return to menu");
           commandTextWidgets[(row * 2) + 1].setText("");
-        }
-        else if (displayOnRow < (int) commandNames.size()) {
+        } else if (displayOnRow < (int) commandNames.size()) {
           commandTextWidgets[row * 2].setText(commandNames[displayOnRow]);
           commandTextWidgets[(row * 2) + 1].setText("");
         } else {
@@ -122,9 +115,50 @@ namespace Menus {
         menuManager->switchMenu(parentMenu);
       } else { // otherwise call the callback function
 
-        Command *commandPressed = this->commandLists[rotaryCounter - 1];
-        LaserTag::getCommandManager()->sendCommand(commandPressed);
+        // Because we may not be using the whole command group due to the send type,
+        // we need to just check the whole command group for what matches the correct name.
+
+        std::string commandName = commandNames[rotaryCounter - 1]; // get the name of the currently selected one
+
+        // iterate through the group to check if any names match
+        for (auto &command: Command::getCommandsByGroup(commandGroup)) {
+          if (command->getCommandName() == commandName) {
+            LaserTag::getCommandManager()->sendCommand(command);
+            return;
+          }
+        }
+
       }
+    }
+
+    void CommandScrollMenu::updateCommands() {
+      // get the name for all the commands and put them in a list
+
+      Commands::commandSendType currentSendType = LaserTag::getCommandManager()->getSendType();
+      commandNames.clear();
+      this->commandLists = Command::getCommandsByGroup(commandGroup);
+      for (auto &command: this->commandLists) {
+        // Check to make sure the command is valid for the current send type
+        bool valid = (currentSendType == Commands::BROADCAST && command->getCanBroadcast()) ||
+                     (currentSendType == Commands::SINGLE && command->getCanSingle()) ||
+                     (currentSendType == Commands::SELF && command->getCanSelf());
+        if (valid)
+          commandNames.push_back(command->getCommandName());
+      }
+
+      // set the rotary counter max
+      int rotaryMax = ((int) commandNames.size() + 1);
+
+      setRotaryMax(rotaryMax);
+    }
+
+    void CommandScrollMenu::resetMenu() {
+      // reset the menu
+      Menu::resetMenu();
+
+      updateCommands(); // update the commands displayed in case the user has changed the send type
+      onRotaryTurned(0); // to update the text messages
+      display(false); // display the menur
     }
 
 

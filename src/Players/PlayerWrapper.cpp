@@ -99,6 +99,36 @@ Weapons::Gun *PlayerWrapper::getGun() {
   return &gun;
 }
 
+void PlayerWrapper::swapGun(std::string gunName) {
+  // Fairly swap guns for the player
+
+  // calculate the percentage of mags remaining
+  int currentMags = gun.getMagsRemaining();
+  int startMags = gun.getInitialMags();
+  float magsRatio = (float) currentMags / (float) startMags;
+
+  // set the new gun so that it has the same percentage of mags remaining
+  Weapons::Gun newGun = WeaponsManager::getGun(gunName);
+  int newGunMagsRemaining = ((int) ((float) magsRatio * newGun.getInitialMags()));
+  int newGunAmmoRemaining = (newGunMagsRemaining > 0) ? newGun.getInitialAmmo() : 0;
+  newGun.setAmmoAndMags(newGunAmmoRemaining, newGunMagsRemaining);
+
+  gun = newGun; // assign the new gun to the player
+
+  gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
+
+}
+
+void PlayerWrapper::resetGun() {
+  // reset a gun so it has full ammo and mags, no longer supressed, inf ammo etc
+
+  Weapons::Gun currentGun = gun;
+  std::string currentName = gun.getName();
+
+  gun = WeaponsManager::getGun(currentName); // reset the gun to the same gun (just new instance)
+
+}
+
 bool PlayerWrapper::canFire() {
   if (player.health <= 0) return false; // if the player is dead they can't fire
   if (player.revives < 0) return false; // if the player has no revives left they can't fire
@@ -148,7 +178,8 @@ void PlayerWrapper::loop() {
     Serial.println("Players respawned");
 #endif
     player.health = 100;
-    player.revives--;
+    if (currentInfiniteLivesState == NORMAL_LIVES) // Normal lives is the only state that uses up a revive
+      player.revives--;
     respawning = false;
   }
 }
@@ -163,28 +194,9 @@ bool PlayerWrapper::canTakeDamage(int shooterUnitnum) {
   if (player.revives == 0 && player.health <= 0)
     return false; // if the player has no revives left and is dead they can't take damage
 
+  if (currentInfiniteLivesState == INVINCIBLE_LIVES) return false; // if the player is invincible they can't take damage
+
   return true; // passed all checks so return true
-}
-
-
-void PlayerWrapper::swapGun(std::string gunName) {
-  // Fairly swap guns for the player
-
-  // calculate the percentage of mags remaining
-  int currentMags = gun.getMagsRemaining();
-  int startMags = gun.getInitialMags();
-  float magsRatio = (float) currentMags / (float) startMags;
-
-  // set the new gun so that it has the same percentage of mags remaining
-  Weapons::Gun newGun = WeaponsManager::getGun(gunName);
-  int newGunMagsRemaining = ((int) ((float) magsRatio * newGun.getInitialMags()));
-  int newGunAmmoRemaining = (newGunMagsRemaining > 0) ? newGun.getInitialAmmo() : 0;
-  newGun.setAmmoAndMags(newGunAmmoRemaining, newGunMagsRemaining);
-
-  gun = newGun; // assign the new gun to the player
-
-  gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
-
 }
 
 void PlayerWrapper::setPlayerToTemplate(Player *target, Player templatePlayer) {
@@ -195,7 +207,6 @@ void PlayerWrapper::setPlayerToTemplate(Player *target, Player templatePlayer) {
   target->health = templatePlayer.health;
   target->kills = templatePlayer.kills;
   target->carryingFlag = templatePlayer.carryingFlag;
-  target->gunIndex = templatePlayer.gunIndex;
 
 }
 
@@ -204,9 +215,21 @@ void PlayerWrapper::setPlayerToTemplate(Player templatePlayer) {
 
   setPlayerToTemplate(&player, templatePlayer);
 
-  gun = WeaponsManager::getGun("Assault Rifle"); // reset my gun (default is the Assault Rifle)
+  resetGun();
   gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
   respawning = false; // reset the respawn status
   respawnStartTime = 0;
 
+}
+
+void PlayerWrapper::setInfiniteLivesState(PlayerWrapper::InfiniteLivesState state) {
+  // Set the player's infinite lives state
+
+  currentInfiniteLivesState = state;
+}
+
+PlayerWrapper::InfiniteLivesState PlayerWrapper::getInfiniteLivesState() {
+  // Return the player's infinite lives state
+
+  return currentInfiniteLivesState;
 }

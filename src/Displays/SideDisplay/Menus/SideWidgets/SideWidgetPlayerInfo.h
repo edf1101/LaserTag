@@ -9,7 +9,7 @@
 
 #include "SideWidget.h"
 #include "Arduino.h"
-#include "Players/Player.h"
+#include "../../../../Players/Player.h"
 
 namespace SideWidgets {
 

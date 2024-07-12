@@ -1,6 +1,7 @@
 /*
- * This is a leaderboard that gets displayed on the side display. It shows stats etc about different players.
  * Created by Ed Fillingham on 08/07/2024.
+ *
+ * This is a leaderboard that gets displayed on the side display. It shows stats etc about different players.
 */
 
 #ifndef LASERTAG_LEADERBOARDMENU_H
@@ -11,7 +12,7 @@
 #include <string>
 #include "Arduino.h"
 #include "SideWidgets/SideWidgetText.h"
-#include "Players/Player.h"
+#include "../../../Players/Player.h"
 #include "SideWidgets/SideWidgetPlayerInfo.h"
 
 class MenuManager; // forward declaration

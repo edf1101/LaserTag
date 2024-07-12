@@ -1,11 +1,12 @@
 /*
- * This is a leaderboard that gets displayed on the side display. It shows stats etc about different players.
  * Created by Ed Fillingham on 08/07/2024.
+ *
+ * This is a leaderboard that gets displayed on the side display. It shows stats etc about different players.
 */
 
 #include "LeaderboardMenu.h"
 #include "MenuManager.h"
-#include "LaserTag.h"
+#include "../../../LaserTag.h"
 #include <set>
 
 namespace Menus {
@@ -73,7 +74,6 @@ namespace Menus {
       }
 
       // List is now sorted so highest scores are at the top.
-
       setRotaryMax((int) players.size() + 1); // + 1 for return to menu bit.
     }
 
@@ -104,7 +104,6 @@ namespace Menus {
         playerInfoWidgets[0].draw(true);
         returnTextWidget.setText("Return to menu");
         returnTextWidget.draw(true);
-//        Serial.println("return button showing");
 
       } else if (!returnButtonShowing && force) {
         lastReturnButtonShowing = false;
@@ -112,15 +111,14 @@ namespace Menus {
         returnTextWidget.draw(true);
         playerInfoWidgets[0].setStatus(players[0], 0);
         playerInfoWidgets[0].draw(true);
-//        Serial.println("return button hiding");
       }
 
     }
 
     void LeaderboardMenu::onRotaryTurned(int change) {
       // This gets called when the rotary encoder is turned. We use it to scroll through the players
-      Serial.println("turned");
       // Do this in case of any new players
+
       updatePlayersList();
       setRotaryMax((int) players.size() + 1); // + 1 for return to menu bit.
 
@@ -165,7 +163,6 @@ namespace Menus {
         playerInfoWidgets[0].draw(true);
         returnTextWidget.setText("Return to menu");
         returnTextWidget.draw(true);
-//        Serial.println("return button showing");
 
       } else if (!returnButtonShowing && lastReturnButtonShowing == true) {
         lastReturnButtonShowing = false;
@@ -173,7 +170,6 @@ namespace Menus {
         returnTextWidget.draw(true);
         playerInfoWidgets[0].setStatus(players[0], 0);
         playerInfoWidgets[0].draw(true);
-//Serial.println("return button hiding");
       }
 
 
@@ -191,6 +187,7 @@ namespace Menus {
 
     void LeaderboardMenu::resetMenu() {
       // extra onRotaryTurned to make sure the top bit is layed out correctly when you go into a menu
+
       rotaryCounter = 0;
       lastReturnButtonShowing = false;
       Serial.println("RESET MENU");

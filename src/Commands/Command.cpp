@@ -9,28 +9,6 @@
 #include <utility>
 
 namespace Commands {
-    Command::Command(std::string groupName, std::string commandName, int commandIndex) {
-      // constructor for the Command object when it's an IR only command
-
-      this->groupName = std::move(groupName);
-      this->commandName = std::move(commandName);
-      this->commandIndex = commandIndex;
-      this->isWifiCommand = false;
-      this->isIRCommand = true;
-
-//      systemCommands.push_back(*this); // add the command to the list of all commands in the system
-    }
-
-    Command::Command(std::string groupName, std::string commandName, std::string commandCode) {
-      // constructor for the Command object when it's a Wi-Fi only command
-
-      this->groupName = std::move(groupName);
-      this->commandName = std::move(commandName);
-      this->commandCode = std::move(commandCode);
-      this->isWifiCommand = true;
-      this->isIRCommand = false;
-
-    }
 
     Command::Command(std::string groupName, std::string commandName, std::string commandCode, int commandIndex) {
       // constructor for the Command object when it's a Wi-Fi or IR command
@@ -39,34 +17,35 @@ namespace Commands {
       this->commandName = std::move(commandName);
       this->commandCode = std::move(commandCode);
       this->commandIndex = commandIndex;
-      this->isWifiCommand = true;
-      this->isIRCommand = true;
+      this->canBroadcast = true;
+      this->canSingle = true;
 
     }
 
-    void Command::createCommand(std::string groupName, std::string commandName, int commandIndex) {
-      // creates an IR only command using the constructor on the Heap
-      // so it's retained out of scope then adds it to the system commands list
-
-      auto *newCommand = new Command(std::move(groupName), std::move(commandName), commandIndex);
-      systemCommands.push_back(newCommand);
-    }
-
-    void Command::createCommand(std::string groupName, std::string commandName, std::string commandCode) {
-      // creates a Wi-Fi only command using the constructor on the Heap
-      // so it's retained out of scope then adds it to the system commands list
-
-      auto *newCommand = new Command(std::move(groupName), std::move(commandName), std::move(commandCode));
-      systemCommands.push_back(newCommand);
-    }
-
-    void
-    Command::createCommand(std::string groupName, std::string commandName, std::string commandCode, int commandIndex) {
+    void Command::createCommand(std::string groupName, std::string commandName,
+                                std::string commandCode, int commandIndex) {
       // creates a Wi-Fi or IR command using the constructor on the Heap
       // so it's retained out of scope then adds it to the system commands list
+      // This creator automatically assumes it can send Broadcast, single and self.
 
       auto *newCommand = new Command(std::move(groupName), std::move(commandName), std::move(commandCode),
                                      commandIndex);
+      systemCommands.push_back(newCommand);
+    }
+
+    void Command::createCommand(std::string groupName, std::string commandName,
+                                std::string commandCode, int commandIndex,
+                                bool canBroadcast, bool canSingle, bool canSelf) {
+      // creates a Wi-Fi or IR command using the constructor on the Heap
+      // so it's retained out of scope then adds it to the system commands list
+      // This creator allows you to specify if it can send Broadcast, single or self.
+
+      // create it.
+      auto *newCommand = new Command(std::move(groupName), std::move(commandName), std::move(commandCode),
+                                     commandIndex);
+
+      newCommand->modifySendType(canBroadcast, canSingle, canSelf); // modify its send type.
+
       systemCommands.push_back(newCommand);
     }
 
@@ -88,16 +67,28 @@ namespace Commands {
       return commandCode;
     }
 
-    bool Command::getIsWifiCommand() {
+    bool Command::getCanBroadcast() {
       // returns whether the command is able to be sent over Wi-Fi or not.
 
-      return isWifiCommand;
+      return canBroadcast;
     }
 
-    bool Command::getIsIRCommand() {
+    bool Command::getCanSingle() {
       // returns whether the command is able to be sent over IR or not.
 
-      return isIRCommand;
+      return canSingle;
+    }
+
+    bool Command::getCanSelf() {
+      // returns whether the command is able to be sent to just ourself.
+
+      return canSingle;
+    }
+
+    int Command::getCommandIndex() {
+      // return the command index
+
+      return commandIndex;
     }
 
     std::vector<Command *> Command::getCommandsByGroup(std::string groupName) {
@@ -126,7 +117,7 @@ namespace Commands {
 
       for (auto &command: systemCommands) {
         if (command->getGroupName() == groupName &&
-            command->getIsWifiCommand() == requiresWiFi && command->getIsIRCommand() == requiresIR) {
+            command->getCanBroadcast() == requiresWiFi && command->getCanSingle() == requiresIR) {
           commandsInGroup.push_back(command);
         }
       }
@@ -138,7 +129,7 @@ namespace Commands {
       // returns whether a command exists in the system or not
 
       for (auto &command: systemCommands) {
-        if (command->getIsWifiCommand() && command->commandCode == commandCode) {
+        if (command->getCanBroadcast() && command->commandCode == commandCode) {
           return true;
         }
       }
@@ -150,7 +141,7 @@ namespace Commands {
       // returns whether a command exists in the system or not
 
       for (auto &command: systemCommands) {
-        if (command->getIsIRCommand() && command->commandIndex == commandId) {
+        if (command->getCanSingle() && command->commandIndex == commandId) {
           return true;
         }
       }
@@ -178,6 +169,14 @@ namespace Commands {
         }
       }
       return nullptr;
+    }
+
+    void Command::modifySendType(bool canBroadcast, bool canSingle, bool canSelf) {
+      // modify who the command can send to
+
+      this->canBroadcast = canBroadcast;
+      this->canSingle = canSingle;
+      this->canSelf = canSelf;
     }
 
 }

@@ -6,7 +6,7 @@
 
 #include "SideWidgetPlayerInfo.h"
 #include "../../SideDisplay.h"
-#include "Weapons/WeaponsManager.h"
+#include "../../../../Weapons/WeaponsManager.h"
 
 namespace SideWidgets {
 

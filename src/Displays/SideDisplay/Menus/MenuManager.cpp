@@ -10,6 +10,7 @@
 #include <functional>
 #include "../../../LaserTag.h"
 #include "../../../Network/Network.h"
+#include "Commands/CommandManager.h"
 
 MenuManager::MenuManager(SideDisplay *_sideDisplay) {
   sideDisplay = _sideDisplay; // assign the pointer to the side display
@@ -95,15 +96,30 @@ void MenuManager::init() {
   adminMenu.setParentMenu(&mainMenu);
   adminMenu.setRequiresAdmin(true);
   adminMenu.addSubMenu("Commands", Images::img_menuCommand, &commandMenu);
+  adminMenu.addSubMenu("Cmd Type", Images::img_menuSettings, &adminCommandSendMethodMenu);
   adminMenu.addSubMenu("Return", Images::img_menuReturn, &mainMenu);
 
   commandMenu.init(sideDisplay);
   commandMenu.setParentMenu(&adminMenu);
   commandMenu.addSubMenu("Games", Images::img_menuCommand, &commandGamemodeMenu);
-  commandMenu.addSubMenu("Player", Images::img_menuCommand, nullptr);
-  commandMenu.addSubMenu("Teams", Images::img_menuCommand, nullptr);
+  commandMenu.addSubMenu("Player", Images::img_menuCommand, &commandPlayerMenu);
+  commandMenu.addSubMenu("Teams", Images::img_menuCommand, &commandTeamMenu);
   commandMenu.addSubMenu("Weapons", Images::img_menuCommand, &commandWeaponsMenu);
+  commandMenu.addSubMenu("Hardware", Images::img_menuCommand, nullptr);
   commandMenu.addSubMenu("Return", Images::img_menuReturn, &adminMenu);
+
+  adminCommandSendMethodMenu.init(sideDisplay);
+  adminCommandSendMethodMenu.setParentMenu(&adminMenu);
+  adminCommandSendMethodMenu.addFunction("All", Images::img_menuCommand,
+                                         std::bind(&Commands::CommandManager::setCmdTypeBroadcast,
+                                                   LaserTag::getCommandManager()));
+  adminCommandSendMethodMenu.addFunction("Single", Images::img_menuCommand,
+                                         std::bind(&Commands::CommandManager::setCmdTypeSingle,
+                                                   LaserTag::getCommandManager()));
+  adminCommandSendMethodMenu.addFunction("Self", Images::img_menuCommand,
+                                         std::bind(&Commands::CommandManager::setCmdTypeSelf,
+                                                   LaserTag::getCommandManager()));
+  adminCommandSendMethodMenu.addSubMenu("Return", Images::img_menuReturn, &adminMenu);
 
   commandGamemodeMenu.init(sideDisplay);
   commandGamemodeMenu.setParentMenu(&commandMenu);
@@ -119,6 +135,9 @@ void MenuManager::init() {
 
   gamesCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Gamemodes");
   gameModsCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Game Mods");
+
+  commandTeamMenu.init(sideDisplay, &commandMenu, "Teams");
+  commandPlayerMenu.init(sideDisplay, &commandMenu, "Players");
 
 
   display(true); // display the menu

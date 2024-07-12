@@ -56,6 +56,7 @@ namespace Weapons {
       this->fireRate = fireRateNormal;
       this->burstCount = 0;
       this->suppressed = defaultSuppressed;
+      currentAmmoState = NORMAL_AMMO;
     }
 
     int Gun::getIndex() const {
@@ -95,10 +96,12 @@ namespace Weapons {
       burstCount++;
 
       // bullet decrement logic
-      bulletsInMag--;
+      if (currentAmmoState != INFINITE_AMMO)
+        bulletsInMag--;
 
       if (bulletsInMag == 0 && magsRemaining > 0) { // if mag is empty & we have more mags start reload
-        magsRemaining--;
+        if (currentAmmoState == NORMAL_AMMO) // if it's either inf mags or inf ammo then don't decrement mags, only normal
+          magsRemaining--;
         reloading = true;
         reloadStartTime = millis();
         drawHUD();
@@ -192,8 +195,8 @@ namespace Weapons {
       hash += fireRateSlow;
       hash += shotsPerBurst;
       hash += defaultSuppressed;
-      hash += (int)(volume*10.0);
-      hash*= (1+gunID); // This is most important it makes sure indexes are the same for guns
+      hash += (int) (volume * 10.0);
+      hash *= (1 + gunID); // This is most important it makes sure indexes are the same for guns
       return hash;
     }
 
@@ -282,4 +285,17 @@ namespace Weapons {
       bulletsInMag = ammo;
       magsRemaining = mags;
     }
+
+    void Gun::setInfiniteAmmoState(InfiniteAmmoState infiniteState) {
+      // Set whether the gun has infinite ammo
+
+      currentAmmoState = infiniteState;
+    }
+
+    InfiniteAmmoState Gun::getInfiniteAmmoState() {
+      // Get whether the gun has infinite ammo/mags or not
+
+      return currentAmmoState;
+    }
+
 }

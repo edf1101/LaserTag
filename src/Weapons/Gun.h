@@ -29,6 +29,12 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         SLOW // The gun's slow fire rate
     };
 
+    enum InfiniteAmmoState {
+        INFINITE_AMMO, // The gun has infinite ammo
+        INFINITE_MAGS, // The gun has infinite mags
+        NORMAL_AMMO // The gun has normal Ammo and Mags
+    };
+
     class Gun {
         // This class represents a gun
     public:
@@ -52,6 +58,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         void reloadLoop(); // The loop that deals with reloading logic
         void reloadAddBullet();
+
         bool getReloading(); // Get whether the gun is currently reloading
 
         void setFireRate(FireRate _fireRate); // Set the fire rate of the gun
@@ -80,6 +87,10 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         std::string getFireType() const; // Get the fire type of the gun
 
         Images::ImageData getImage(); // Get the gun's image
+
+        void setInfiniteAmmoState(InfiniteAmmoState infiniteState); // Set whether the gun has infinite ammo
+        InfiniteAmmoState getInfiniteAmmoState(); // Get whether the gun has infinite ammo
+
 
     private:
         // Gun default Characteristics
@@ -120,6 +131,9 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         bool suppressed; // Whether the gun is currently suppressed
 
         std::function<void(void)> drawHUD; // Function to draw the gun's HUD
+
+        // infinite ammo / mags
+        InfiniteAmmoState currentAmmoState = NORMAL_AMMO; // The current state of the gun's ammo
     };
 }
 

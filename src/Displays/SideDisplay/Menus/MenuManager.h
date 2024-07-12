@@ -52,10 +52,11 @@ private:
     SelectPageMenu adminMenu = SelectPageMenu(this, "Admin Menu");
 
     SelectPageMenu commandMenu = SelectPageMenu(this, "Commands");
+    SelectPageMenu adminCommandSendMethodMenu = SelectPageMenu(this, "Send Method");
 
     SelectPageMenu commandGamemodeMenu = SelectPageMenu(this, "Gamemodes");
-//    SelectPageMenu commandPlayerMenu = SelectPageMenu(this, "Player Modifiers");
-//    SelectPageMenu commandTeamMenu = SelectPageMenu(this, "Teams");
+    CommandScrollMenu commandPlayerMenu = CommandScrollMenu(this);
+    CommandScrollMenu commandTeamMenu = CommandScrollMenu(this);
     SelectPageMenu commandWeaponsMenu = SelectPageMenu(this, "Weapons");
 
     CommandScrollMenu gamesCommandMenu = CommandScrollMenu(this); // holds actual games
