@@ -92,12 +92,12 @@ void WeaponsManager::setGroupUseState(std::string groupName, bool state) {
   // Set whether a group is in use or not
   getGunGroup(std::move(groupName))->setInUse(state);
 
-  if (setCallback){
+  if (setCallback) {
     updateMenuOfChanges(); // update the menu of changes (if the callback has been set
   }
 }
 
-std::vector<Weapons::Gun > WeaponsManager::getAllGuns() {
+std::vector<Weapons::Gun> WeaponsManager::getAllGuns() {
   // Return all active guns
   findAllGuns();
   return allGuns;
@@ -108,4 +108,26 @@ void WeaponsManager::setUpdateMenuCallback(std::function<void(void)> callback) {
 
   updateMenuOfChanges = std::move(callback);
   setCallback = true;
+}
+
+void WeaponsManager::setGunsSwappable(bool swappable) {
+  // Set whether the guns are swappable or not
+
+  gunsSwappable = swappable;
+}
+
+bool WeaponsManager::getGunsSwappable() {
+  // Get whether the guns are swappable or not
+
+  return gunsSwappable;
+}
+
+std::vector<Weapons::GunGroup *> WeaponsManager::getGunGroups() {
+  // return a vector of all the gun groups
+
+  std::vector<Weapons::GunGroup *> allGroups;
+  for (auto &gunGroup: allGunGroups) {
+    allGroups.push_back(gunGroup);
+  }
+  return allGroups;
 }

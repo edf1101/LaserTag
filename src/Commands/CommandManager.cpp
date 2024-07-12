@@ -47,8 +47,29 @@ namespace Commands {
       // Set up all the team commands
 
       // Set up weapon types
+      Command::createCommand("Guns", "Guns Swappable", "GUN_SWAP", (3 * GROUP_SIZE) + 0);
+      Command::createCommand("Guns", "Guns Unswappable", "GUN_SWAP_OFF", (3 * GROUP_SIZE) + 1);
+
+      // now add all of the guns
+      vector<Weapons::Gun> allGuns = WeaponsManager::getAllGuns();
+      int i = 2; // start on 2 as we have already added the swappable and unswappable commands
+      for (auto &gun: allGuns) {
+        Command::createCommand("Guns", gun.getName(),
+                               "GUN_" + gun.getAcronym(), (3 * GROUP_SIZE) + i);
+        i++;
+      }
+
 
       // set up weapon groups
+      vector<Weapons::GunGroup *> allGunGroups = WeaponsManager::getGunGroups();
+      i = 0;
+      for (auto &gunGroup: allGunGroups) {
+        Command::createCommand("Gun Groups", gunGroup->getName() + " On",
+                               "GG_" + gunGroup->getName() + "_ON", (3 * GROUP_SIZE) + (i * 2));
+        Command::createCommand("Gun Groups", gunGroup->getName() + " Off",
+                               "GG_" + gunGroup->getName() + "_OFF", (3 * GROUP_SIZE) + (i * 2) + 1);
+        i++;
+      }
 
     }
 
@@ -171,6 +192,61 @@ namespace Commands {
 
           myPlayer->setKills(myPlayer->getKills() + 1);
           Serial.println("Setting player to have a fake kill confirm");
+        }
+
+      } else if (commandGroup == "Guns") {
+        if (commandName == "Guns Swappable") {
+          // Set the guns to be swappable
+
+          WeaponsManager::setGunsSwappable(true);
+          Serial.println("Setting guns to be swappable");
+        } else if (commandName == "Guns Unswappable") {
+          // Set the guns to not be swappable
+
+          WeaponsManager::setGunsSwappable(false);
+          Serial.println("Setting guns to not be swappable");
+        } else {
+          // Set the player's gun to the selected gun
+
+          Weapons::Gun newGun = WeaponsManager::getGun(commandName);
+          myPlayer->swapGun(newGun.getName());
+          Serial.print("Setting player to have the gun: ");
+          Serial.println(newGun.getName().c_str());
+        }
+      } else if (commandGroup == "Gun Groups") {
+        // Set the gun group to be on or off
+
+        std::string groupName = commandName.substr(0, commandName.find(" ", 0));
+        std::string state = commandName.substr(commandName.find(' ', 0) + 1);
+        bool stateBool = state == "On";
+        WeaponsManager::setGroupUseState(groupName, stateBool);
+        Serial.print("Setting gun group ");
+        Serial.print(groupName.c_str());
+        Serial.print(" to ");
+        Serial.println(state.c_str());
+
+        // Now check if we need to change the player's gun
+        Weapons::Gun *currentGun = myPlayer->getGun();
+        std::vector<Weapons::Gun> allGuns = WeaponsManager::getAllGuns();
+        bool currentGunFound = false;
+        bool defaultGunFound = false;
+        for (auto &gun: allGuns) {
+          if (gun.getName() == currentGun->getName()) {
+            currentGunFound = true;
+          }
+          if (gun.getName() == WeaponsManager::defaultGun) {
+            defaultGunFound = true;
+          }
+        }
+
+        if (currentGunFound) return; // if the current gun is still in the active guns then return
+
+        // we need to swap the gun.
+        if (defaultGunFound) // if the default gun is still in the active guns then swap to that
+          myPlayer->swapGun(WeaponsManager::defaultGun);
+        else {
+          // if the default gun isn't in the active guns then swap to the first gun in the list
+          myPlayer->swapGun(allGuns[0].getName());
         }
 
       }

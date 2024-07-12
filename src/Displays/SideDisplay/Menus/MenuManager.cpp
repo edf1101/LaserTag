@@ -10,7 +10,7 @@
 #include <functional>
 #include "../../../LaserTag.h"
 #include "../../../Network/Network.h"
-#include "Commands/CommandManager.h"
+#include "../../../Commands/CommandManager.h"
 
 MenuManager::MenuManager(SideDisplay *_sideDisplay) {
   sideDisplay = _sideDisplay; // assign the pointer to the side display
@@ -49,6 +49,7 @@ void MenuManager::switchMenu(Menu *newMenu) {
   currentMenu = newMenu;
   currentMenu->resetMenu();
   currentMenu->display(true);
+
 }
 
 void MenuManager::display(bool force) {
@@ -129,16 +130,27 @@ void MenuManager::init() {
 
   commandWeaponsMenu.init(sideDisplay);
   commandWeaponsMenu.setParentMenu(&commandMenu);
-  commandWeaponsMenu.addSubMenu("Types", Images::img_menuCommand, nullptr);
-  commandWeaponsMenu.addSubMenu("Groups", Images::img_menuCommand, nullptr);
+  commandWeaponsMenu.addSubMenu("Types", Images::img_menuCommand, &weaponTypeCommandMenu);
+  commandWeaponsMenu.addSubMenu("Groups", Images::img_menuCommand, &weaponGroupCommandMenu);
   commandWeaponsMenu.addSubMenu("Return", Images::img_menuReturn, &commandMenu);
 
   gamesCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Gamemodes");
+  gamesCommandMenu.setParentMenu(&commandGamemodeMenu);
   gameModsCommandMenu.init(sideDisplay, &commandGamemodeMenu, "Game Mods");
+  gameModsCommandMenu.setParentMenu(&commandGamemodeMenu);
+
 
   commandTeamMenu.init(sideDisplay, &commandMenu, "Teams");
-  commandPlayerMenu.init(sideDisplay, &commandMenu, "Players");
+  commandTeamMenu.setParentMenu(&commandMenu);
 
+  commandPlayerMenu.init(sideDisplay, &commandMenu, "Players");
+  commandPlayerMenu.setParentMenu(&commandMenu);
+
+  weaponTypeCommandMenu.init(sideDisplay, &commandWeaponsMenu, "Guns");
+  weaponTypeCommandMenu.setParentMenu(&commandWeaponsMenu);
+
+  weaponGroupCommandMenu.init(sideDisplay, &commandWeaponsMenu, "Gun Groups");
+  weaponGroupCommandMenu.setParentMenu(&commandWeaponsMenu);
 
   display(true); // display the menu
 }

@@ -62,6 +62,9 @@ private:
     CommandScrollMenu gamesCommandMenu = CommandScrollMenu(this); // holds actual games
     CommandScrollMenu gameModsCommandMenu = CommandScrollMenu(this); // holds game modifications (play/pause/etc)
 
+    CommandScrollMenu weaponTypeCommandMenu = CommandScrollMenu(this); // holds actual games
+    CommandScrollMenu weaponGroupCommandMenu = CommandScrollMenu(this); // holds game modifications (play/pause/etc)
+
     LeaderboardMenu leaderboardMenu = LeaderboardMenu(this);
 
 

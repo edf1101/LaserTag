@@ -29,7 +29,8 @@ namespace Menus {
       rotaryCounter =
               (rotaryCounter + change + maxRotaryCounter) % maxRotaryCounter; // add the change to the rotary counter
 #if DEBUG_SERIAL
-      Serial.println("menu.h: Rotary Turned position now: " + String(rotaryCounter));
+      if (change != 0)
+        Serial.println("menu.h: Rotary Turned position now: " + String(rotaryCounter));
 #endif
     }
 
@@ -44,6 +45,13 @@ namespace Menus {
 
       // TODO DO THIS!
       // iterate through parents until get to root or somewhere that has admin required access.
+
+      if (requiresAdmin)
+        return false;
+
+      if (hasParentMenu)
+        return parentMenu->getCanTakeDamage();
+
       return true;
 
     }

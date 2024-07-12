@@ -78,7 +78,8 @@ bool LaserTag::canFire() {
 
 bool LaserTag::canTakeDamage(int shooterUnitnum) {
   // Returns true if the player can take damage
-  return getGamemode()->canTakeDamage(shooterUnitnum) && player.canTakeDamage(shooterUnitnum);
+  return getGamemode()->canTakeDamage(shooterUnitnum) && player.canTakeDamage(shooterUnitnum) &&
+         sideDisplay.getMenuManager()->getCurrentMenu()->getCanTakeDamage();
 }
 
 void LaserTag::turnOff() {

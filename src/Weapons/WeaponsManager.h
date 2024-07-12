@@ -26,7 +26,16 @@ public:
 
     static void setGroupUseState(std::string groupName, bool state); // Set a groups use state
     static std::vector<Weapons::Gun> getAllGuns(); // return all active guns
+
+    static std::vector<Weapons::GunGroup*> getGunGroups(); // return all gun groups
+
     static void setUpdateMenuCallback(std::function<void(void)> callback); // set the callback function for updating the menu of changes
+
+    static void setGunsSwappable(bool swappable); // set whether the guns are swappable or not
+    static bool getGunsSwappable(); // get whether the guns are swappable or not
+
+    inline static std::string defaultGun = "Assault Rifle"; // the default gun to use
+
 private:
     inline static std::function<void(void)> updateMenuOfChanges; // function to update the menu of changes
     inline static bool setCallback = false;
@@ -36,6 +45,8 @@ private:
 
     static void findAllGuns(); // collates all the guns in active gun groups
     inline static std::vector<Weapons::Gun> allGuns; // contains all guns
+
+    inline static bool gunsSwappable = true; // whether the guns are swappable or not
 
     // Define the different Guns here (Don't modify default guns or anti-cheat will get you:
 

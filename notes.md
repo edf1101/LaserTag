@@ -8,17 +8,13 @@
 
 ## Ideas
 - Have a define to turn on or off Serial debug
-- Anticheat could work by making a hash of all the weapons and checking if each gun has the same total weapon hash.
 - Same with test mode except it could be hold down trigger on start instead of define.
 - Latch circuit to turn on the gun and timer / menu to turn off the gun
-- modifying techcamp code to run on this hardware, and having the leaderboard display on the side screen would be pretty cool.
-Would also involve removing their LEDs and replacing with our WS2182B LEDs.
 - Admin have the option to lower all volumes (dont do individual volumes as would be unfair to be stealthy), admin can also disable LEDs
 - Users should be able to enable or disable vibration motors.
 - Have a mode where all the shooting effects are laser sounds so it doesn't sound like real guns.
 - Have a PC Interface that communicates with a "base node" via HTTP or serial that can run some python code to display stats, run commands etc.
-If web interface uses flask then other phones etc can access it. send JSON over serial for ease of use.
-- can have a shot accuracy stat
+If web interface uses flask then other phones etc can access it. send JSON over serial for ease of use. can have a shot accuracy stat
 - Sort out the canTakeDamage / need admin fields of menus
 - make things more staticy where poss
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
@@ -29,11 +25,10 @@ if not do usual thing. If so then do the join game as existing routine.
 - admin can turn down IR and volume
 - If sounds are still buzzy with new board try optocouplers or fast transistor. change the sound class so that it turns on the transistor then then waits 1-10 ms before playing.
 transistor should attatch to amplifier power not speaker.
-- try more SMT stuff to make the board smaller.
+- try more SMT stuff to make the PCB smaller.
+- Other menu in admin base menu is to autoteam balance.(or maybe in teams menu have an autobalance 2 team,3 team, 4 team etc)
 
 ## Plan
-- implement rest of commands apart from guns
-- Gun groups 
 - add teams (and auto team balancing) 
 - add team DM game
 - add a logger (debug screen messages from here)
@@ -44,34 +39,5 @@ transistor should attatch to amplifier power not speaker.
 - PC serial stats interface in python
 
 ## Potential issues if recreating
-- The 128x64 OLED screen sometimes has different addresses / pin layouts be aware of pin layouts if using this PCB
+- The 128x64 OLED screen sometimes has different pin layouts be aware of pin layouts if using this PCB
 - Must use a larger program size for ESP32 (I used 'huge APP' partition)
-
-## Tests
-- Try changing the gun group while a player is viewing a gun in choice menu that that has been disallowed
-
-## Commands
-### Game modifications
-- pause
-- play
-- Stop
-
-
-### Player modifications
-- Add a life
-- Remove a life
-- 0 lives
-- Inf mags on
-- Inf mags off
-- Inf ammo on
-- Inf ammo off
-- Inf Liveson
-- Inf Lives off
-- Invincible on 
-- Invincible off
-- Suppressor on
-- Suppressor off
-- Fast fire
-- slow fire
-- normal fire
-- Fake kill confirm

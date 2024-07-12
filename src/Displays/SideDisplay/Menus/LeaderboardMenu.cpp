@@ -145,7 +145,6 @@ namespace Menus {
       for (int displayRow = startRow; displayRow < 5 ; displayRow++) {
         int index = displayRow - startRow;
         int playerIndex = returnButtonShowing ?  index : rotaryCounter - 5 + index;
-        Serial.println("Row "+String(displayRow)+" Player "+String(playerIndex));
 
         if (playerIndex < players.size()){
           playerInfoWidgets[displayRow].setStatus(players[playerIndex], playerIndex);

@@ -124,7 +124,10 @@ void Menus::GunMenu::subMenuCounterPressed(int item) {
   // Called when the select button in submenu is pressed
 
   // set the gun to the selected gun
-  LaserTag::getPlayer()->swapGun(gunsInUse[item].getName());
+  if (WeaponsManager::getGunsSwappable()) // only swap if we are allowed to
+    LaserTag::getPlayer()->swapGun(gunsInUse[item].getName());
+
+  menuManager->switchMenu(parentMenu); // switch back to the parent menu
 }
 
 

@@ -4,7 +4,7 @@
 
 #include "Firing.h"
 #include "../LaserTag.h"
-#include "Commands/CommandManager.h"
+#include "../Commands/CommandManager.h"
 
 void Firing::init(LaserTag *_mySystem) {
   // This function is called once at the start of the game

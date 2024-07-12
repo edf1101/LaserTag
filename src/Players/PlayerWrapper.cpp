@@ -110,9 +110,24 @@ Weapons::Gun *PlayerWrapper::getGun() {
 void PlayerWrapper::swapGun(std::string gunName) {
   // Fairly swap guns for the player
 
+  // Check new gun is part of the current gun group
+  vector<Weapons::Gun> allActiveGuns = WeaponsManager::getAllGuns();
+  bool gunFound = false;
+  for (auto &_gun: allActiveGuns) {
+    if (_gun.getName() == gunName) {
+      gunFound = true;
+      break;
+    }
+  }
+  if (gunFound == false) {
+    return; // if the gun isn't found then return
+  }
+
   // calculate the percentage of mags remaining
   int currentMags = gun.getMagsRemaining();
   int startMags = gun.getInitialMags();
+
+  if (currentMags == -1) currentMags = startMags; // if infinite mags then set to start mags
   float magsRatio = (float) currentMags / (float) startMags;
 
   // set the new gun so that it has the same percentage of mags remaining

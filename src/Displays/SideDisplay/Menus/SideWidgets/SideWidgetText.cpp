@@ -29,7 +29,6 @@ namespace SideWidgets {
 
       if (text == lastText && textSize == lastTextSize && textColor == lastTextColor && !force) return;
 
-    Serial.println("Drawing text");
       // Overwrite old text
       Adafruit_ST7735 *rawDisplay = myDisplay->getRawDisplay();
       rawDisplay->setTextSize(lastTextSize); // Set the text size

@@ -25,6 +25,7 @@ namespace Menus {
         virtual void onRotaryPressed(); // called when the button is pressed
 
         bool getCanTakeDamage(); // get whether you can take damage in this menu
+
         void setRequiresAdmin(bool requiresAdmin); // set whether the menu requires admin access
         bool getRequiresAdmin(); // get whether the menu requires admin access
 
