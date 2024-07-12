@@ -35,13 +35,20 @@ void HudWidgetImageData::draw(bool force) {
 
   erase(); //blank out old bit
 
-  std::string dataString = std::to_string(lastData); // Get the data to display
+  if (lastData >=0) { // If its positive then display it
+    std::string dataString = std::to_string(lastData); // Get the data to display
 
-  actualDisplay->setTextSize(2);               // Normal 1:1 pixel scale
-  actualDisplay->setTextColor(SSD1306_WHITE);  // Draw white text
-  actualDisplay->setCursor(17, (yCoordinate + 2));             // Start at top-left corner
-  actualDisplay->cp437(true);                  // Use full 256 char 'Code Page 437' font
-  actualDisplay->write(dataString.c_str());
+    actualDisplay->setTextSize(2);               // Normal 1:1 pixel scale
+    actualDisplay->setTextColor(SSD1306_WHITE);  // Draw white text
+    actualDisplay->setCursor(17, (yCoordinate + 2));             // Start at top-left corner
+    actualDisplay->cp437(true);                  // Use full 256 char 'Code Page 437' font
+    actualDisplay->write(dataString.c_str());
+  }
+  else if (lastData == -1){ // if it's -1 then draw an infinity symbol
+    display->drawImage(21, yCoordinate, Images::img_infinity, Images::TOP_LEFT);
+  }
+
+  // draw the image representing health / revives / mags etc
   display->drawImage(0, yCoordinate, image, Images::TOP_LEFT);
 }
 

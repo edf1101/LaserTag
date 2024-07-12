@@ -60,7 +60,11 @@ void PlayerWrapper::setName(std::string _name) {
 
 // getter & setter for revives
 int PlayerWrapper::getRevives() const {
-  return player.revives;
+
+  if (currentInfiniteLivesState == INFINITE_LIVES || currentInfiniteLivesState == INVINCIBLE_LIVES)
+    return -1; // if the player has infinite or invincible lives then return -1
+
+  return player.revives; // if normal revives then just return them
 }
 
 void PlayerWrapper::setRevives(int _revives) {
@@ -69,7 +73,11 @@ void PlayerWrapper::setRevives(int _revives) {
 
 // getter & setter for health
 int PlayerWrapper::getHealth() const {
-  return player.health;
+
+  if (currentInfiniteLivesState == INVINCIBLE_LIVES)
+    return -1; // if the player is invincible then return -1
+
+  return player.health; // if normal health then just return it
 }
 
 void PlayerWrapper::setHealth(int _health) {

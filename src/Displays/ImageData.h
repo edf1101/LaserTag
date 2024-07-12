@@ -50,6 +50,7 @@ namespace Images {
 #include "Images/img_gunPisSup.h"
 #include "Images/img_gunMAC11.h"
 #include "Images/img_menuCommand.h"
+#include "Images/img_Infinity.h"
 
 
 }

@@ -100,7 +100,8 @@ namespace Weapons {
         bulletsInMag--;
 
       if (bulletsInMag == 0 && magsRemaining > 0) { // if mag is empty & we have more mags start reload
-        if (currentAmmoState == NORMAL_AMMO) // if it's either inf mags or inf ammo then don't decrement mags, only normal
+        if (currentAmmoState ==
+            NORMAL_AMMO) // if it's either inf mags or inf ammo then don't decrement mags, only normal
           magsRemaining--;
         reloading = true;
         reloadStartTime = millis();
@@ -217,11 +218,20 @@ namespace Weapons {
 
     int Gun::getAmmoRemaining() {
       // Returns ammo remaining for the gun
+
+      if (currentAmmoState == INFINITE_AMMO) // if infinite ammo then return -1
+        return -1;
+
       return bulletsInMag;
     }
 
     int Gun::getMagsRemaining() {
       // Returns mags remaining for the gun
+
+      if (currentAmmoState == INFINITE_MAGS ||
+          currentAmmoState == INFINITE_AMMO) // if infinite ammo or mags then return -1
+        return -1;
+
       return magsRemaining;
     }
 

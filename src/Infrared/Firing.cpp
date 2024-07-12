@@ -4,6 +4,7 @@
 
 #include "Firing.h"
 #include "../LaserTag.h"
+#include "Commands/CommandManager.h"
 
 void Firing::init(LaserTag *_mySystem) {
   // This function is called once at the start of the game
@@ -116,7 +117,9 @@ void Firing::OnCommand() {
   Serial.println(command);
 #endif
 
-  //TODO pass this on to a callback func somewhere
+  // pass onto the command manager
+  Commands::Command *rxCommand = Commands::Command::getCommandByIndex(command);
+  LaserTag::getCommandManager()->processCommand(rxCommand);
 }
 
 void Firing::sendCommand(uint16_t command) {
