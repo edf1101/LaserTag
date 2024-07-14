@@ -15,7 +15,6 @@
 - Have a mode where all the shooting effects are laser sounds so it doesn't sound like real guns.
 - Have a PC Interface that communicates with a "base node" via HTTP or serial that can run some python code to display stats, run commands etc.
 If web interface uses flask then other phones etc can access it. send JSON over serial for ease of use. can have a shot accuracy stat
-- Sort out the canTakeDamage / need admin fields of menus
 - make things more staticy where poss
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
 - Add a proper logger instead of Serial.println

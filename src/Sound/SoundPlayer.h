@@ -24,6 +24,7 @@ namespace Sounds {
 
     class SoundPlayer {
     public:
+        void init(); // Initialise the sound player
         void soundLoop(); // This is called every main system loop to fill the sound buffer
 
         void playSound(XT_PlayListItem_Class *sound); // Play a sound
@@ -40,6 +41,13 @@ namespace Sounds {
         // Create the sound low level object
 #if SOUND_ON
         XT_DAC_Audio_Class DacAudio = XT_DAC_Audio_Class(DAC_PIN, 0);
+        XT_PlayListItem_Class *currentSound = nullptr;
+        bool highValue = false;
+        long playIn;
+        bool needsPlay;
+
+        long offIn;
+        bool needsOff;
 #endif
     };
 }

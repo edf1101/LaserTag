@@ -18,7 +18,7 @@ void LaserTag::init() {
   Serial.begin(115200); // start serial communication for debug purposes
   Serial.println("Started");
 #endif
-
+  soundPlayer.init();
   networkManager.init(); // Set up the network manager
 
   // Set up the commands / command manager

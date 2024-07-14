@@ -21,11 +21,50 @@ void SoundPlayer::soundLoop() {
 #if SOUND_ON
   DacAudio.FillBuffer();                // Fill the sound buffer with data
 #endif
+  if (currentSound != nullptr && currentSound->TimeLeft == 0 && !needsPlay) {
+
+    highValue = false;
+    offIn = millis()+100;
+    needsOff = true;
+    Serial.println("sound stop");
+    currentSound = nullptr;
+
+  }
+
+  if(needsOff && millis() > offIn) {
+    digitalWrite(0, LOW);
+    needsOff = false;
+    Serial.println("amp off");
+  }
+
+  if (needsPlay && millis() > playIn) {
+    DacAudio.Play(currentSound);
+    needsPlay = false;
+    Serial.println("sound play");
+
+  }
+
 }
 
 void SoundPlayer::playSound(XT_PlayListItem_Class *sound) {
 #if SOUND_ON
-  DacAudio.Play(sound);
+
+    digitalWrite(0, HIGH);
+
+//  delay(10);
+//  DacAudio.Play(sound);
+  currentSound = sound;
+  highValue = true;
+  needsPlay = true;
+  playIn = millis()+100;
+  needsOff = false;
+//  digitalWrite(2,LOW);
+Serial.println("amp on");
 #endif
+}
+
+void SoundPlayer::init() {
+  pinMode(0, OUTPUT);
+  digitalWrite(0, LOW);
 }
 
