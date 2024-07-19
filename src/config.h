@@ -20,8 +20,8 @@
 #define MESH_PORT 5555
 
 // Pin definitions for the side display
-#define TFT_CS 14
-#define TFT_RST 15
+#define TFT_CS 5
+#define TFT_RST 4
 #define TFT_DC 32
 
 // Colour definitions for the side display. These are RGB565 colours.
@@ -29,26 +29,28 @@
 #define TFT_SECONDARY_COLOUR 0x07E0 // Secondary is for non-highlighted text, borders etc.
 
 // Pin definitions for the rotary encoder
-#define ROT_OUT_A 17
-#define ROT_OUT_B 5
-#define ROT_SWITCH 19
+#define ROT_OUT_A 33
+#define ROT_OUT_B 34
+#define ROT_SWITCH 2
 
 // Pin definitions for IR Transmitter & Receiver
 #define IR_RECEIVER GPIO_NUM_35
 #define IR_TRANSMITTER GPIO_NUM_26
-#define MUZZLE_LED 13
-#define VIBRATE_PIN 33
+#define MUZZLE_LED 14
+#define VIBRATE_PIN 16
 
 // Config & Pin definitions for the buttons
-#define TRIGGER_BUTTON 12
-#define MAGAZINE_BUTTON 16
+#define TRIGGER_BUTTON 2
+#define MAGAZINE_BUTTON 2
 
-// Speaker pins
-#define DAC_PIN 25
+// Amplifier pins
+#define AMP_LRCLK 25
+#define AMP_BCLK 0
+#define AMP_DATA 19
 
 // Cosmetic LED Pins
 #define NEOPIXEL_ON 0 // 1 for true 0 for false
-#define NEOPIXEL_LEDS_PIN 4
+#define NEOPIXEL_LEDS_PIN 27
 #define NEOPIXEL_LEDS_COUNT 5 // If there are more than 5 LEDs put here and will scale
 
 #endif //LASERTAG_CONFIG_H

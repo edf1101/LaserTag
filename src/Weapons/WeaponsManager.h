@@ -27,9 +27,10 @@ public:
     static void setGroupUseState(std::string groupName, bool state); // Set a groups use state
     static std::vector<Weapons::Gun> getAllGuns(); // return all active guns
 
-    static std::vector<Weapons::GunGroup*> getGunGroups(); // return all gun groups
+    static std::vector<Weapons::GunGroup *> getGunGroups(); // return all gun groups
 
-    static void setUpdateMenuCallback(std::function<void(void)> callback); // set the callback function for updating the menu of changes
+    static void setUpdateMenuCallback(
+            std::function<void(void)> callback); // set the callback function for updating the menu of changes
 
     static void setGunsSwappable(bool swappable); // set whether the guns are swappable or not
     static bool getGunsSwappable(); // get whether the guns are swappable or not
@@ -52,81 +53,80 @@ private:
 
     // DEFAULT GUNS (DO NOT MODIFY)
     inline static Weapons::Gun AssaultRifle = Weapons::Gun(0, "Assault Rifle", "AR",
-                                             Images::img_gunAR,
-                                             16, 10, 2000,
-                                             Weapons::ReloadType::AUTO, 20,
-                                             300, 100, 400,
-                                             -1, false, 1,
-                                             &Sounds::SoundPlayer::ArSound);
+                                                           Images::img_gunAR,
+                                                           16, 10, 2000,
+                                                           Weapons::ReloadType::AUTO, 20,
+                                                           300, 100, 400,
+                                                           -1, false, 1,
+                                                           Sounds::arSound);
 
     inline static Weapons::Gun SMG = Weapons::Gun(1, "SMG", "SMG",
-                                    Images::img_gunMAC11,
-                                    16, 10, 2000,
-                                    Weapons::ReloadType::AUTO, 15,
-                                    150, 75, 250,
-                                    3, false, 0.8,
-                                    &Sounds::SoundPlayer::SmgSound);
+                                                  Images::img_gunMAC11,
+                                                  16, 10, 2000,
+                                                  Weapons::ReloadType::AUTO, 15,
+                                                  150, 75, 250,
+                                                  3, false, 0.8,
+                                                  Sounds::arSound);
 
     inline static Weapons::Gun Sniper = Weapons::Gun(2, "Sniper", "SN",
-                                       Images::img_gunSniper,
-                                       2, 20, 5000,
-                                       Weapons::ReloadType::PRESS_PER_BULLET, 80,
-                                       150, 75, 250,
-                                       1, false, 0.2,
-                                       &Sounds::SoundPlayer::SniperSound);
+                                                     Images::img_gunSniper,
+                                                     2, 20, 5000,
+                                                     Weapons::ReloadType::PRESS_PER_BULLET, 80,
+                                                     150, 75, 250,
+                                                     1, false, 0.2,
+                                                     Sounds::arSound);
 
     inline static Weapons::Gun Shotgun = Weapons::Gun(3, "Shotgun", "SG",
-                                        Images::img_gunShotgun,
-                                        8, 10, 5000,
-                                        Weapons::ReloadType::PRESS_FOR_ALL, 50,
-                                        150, 75, 250,
-                                        1, false, 1,
-                                        &Sounds::SoundPlayer::ShotgunSound);
+                                                      Images::img_gunShotgun,
+                                                      8, 10, 5000,
+                                                      Weapons::ReloadType::PRESS_FOR_ALL, 50,
+                                                      150, 75, 250,
+                                                      1, false, 1,
+                                                      Sounds::arSound);
 
     // Pistol Guns
     inline static Weapons::Gun Glock = Weapons::Gun(4, "Glock-18", "GLK",
-                                       Images::img_gunPistol,
-                                       12, 10, 5000,
-                                       Weapons::ReloadType::PRESS_FOR_ALL, 10,
-                                       100, 75, 250,
-                                       3, false, 0.7,
-                                       &Sounds::SoundPlayer::GlockSound);
+                                                    Images::img_gunPistol,
+                                                    12, 10, 5000,
+                                                    Weapons::ReloadType::PRESS_FOR_ALL, 10,
+                                                    100, 75, 250,
+                                                    3, false, 0.7,
+                                                    Sounds::arSound);
 
     inline static Weapons::Gun supressedPistol = Weapons::Gun(4, "P250-SUP", "SUP",
-                                                Images::img_gunPisSupp,
-                                                10, 10, 5000,
-                                                Weapons::ReloadType::PRESS_FOR_ALL, 25,
-                                                250, 140, 400,
-                                                1, true, 0.2,
-                                                &Sounds::SoundPlayer::SmgSound);
+                                                              Images::img_gunPisSupp,
+                                                              10, 10, 5000,
+                                                              Weapons::ReloadType::PRESS_FOR_ALL, 25,
+                                                              250, 140, 400,
+                                                              1, true, 0.2,
+                                                              Sounds::arSound);
 
     inline static Weapons::Gun desertEagle = Weapons::Gun(4, "Desert Eagle", "DEG",
-                                                Images::img_gunPistol,
-                                                8, 12, 5000,
-                                                Weapons::ReloadType::PRESS_FOR_ALL, 50,
-                                                600, 400, 800,
-                                                1, false, 1.0,
-                                                &Sounds::SoundPlayer::DeagleSound);
+                                                          Images::img_gunPistol,
+                                                          8, 12, 5000,
+                                                          Weapons::ReloadType::PRESS_FOR_ALL, 50,
+                                                          600, 400, 800,
+                                                          1, false, 1.0,
+                                                          Sounds::arSound);
 
     inline static Weapons::Gun mac11 = Weapons::Gun(4, "MAC11", "MAC",
-                                            Images::img_gunMAC11,
-                                            20, 7, 5000,
-                                            Weapons::ReloadType::PRESS_FOR_ALL, 7,
-                                            250, 125, 400,
-                                            -1, false, 0.7,
-                                            &Sounds::SoundPlayer::GlockSound);
+                                                    Images::img_gunMAC11,
+                                                    20, 7, 5000,
+                                                    Weapons::ReloadType::PRESS_FOR_ALL, 7,
+                                                    250, 125, 400,
+                                                    -1, false, 0.7,
+                                                    Sounds::arSound);
 
 
     // define the gun groups here
-    inline static std::vector<Weapons::Gun*> defaults = {&AssaultRifle, &SMG, &Sniper, &Shotgun};
-    inline static Weapons::GunGroup defaultGroup = Weapons::GunGroup(0,"Default", defaults, true);
+    inline static std::vector<Weapons::Gun *> defaults = {&AssaultRifle, &SMG, &Sniper, &Shotgun};
+    inline static Weapons::GunGroup defaultGroup = Weapons::GunGroup(0, "Default", defaults, true);
 
-    inline static std::vector<Weapons::Gun*> pistols = {&Glock, &supressedPistol, &desertEagle, &mac11};
-    inline static Weapons::GunGroup pistolGroup = Weapons::GunGroup(1,"Pistols", pistols, true);
+    inline static std::vector<Weapons::Gun *> pistols = {&Glock, &supressedPistol, &desertEagle, &mac11};
+    inline static Weapons::GunGroup pistolGroup = Weapons::GunGroup(1, "Pistols", pistols, true);
 
     // Put all the gun groups created into this array (order doesn't matter) contains USED AND UNUSED gun groups
     inline static Weapons::GunGroup *allGunGroups[2] = {&defaultGroup, &pistolGroup};
-
 
 
 };

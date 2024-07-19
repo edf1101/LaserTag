@@ -8,63 +8,38 @@
 
 using namespace Sounds;
 
-// Define sounds here
-XT_Wav_Class SoundPlayer::ArSound = XT_Wav_Class(ARwav);
-XT_Wav_Class SoundPlayer::SmgSound = XT_Wav_Class(SMGwav);
-XT_Wav_Class SoundPlayer::ShotgunSound = XT_Wav_Class(shotgunWav);
-XT_Wav_Class SoundPlayer::SniperSound = XT_Wav_Class(pistolWav);
-XT_Wav_Class SoundPlayer::DeagleSound = XT_Wav_Class(Deaglewav);
-XT_Wav_Class SoundPlayer::GlockSound = XT_Wav_Class(glockWav);
+void SoundPlayer::init() {
+  // Initialises the sound system.
+
+  // set up the I2S output
+  out = new AudioOutputI2S();
+  out->SetPinout(0,25,19);
+  out->SetGain(3.0);
+
+  // set up the WAV generator
+  wav = new AudioGeneratorWAV();
+}
 
 void SoundPlayer::soundLoop() {
-// This is called every main system loop
-#if SOUND_ON
-  DacAudio.FillBuffer();                // Fill the sound buffer with data
-#endif
-  if (currentSound != nullptr && currentSound->TimeLeft == 0 && !needsPlay) {
+  // This is called every main system loop to fill the sound buffer
 
-    highValue = false;
-    offIn = millis()+100;
-    needsOff = true;
-    Serial.println("sound stop");
-    currentSound = nullptr;
-
-  }
-
-  if(needsOff && millis() > offIn) {
-    digitalWrite(0, LOW);
-    needsOff = false;
-    Serial.println("amp off");
-  }
-
-  if (needsPlay && millis() > playIn) {
-    DacAudio.Play(currentSound);
-    needsPlay = false;
-    Serial.println("sound play");
-
+  if (wav->isRunning()) { // calls the buffer if the sound is running, if finished it will stop the sound
+    if (!wav->loop()) wav->stop();
   }
 
 }
 
-void SoundPlayer::playSound(XT_PlayListItem_Class *sound) {
-#if SOUND_ON
+void SoundPlayer::playSound(SoundData sound) {
+  // Play a sound
 
-    digitalWrite(0, HIGH);
+  // stop the old sound if its running
+  if (wav->isRunning()){
+    wav->stop();
+  }
 
-//  delay(10);
-//  DacAudio.Play(sound);
-  currentSound = sound;
-  highValue = true;
-  needsPlay = true;
-  playIn = millis()+100;
-  needsOff = false;
-//  digitalWrite(2,LOW);
-Serial.println("amp on");
-#endif
+  // set up the new wav
+  file = new AudioFileSourcePROGMEM( sound.mySound, sound.length );
+  wav->begin(file, out);
 }
 
-void SoundPlayer::init() {
-  pinMode(0, OUTPUT);
-  digitalWrite(0, LOW);
-}
 

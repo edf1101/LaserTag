@@ -9,8 +9,8 @@
 
 #include <string>
 #include <functional>
-#include "XT_DAC_Audio.h"
 #include "../Displays/ImageData.h"
+#include "../Sound/SoundData.h"
 
 namespace Weapons { // So we don't have irrelevant things floating around in the global namespace
 
@@ -44,8 +44,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
             int damage,
             int fireRateNormal, int fireRateFast, int fireRateSlow,
             int shotsPerBurst, bool defaultSuppressed, float volume,
-            XT_Wav_Class *gunSound
-        );
+             Sounds::SoundData gunSound);
 
         void resetCharacteristics(); // Reset the gun's characteristics to default
         int getIndex() const; // Returns the gun's index
@@ -67,7 +66,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
         std::string getAcronym(); // Get the guns acronym
         std::string getReloadDescription(); // Get the description of how the gun reloads
 
-        XT_Wav_Class *getSound(); // Get the gun's sound effect so it can be played back elsewhere
+        Sounds::SoundData getSound(); // Get the gun's sound effect so it can be played back elsewhere
         int getDamage(); // Get the gun's damage
 
         int getAmmoRemaining(); // Get the remaining ammo in the mag currently
@@ -114,7 +113,7 @@ namespace Weapons { // So we don't have irrelevant things floating around in the
 
         bool defaultSuppressed; // Whether the gun is suppressed by default
         float volume; // The volume of the gun (0-1)
-        XT_Wav_Class *gunSound;
+         Sounds::SoundData gunSound;
 
         // Gun instance variables
         int magsRemaining; // How many mags are left

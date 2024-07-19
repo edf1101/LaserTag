@@ -18,7 +18,6 @@ void LaserTag::init() {
   Serial.begin(115200); // start serial communication for debug purposes
   Serial.println("Started");
 #endif
-  soundPlayer.init();
   networkManager.init(); // Set up the network manager
 
   // Set up the commands / command manager
@@ -40,8 +39,9 @@ void LaserTag::init() {
 
   // Set up the gamemode manager after displays since it depends on the HUD
   gamemodeManager.init(this);
-//  gamemodeManager.switchGamemode(GamemodeManager::GamemodeOptions::SOLO); // Set the initial gamemode to none
-//  gamemodeManager.getCurrentGame()->setGamePauseState(false);
+
+  soundPlayer.init(); // must be after side display init for some reason
+
   updateHUD(); // Update the HUD to show the initial state of the game
 
 }
@@ -51,19 +51,19 @@ void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
 
   soundPlayer.soundLoop(); // Check if any sounds need to be played / fill buffer
-  ledManager.loop();
-  hudDisplay.loop(); // Call the HUD loop function
-  buttons.pollButtons(); // Check the buttons for presses
-  firing.FiringLoop(); // Call the firing loop function
-  player.loop(); // Call the player loop function
-  gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
-  networkManager.loop(); // Call the network loop function
-  sideDisplay.getMenuManager()->loop(); // Call the menu manager loop function to refresh menus
-
-  // turn off gun if no activity for a while
-  if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {
-    turnOff();
-  }
+//  ledManager.loop();
+//  hudDisplay.loop(); // Call the HUD loop function
+//  buttons.pollButtons(); // Check the buttons for presses
+//  firing.FiringLoop(); // Call the firing loop function
+//  player.loop(); // Call the player loop function
+//  gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
+//  networkManager.loop(); // Call the network loop function
+//  sideDisplay.getMenuManager()->loop(); // Call the menu manager loop function to refresh menus
+//
+//  // turn off gun if no activity for a while
+//  if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {
+//    turnOff();
+//  }
 }
 
 void LaserTag::updateHUD() {

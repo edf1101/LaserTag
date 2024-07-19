@@ -22,9 +22,6 @@ If web interface uses flask then other phones etc can access it. send JSON over 
 if not do usual thing. If so then do the join game as existing routine.
 - logger have diff levels of logging
 - admin can turn down IR and volume
-- If sounds are still buzzy with new board try optocouplers or fast transistor. change the sound class so that it turns on the transistor then then waits 1-10 ms before playing.
-transistor should attatch to amplifier power not speaker.
-- try more SMT stuff to make the PCB smaller.
 - Other menu in admin base menu is to autoteam balance.(or maybe in teams menu have an autobalance 2 team,3 team, 4 team etc)
 
 ## Plan
@@ -33,8 +30,6 @@ transistor should attatch to amplifier power not speaker.
 - add a logger (debug screen messages from here)
 - player can turn on and off vibration motors
 - admin can enable/disable/change: volume, LEDs, IR, gun or laser sounds
-- design latch circuit
-- build enclosure / pcbs
 - PC serial stats interface in python
 
 ## Potential issues if recreating
