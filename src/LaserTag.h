@@ -12,17 +12,18 @@
 
 #include <functional>
 #include "Arduino.h"
+#include "Hardware/Hardware.h"
 #include "Commands/Command.h"
-#include "Displays/HUD/HudDisplay.h"
-#include "Displays/SideDisplay/SideDisplay.h"
-#include "Infrared/Firing.h"
+#include "Hardware/Displays/HUD/HudDisplay.h"
+#include "Hardware/Displays/SideDisplay/SideDisplay.h"
+#include "Hardware/Infrared/Firing.h"
 #include "Players/PlayerWrapper.h"
 #include "Weapons/WeaponsManager.h"
-#include "Buttons/Buttons.h"
-#include "Sound/SoundPlayer.h"
+#include "Hardware/Buttons/Buttons.h"
+#include "Hardware/Sound/SoundPlayer.h"
 #include "Gamemodes/GamemodeManager.h"
 #include "config.h"
-#include "LEDs/LEDManager.h"
+#include "Hardware/LEDs/LEDManager.h"
 #include "Network/Network.h"
 #include "Commands/CommandManager.h"
 
@@ -76,6 +77,7 @@ private:
     inline static PlayerWrapper player;  // player object
     inline static GamemodeManager gamemodeManager;  // current gamemode object
     inline static Commands::CommandManager commandManager;  // command manager object
+
 };
 
 

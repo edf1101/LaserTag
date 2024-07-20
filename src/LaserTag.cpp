@@ -14,6 +14,9 @@ using namespace Commands;
 void LaserTag::init() {
   // This gets called once at the start of the program
 
+  // set up the hardware class ASAP as it starts the power latch and that needs to be done fast
+  Hardware::init();
+
 #if DEBUG_SERIAL
   Serial.begin(115200); // start serial communication for debug purposes
   Serial.println("Started");
@@ -44,6 +47,8 @@ void LaserTag::init() {
 
   updateHUD(); // Update the HUD to show the initial state of the game
 
+  soundPlayer.playSound(Sounds::arSound);
+
 }
 
 
@@ -51,19 +56,20 @@ void LaserTag::loop() {
   // This gets called everytime the loop() function is called in the main.cpp / LaserTag.ino file
 
   soundPlayer.soundLoop(); // Check if any sounds need to be played / fill buffer
-//  ledManager.loop();
-//  hudDisplay.loop(); // Call the HUD loop function
-//  buttons.pollButtons(); // Check the buttons for presses
-//  firing.FiringLoop(); // Call the firing loop function
-//  player.loop(); // Call the player loop function
-//  gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
-//  networkManager.loop(); // Call the network loop function
-//  sideDisplay.getMenuManager()->loop(); // Call the menu manager loop function to refresh menus
-//
-//  // turn off gun if no activity for a while
-//  if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {
-//    turnOff();
-//  }
+  Hardware::loop(); // Check if the gun needs to be turned off
+  ledManager.loop(); // make sure neopixels are updated
+  hudDisplay.loop(); // Call the HUD loop function
+  buttons.pollButtons(); // Check the buttons for presses
+  firing.FiringLoop(); // Call the firing loop function
+  player.loop(); // Call the player loop function
+  gamemodeManager.getCurrentGame()->loop(); // Call the current gamemode loop function
+  networkManager.loop(); // Call the network loop function
+  sideDisplay.getMenuManager()->loop(); // Call the menu manager loop function to refresh menus
+
+  // turn off gun if no activity for a while
+  if (millis() - buttons.getLastActivity() > MINS_TO_SLEEP * 60 * 1000) {
+    turnOff();
+  }
 }
 
 void LaserTag::updateHUD() {
@@ -84,9 +90,13 @@ bool LaserTag::canTakeDamage(int shooterUnitnum) {
 
 void LaserTag::turnOff() {
   // Turns off the gun with the latch circuit
-  // TODO implement this once latch stuff done.
   Serial.println("Turning off");
+
+  // We need to disconnect from the network before turning off the gun
+  // wait a few secs to make sure the network disconnects before actually shutting it down.
   networkManager.disconnectNetwork();
+  Hardware::turnOffSystem();
+
 }
 
 // Pointer Getters for the main objects so they can be accessed elsewhere

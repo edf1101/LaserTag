@@ -11,11 +11,11 @@
 #include <string>
 #include "ArduinoJson.h"
 #include "../Players/Player.h"
-#include "../Displays/HUD/HudDisplay.h"
-#include "../Displays/HUD/HudWidgets/HudWidgetImageData.h"
-#include "../Displays/HUD/HudWidgets/HudWidgetInfoBox.h"
-#include "../Displays/HUD/HudWidgets/HudWidgetBackdrop.h"
-#include "../Displays/HUD/HudWidgets/HudWidgetProgress.h"
+#include "../Hardware/Displays/HUD/HudDisplay.h"
+#include "../Hardware/Displays/HUD/HudWidgets/HudWidgetImageData.h"
+#include "../Hardware/Displays/HUD/HudWidgets/HudWidgetInfoBox.h"
+#include "../Hardware/Displays/HUD/HudWidgets/HudWidgetBackdrop.h"
+#include "../Hardware/Displays/HUD/HudWidgets/HudWidgetProgress.h"
 
 
 #define HUD_UPDATE_INTERVAL 5000 // force an update on the HUD every 5 seconds automatically

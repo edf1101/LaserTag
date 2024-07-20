@@ -9,8 +9,8 @@
 
 #include <string>
 #include <functional>
-#include "../Displays/ImageData.h"
-#include "../Sound/SoundData.h"
+#include "../Hardware/Displays/ImageData.h"
+#include "../Hardware/Sound/SoundData.h"
 
 namespace Weapons { // So we don't have irrelevant things floating around in the global namespace
 

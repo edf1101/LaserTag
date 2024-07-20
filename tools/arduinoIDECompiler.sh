@@ -5,7 +5,7 @@
 echo "Compiling project for Arduino IDE..."
 echo ""
 
-cd ../arduino_builds
+cd ./arduino_builds
 echo "Removing old build"
 echo ""
 rm -r -f LaserTag
@@ -17,7 +17,7 @@ echo "Copying .ino entrance file"
 cp LaserTag.ino LaserTag/
 mkdir LaserTag/src
 echo "Copying src code"
-cp -r ../src/* LaserTag/src
+cp -r ../../src/* LaserTag/src
 echo "Removing main.cpp from arduino build"
 rm -f LaserTag/src/main.cpp
 

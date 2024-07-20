@@ -19,6 +19,9 @@
 #define MESH_PASSWORD "LaserTag"
 #define MESH_PORT 5555
 
+// Pin definition for the Latch mechanism
+#define POWER_HOLD_PIN 17
+
 // Pin definitions for the side display
 #define TFT_CS 5
 #define TFT_RST 4

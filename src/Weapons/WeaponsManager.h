@@ -14,8 +14,8 @@
 #include <vector>
 #include "Arduino.h"
 #include "Gun.h" // For creating Gun types
-#include "../Displays/ImageData.h" // For getting gun images
-#include "../Sound/SoundPlayer.h" // For getting gun sounds
+#include "../Hardware/Displays/ImageData.h" // For getting gun images
+#include "../Hardware/Sound/SoundPlayer.h" // For getting gun sounds
 #include "GunGroup.h"
 
 class WeaponsManager {
