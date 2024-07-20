@@ -18,7 +18,6 @@ Weapons::Gun WeaponsManager::getGun(const std::string &gunName) {
   findAllGuns(); // make sure the list of guns is up-to-date
 
   for (auto &gun: allGuns) {
-    Serial.println(gun.getName().c_str());
     if (gun.getName() == gunName) {
       return gun;
     }

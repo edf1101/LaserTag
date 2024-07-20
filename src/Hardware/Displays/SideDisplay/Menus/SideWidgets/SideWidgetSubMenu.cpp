@@ -92,12 +92,9 @@ namespace SideWidgets {
       if (subMenuCounter > maxSubMenuCounter) {
         subMenuCounter = 0;
       }
-      Serial.print("Sub menu counter: ");
-      Serial.println(subMenuCounter);
+      Logger::log(Logger::LogLevel::DETAIL, "Sub menu counter now: " + std::to_string(subMenuCounter));
       if (changeCallbackSet) {
         onChangeSubMenuCounter(subMenuCounter);
-        Serial.println("!!!");
-
       }
     }
 
@@ -107,11 +104,9 @@ namespace SideWidgets {
       if (subMenuCounter < 0) {
         subMenuCounter = maxSubMenuCounter;
       }
-      Serial.print("Sub menu counter: ");
-      Serial.println(subMenuCounter);
+      Logger::log(Logger::LogLevel::DETAIL, "Sub menu counter now: " + std::to_string(subMenuCounter));
 
       if (changeCallbackSet) {
-        Serial.println("!!!");
         onChangeSubMenuCounter(subMenuCounter);
       }
     }
@@ -119,7 +114,6 @@ namespace SideWidgets {
     void SideWidgetSubMenu::selectOption() {
       // Select the option
 
-      Serial.println("Selected option" + String(subMenuCounter));
       if (pressCallbackSet) {
         onPressSubMenuCounter(subMenuCounter);
       }
@@ -128,7 +122,6 @@ namespace SideWidgets {
     void SideWidgetSubMenu::returnToParent() {
       // Return to the parent menu
 
-      Serial.println("Returning to parent menu");
       menuManager->switchMenu(previousMenu);
     }
 

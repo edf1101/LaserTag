@@ -20,7 +20,6 @@ namespace LEDs {
       if (infinite) {
         return false;
       }
-      Serial.println(effectLength);
 
       return (millis() - startTime) > effectLength;
     }
@@ -59,12 +58,8 @@ namespace LEDs {
 
     void LEDEffect::setLength(unsigned long newLength) {
       // set the length of an effect
-      Serial.println("effectLength");
-      Serial.println(effectLength);
 
       effectLength = newLength;
-      Serial.println(effectLength);
-
     }
 
 } // LEDs

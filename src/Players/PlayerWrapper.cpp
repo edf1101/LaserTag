@@ -163,15 +163,14 @@ void PlayerWrapper::takeDamage(int _gunIndex) {
   // deal damage to the player
 
   int gunDamage = WeaponsManager::getGun(_gunIndex).getDamage(); // get the gun that shot the player
-#if DEBUG_SERIAL
-  Serial.print("Players took damage: ");
-  Serial.println(gunDamage);
-#endif
+  Logger::log(Logger::LogLevel::INFO, "I took " + std::to_string(gunDamage) + " damage");
   player.health -= gunDamage;
   if (player.health <= 0) {
+    Logger::log(Logger::LogLevel::DETAIL, "I died");
     player.health = 0;
     mySystem->getGamemode()->onPlayerDeath();
     if (player.revives > 0) {
+      Logger::log(Logger::LogLevel::DETAIL, "Starting respawn");
       respawn();
     }
   }
@@ -197,9 +196,8 @@ void PlayerWrapper::loop() {
 
   // Deal with respawn logic
   if (respawning && (millis() - respawnStartTime > RESPAWN_TIME)) {
-#if DEBUG_SERIAL
-    Serial.println("Players respawned");
-#endif
+    Logger::log(Logger::LogLevel::INFO, "Respawn complete");
+
     player.health = 100;
     if (currentInfiniteLivesState == NORMAL_LIVES) // Normal lives is the only state that uses up a revive
       player.revives--;

@@ -189,7 +189,6 @@ namespace Menus {
 
       rotaryCounter = 0;
       lastReturnButtonShowing = false;
-      Serial.println("RESET MENU");
       onRotaryTurned(0);
     }
 

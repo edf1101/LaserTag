@@ -24,7 +24,8 @@ namespace Networks {
       // check if the admin code is correct
 
       if (adminCode == ADMIN_PASS) {
-        Serial.println("Admin status granted");
+        Logger::log(Logger::LogLevel::INFO, "I gained admin status!");
+
         adminStatus = true;
         inLobby = true; // If we are the admin we are automatically in the lobby
 
@@ -71,7 +72,8 @@ namespace Networks {
       // join the lobby
 
       inLobby = true;
-      Serial.println("Joined lobby");
+      Logger::log(Logger::LogLevel::DETAIL, "I joined the lobby");
+
 
       LaserTag::getNetworkManager()->getMessageQueue()->pushMessage(
               "Joined Lobby"); // tell the msg queue we joined the lobby
@@ -163,13 +165,17 @@ namespace Networks {
       // when we get a hit confirmation from the network we handle it.
       // it gets handles here as meshmanager is more low level
 
-      Serial.println("Hit confirmation received format: Killer,Victim,died(bool) " + String(shooterUnitnum) + "," +
-                     String(victimUnitnum) + "," + String(killConfirm));
+      std::string msg = "Hit confirmation received format: Killer,Victim,died(bool) " + std::to_string(shooterUnitnum) + "," +
+              std::to_string(victimUnitnum) + "," + std::to_string(killConfirm);
+
+      Logger::log(Logger::LogLevel::DETAIL, msg);
+
 
       std::string shooterName = LaserTag::getNetworkManager()->getPlayerByUnitnum(shooterUnitnum)->name;
       std::string victimName = LaserTag::getNetworkManager()->getPlayerByUnitnum(victimUnitnum)->name;
 
       if (killConfirm) { // If the victim died put that on our message queue.
+        Logger::log(Logger::LogLevel::INFO, shooterName + " killed " + victimName + "!");
         messageQueue.pushMessage(shooterName + " killed " + victimName + " " + +"!");
       }
 

@@ -55,7 +55,6 @@ void GamemodeManager::switchGamemode(GamemodeManager::GamemodeOptions _option) {
 void GamemodeManager::switchGamemodeByInt(int _option) {
   // Switch the gamemode to the specified option (the integer refers to the enum index)
 
-  Serial.println("Switching to" + String(_option) + " gamemode.");
   switchGamemode((GamemodeOptions) _option);
 }
 

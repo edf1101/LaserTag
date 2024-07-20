@@ -32,13 +32,12 @@ void Firing::FiringLoop() {
 
   infraredTransciever.receiveIR(); // check for IR signals in
   if (infraredTransciever.infraredReceived) {
-//#if DEBUG_SERIAL
-//    Serial.println("IR Received");
-//#endif
+
+    Logger::log(Logger::LogLevel::DETAIL, "IR Received");
     if (infraredTransciever.crcValid) {
-//#if DEBUG_SERIAL
-//      Serial.println("CRC correct");
-//#endif
+
+      Logger::log(Logger::LogLevel::DETAIL, "IR CRC correct");
+
 
       int irControl = infraredTransciever.irPacketIn.control;
 
@@ -86,18 +85,13 @@ void Firing::OnHit() {
   int rxUnitnum = infraredTransciever.irPacketIn.unitnum;
   int rxWeapon = infraredTransciever.irPacketIn.weapon;
 
-#if DEBUG_SERIAL
-  Serial.println("Rx Hit signal");
-  Serial.print("Hit! Shot by: ");
-  Serial.print(rxUnitnum);
-  Serial.print(" with weapon: ");
-  Serial.println(rxWeapon);
-#endif
+
+  Logger::log(Logger::LogLevel::DETAIL,
+              "Hit! Shot by: " + std::to_string(rxUnitnum) + " with weapon: " + std::to_string(rxWeapon));
 
   if (mySystem->canTakeDamage(rxUnitnum)) {
-#if DEBUG_SERIAL
-    Serial.println("Valid hit");
-#endif
+
+    Logger::log(Logger::LogLevel::DETAIL, "Valid hit");
     player->takeDamage(rxWeapon); // Deal damage to the player based on the weapon that hit them
 
     // send a hit signal back. if the player is respawning, set killConfirm flag to true.
@@ -112,10 +106,8 @@ void Firing::OnCommand() {
   int unitnum = infraredTransciever.irPacketIn.unitnum;
   int weapon = infraredTransciever.irPacketIn.weapon;
   int command = weapon << 7 | unitnum;
-#if DEBUG_SERIAL
-  Serial.print("Control packet received: ");
-  Serial.println(command);
-#endif
+
+  Logger::log(Logger::LogLevel::DETAIL, "Control packet received: " + std::to_string(command));
 
   // pass onto the command manager
   Commands::Command *rxCommand = Commands::Command::getCommandByIndex(command);
@@ -130,7 +122,8 @@ void Firing::sendCommand(uint16_t command) {
 
   // We have 11 bits for commands (plenty) make sure command id is within that range
   if (command > 2048) {
-    Serial.println("Command too large");
+    Logger::log(Logger::LogLevel::ERROR,"Command ID too large: " + std::to_string(command));
+
     return;
   }
 

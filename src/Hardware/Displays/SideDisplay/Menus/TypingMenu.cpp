@@ -112,7 +112,8 @@ namespace Menus {
       char currentChar = characterSet[index]; // get the current character
 
       if (index == maxRotaryCounter - 1) { // Set the string
-        Serial.println("Set");
+        Logger::log(Logger::LogLevel::DETAIL,"Set a new name");
+
 
         if (!completeString.empty() && setCallbackString) { // if its not empty do something with the string
           callback(completeString);
@@ -128,7 +129,8 @@ namespace Menus {
           completeString.pop_back();
           completeStringWidget.setText(hideCompleteString ? std::string(completeString.size(), '*') : completeString);
         }
-        Serial.println("Backspace");
+        Logger::log(Logger::LogLevel::DETAIL,"Name menu backspace");
+
       } else { // add a character to the string
 
         completeString.push_back(currentChar);

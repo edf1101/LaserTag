@@ -17,17 +17,14 @@
 If web interface uses flask then other phones etc can access it. send JSON over serial for ease of use. can have a shot accuracy stat
 - make things more staticy where poss
 - Could install all libs in the src code so that it can be run on any computer without needing to install anything.
-- Add a proper logger instead of Serial.println
 - When becoming admin, the player should send out an am I admin packet to all other players. Wait 1s to see if any responses
 if not do usual thing. If so then do the join game as existing routine.
-- logger have diff levels of logging
 - admin can turn down IR and volume
 - Other menu in admin base menu is to autoteam balance.(or maybe in teams menu have an autobalance 2 team,3 team, 4 team etc)
 
 ## Plan
 - add teams (and auto team balancing) 
 - add team DM game
-- add a logger (debug screen messages from here)
 - player can turn on and off vibration motors
 - admin can enable/disable/change: volume, LEDs, IR, gun or laser sounds
 - PC serial stats interface in python

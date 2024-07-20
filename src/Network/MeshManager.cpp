@@ -11,7 +11,6 @@
 
 namespace Networks {
     void MeshManager::init() {
-      mesh.setDebugMsgTypes(ERROR | STARTUP);  // set before init() so that you can see startup messages
 
       mesh.init(MESH_SSID, MESH_PASSWORD, &userScheduler, MESH_PORT);
       mesh.onReceive(std::bind(&MeshManager::receivedCallback, this, std::placeholders::_1, std::placeholders::_2));
@@ -38,9 +37,8 @@ namespace Networks {
     void MeshManager::receivedCallback(uint32_t from, String &msg) {
       // When a message is received this callback function is called
 
-#if DEBUG_SERIAL
-      Serial.printf("startHere: Received from %u msg=%s\n", from, msg.c_str());
-#endif
+      std::string message = "recieved message" + std::string(msg.c_str()) + " from node " + std::to_string(from);
+      Logger::log(Logger::LogLevel::DETAIL, message);
 
       // Update the node activity map
       nodeActivityMap[from] = millis();
@@ -152,10 +150,12 @@ namespace Networks {
 
       JsonDocument jsonOut;
       jsonOut["control"] = ControlTypes::JOIN_ACKNOWLEDGE;
-      Serial.println("Handling join request");
+      Logger::log(Logger::LogLevel::INFO, "Handling join request from node " + std::to_string(from));
+
       // Check if the node is already in the game
       if (connectedNodes.find(from) != connectedNodes.end()) {
-        Serial.println("Node is already in the lobby");
+        Logger::log(Logger::LogLevel::INFO, "Node " + std::to_string(from) + " is already in the game");
+
         // If the node is already in the game find it's stats and send them back to make the node rejoin in last state.
         // This is useful if the node has been disconnected and reconnected and needs to rejoin the game
 
@@ -176,7 +176,7 @@ namespace Networks {
         // pick a unitnum for the node
         vector<uint32_t> allNodes = LaserTag::getNetworkManager()->getAllPlayerNodeIDs();
         vector<int> allUnitnums; // get all the unitnums of the players in the game so far.
-        for (uint32_t node : allNodes) {
+        for (uint32_t node: allNodes) {
           Player *player = LaserTag::getNetworkManager()->getPlayerInMap(node);
           allUnitnums.push_back(player->unitnum);
         }
@@ -184,13 +184,14 @@ namespace Networks {
         // TODO have a max number of tries before giving up
         // TODO If more than 99 players are in the game then we can't add any more
         // TODO we can just break and not send back a response
-        int unitnum = random(1,127); // pick a random unitnum to start with
+        int unitnum = random(1, 127); // pick a random unitnum to start with
         while (std::find(allUnitnums.begin(), allUnitnums.end(), unitnum) != allUnitnums.end()) {
           // if the unitnum is already in use then pick a new one
-          unitnum = random(1,127);
+          unitnum = random(1, 127);
         }
 
-        Serial.println("Node is new, Assigning it unitnum: " + String(unitnum));
+        Logger::log(Logger::LogLevel::INFO, "Node " + std::to_string(from) + " is new assigning new unitnum");
+
         jsonOut["unitnum"] = unitnum;
         jsonOut["name"] = "Gun" + String(unitnum);
         jsonOut["joinState"] = JoinAckStates::ACCEPT_NEW_GUN;
@@ -216,17 +217,15 @@ namespace Networks {
 
 
     void MeshManager::newConnectionCallback(uint32_t nodeId) {
-#if DEBUG_SERIAL
-      Serial.printf("--> startHere: New Connection, nodeId = %u\n", nodeId);
-#endif
+      // Gets called when a new node connects to the mesh network
 
-
+      Logger::log(Logger::LogLevel::DETAIL, "Node " + std::to_string(nodeId) + " has joined the mesh");
     }
 
     void MeshManager::changedConnectionCallback() {
-#if DEBUG_SERIAL
-      Serial.printf("Changed connections\n");
-#endif
+      // Gets called when a node connects or disconnects from the mesh network
+
+      Logger::log(Logger::LogLevel::DETAIL, "Node connections have changed");
     }
 
     void MeshManager::nodeTimeAdjustedCallback(int32_t offset) {
@@ -238,7 +237,7 @@ namespace Networks {
       JsonDocument jsonOut;
       jsonOut["control"] = ControlTypes::COMMAND;
       jsonOut["code"] = commandCode;
-      Serial.println("sending the command" + String(commandCode.c_str()) + " over the mesh network");
+      Logger::log(Logger::LogLevel::INFO, "sending the command" + std::string(commandCode.c_str()));
 
       // convert JSON object to a string and send to all nodes on the network (apart from ourselves)
       String msg = "";
@@ -321,7 +320,7 @@ namespace Networks {
 
       set<uint32_t> activeNodes; // create a new set to return
 
-      for(auto & pair : nodeActivityMap){
+      for (auto &pair: nodeActivityMap) {
         if (millis() - pair.second < MESH_ACTIVITY_TIMEOUT) { // if the node has been active in the last ~20 seconds
           activeNodes.insert(pair.first); // add it to the set
         }

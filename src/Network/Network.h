@@ -34,7 +34,6 @@ namespace Networks {
 
         // pointer getters to important objects
         MessageQueue *getMessageQueue() { return &messageQueue; } // Getter for the message queue
-        MessageQueue *getDebugMessageQueue() { return &debugMessageQueue; } // Getter for the message queue
 
         // functions (getters & setters) for the players map
         static void setPlayerInMap(uint32_t id, Player player); // Add a player to the map
@@ -54,7 +53,6 @@ namespace Networks {
 
     private:
         MessageQueue messageQueue; // The message queue
-        MessageQueue debugMessageQueue; // The message queue
 
         MeshManager meshManager; // The mesh manager object
 

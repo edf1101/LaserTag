@@ -6,6 +6,7 @@
 
 #include "HudDisplay.h"
 #include "../../Hardware.h"
+#include "Logger/Logger.h"
 
 // definitions of various OLED screen parameters
 #define SCREEN_WIDTH 128 // OLED testDisplay width, in pixels
@@ -19,9 +20,14 @@ void HudDisplay::init() {
   hudDisplay = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
   // scan for devices
-  Serial.println("Scanning for I2C devices ...");
-  uint8_t i2cAddress= Hardware::findOLEDAddress();
-  Serial.printf("I2C device found at address 0x%02X\n", i2cAddress);
+  Logger::log(Logger::LogLevel::INFO, "Scanning for I2C devices ...");
+  uint8_t i2cAddress = Hardware::findOLEDAddress();
+
+//  if (i2cAddress == 0)
+//    Logger::log(Logger::LogLevel::FATAL, "No I2C OLED found");
+//
+//  else
+//    Logger::log(Logger::LogLevel::INFO, "I2C device found ");
 
   hudDisplay.begin(SSD1306_SWITCHCAPVCC, i2cAddress);
 

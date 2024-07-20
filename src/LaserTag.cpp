@@ -14,13 +14,9 @@ using namespace Commands;
 void LaserTag::init() {
   // This gets called once at the start of the program
 
-  // set up the hardware class ASAP as it starts the power latch and that needs to be done fast
-  Hardware::init();
-
-#if DEBUG_SERIAL
-  Serial.begin(115200); // start serial communication for debug purposes
-  Serial.println("Started");
-#endif
+  Logger::init(DEBUG_SERIAL, DEBUG_BAUD_RATE,
+               Logger::LogLevel::DETAIL); // Set up the logger
+  Logger::log(Logger::LogLevel::INFO, "Starting system...");
   networkManager.init(); // Set up the network manager
 
   // Set up the commands / command manager
@@ -30,9 +26,11 @@ void LaserTag::init() {
   player.init(this, 1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
-  hudDisplay.init();
   sideDisplay.init();
+  hudDisplay.init();
 
+  // set up the hardware class ASAP as it starts the power latch and that needs to be done fast
+  Hardware::init();
   firing.init(this); // Set up the firing object
 
   ledManager.init(); // set up the LED manager
@@ -48,7 +46,6 @@ void LaserTag::init() {
   updateHUD(); // Update the HUD to show the initial state of the game
 
   soundPlayer.playSound(Sounds::arSound);
-
 }
 
 
@@ -90,7 +87,7 @@ bool LaserTag::canTakeDamage(int shooterUnitnum) {
 
 void LaserTag::turnOff() {
   // Turns off the gun with the latch circuit
-  Serial.println("Turning off");
+  Logger::log(Logger::LogLevel::INFO, "Turning off");
 
   // We need to disconnect from the network before turning off the gun
   // wait a few secs to make sure the network disconnects before actually shutting it down.
@@ -143,4 +140,8 @@ Firing *LaserTag::getFiring() {
 
 Commands::CommandManager *LaserTag::getCommandManager() {
   return &commandManager;
+}
+
+SideDisplay *LaserTag::getSideDisplay() {
+  return &sideDisplay;
 }

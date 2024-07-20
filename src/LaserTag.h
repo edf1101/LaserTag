@@ -12,6 +12,7 @@
 
 #include <functional>
 #include "Arduino.h"
+#include "Logger/Logger.h"
 #include "Hardware/Hardware.h"
 #include "Commands/Command.h"
 #include "Hardware/Displays/HUD/HudDisplay.h"
@@ -62,6 +63,8 @@ public:
     static Firing *getFiring();
 
     static Commands::CommandManager *getCommandManager();
+
+    static SideDisplay *getSideDisplay();
 
 private:
     // Objects for main hardware components of the gun.

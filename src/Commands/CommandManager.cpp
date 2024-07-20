@@ -81,6 +81,7 @@ namespace Commands {
 
       Serial.print("Processing command: ");
       Serial.println(commandName.c_str());
+      Logger::log(Logger::LogLevel::INFO, "Processing command: " + commandName);
 
       Networks::MessageQueue *messageQueue = LaserTag::getNetworkManager()->getMessageQueue();
       PlayerWrapper *myPlayer = LaserTag::getPlayer();
@@ -90,22 +91,22 @@ namespace Commands {
         if (commandName == "None") {
           // set the gamemode to none
           LaserTag::getGamemodeManager()->switchGamemode(GamemodeManager::GamemodeOptions::NONE);
-          Serial.println("Switching gamemode to none");
+          Logger::log(Logger::LogLevel::INFO, "Switching gamemode to none");
         } else if (commandName == "Solo") {
           // set the gamemode to solo
           LaserTag::getGamemodeManager()->switchGamemode(GamemodeManager::GamemodeOptions::SOLO);
-          Serial.println("Switching gamemode to solo");
+          Logger::log(Logger::LogLevel::INFO, "Switching gamemode to solo");
         }
       } else if (commandGroup == "Game Mods") { // Process the game modification commands
         if (commandName == "Play") {
           // set the game to play
-          Serial.println("Setting game to play");
+          Logger::log(Logger::LogLevel::INFO, "Setting game to play");
           LaserTag::getGamemodeManager()->getCurrentGame()->setGamePauseState(false);
           messageQueue->pushMessage("Game started!");
 
         } else if (commandName == "Pause") {
           // set the game to pause
-          Serial.println("Setting game to paused");
+          Logger::log(Logger::LogLevel::INFO, "Setting game to paused");
           LaserTag::getGamemodeManager()->getCurrentGame()->setGamePauseState(true);
           messageQueue->pushMessage("Game paused!");
 
@@ -115,7 +116,7 @@ namespace Commands {
         if (commandName == "+1 Life") {
           // add a life to the player
 
-          Serial.println("Adding a life to the player");
+          Logger::log(Logger::LogLevel::INFO, "Adding a life to the player");
           if (myPlayer->getRevives() < MAX_REVIVES) {
             myPlayer->setRevives(myPlayer->getRevives() + 1);
           }
@@ -125,73 +126,73 @@ namespace Commands {
           if (myPlayer->getRevives() > 0) {
             myPlayer->setRevives(myPlayer->getRevives() - 1);
           }
-          Serial.println("Removing a life from the player");
+          Logger::log(Logger::LogLevel::INFO, "Removing a life from the player");
 //          LaserTag::getPlayer()->removeLife();
         } else if (commandName == "0 Lives") {
           // set the player to 0 lives
 
-          Serial.println("Setting player to 0 lives");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to 0 lives");
           myPlayer->setRevives(0);
         } else if (commandName == "Infinite Mags") {
           // set the player to infinite mags
 
           myPlayer->getGun()->setInfiniteAmmoState(Weapons::INFINITE_MAGS);
-          Serial.println("Setting player to infinite mags");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have infinite mags");
         } else if (commandName == "Infinite Ammo") {
           // set the player to have infinite ammo
 
           myPlayer->getGun()->setInfiniteAmmoState(Weapons::INFINITE_AMMO);
-          Serial.println("Setting player to have infinite ammo");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have infinite ammo");
         } else if (commandName == "Normal Ammo") {
           // set the player to not have infinite ammo
 
           myPlayer->getGun()->setInfiniteAmmoState(Weapons::NORMAL_AMMO);
-          Serial.println("Setting player to have normal ammo");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have normal ammo");
         } else if (commandName == "Infinite Lives") {
           // Set the player to have infinite Lives
 
           myPlayer->setInfiniteLivesState(PlayerWrapper::INFINITE_LIVES);
-          Serial.println("Setting player to have infinite lives");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have infinite lives");
         } else if (commandName == "Invincible") {
           // Set the player to be invincible
 
           myPlayer->setInfiniteLivesState(PlayerWrapper::INVINCIBLE_LIVES);
-          Serial.println("Setting player to be invincible");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to be invincible");
         } else if (commandName == "Normal Lives") {
           // Set the player to not be invincible or infinite lives
 
           myPlayer->setInfiniteLivesState(PlayerWrapper::NORMAL_LIVES);
-          Serial.println("Setting player to not be invincible");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to not be invincible");
         } else if (commandName == "Suppressor") {
           // Set the player to have a suppressor
 
-          Serial.println("Setting player to have a suppressor");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have a suppressor");
           myPlayer->getGun()->setSuppressed(true);
         } else if (commandName == "Suppressor Off") {
           // Set the player to not have a suppressor
 
-          Serial.println("Setting player to not have a suppressor");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to not have a suppressor");
           myPlayer->getGun()->setSuppressed(false);
         } else if (commandName == "High Fire Rate") {
           // Set the player to have a high fire rate
 
           myPlayer->getGun()->setFireRate(Weapons::FireRate::FAST);
-          Serial.println("Setting player to have a high fire rate");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have a high fire rate");
         } else if (commandName == "Slow Fire Rate") {
           // Set the player to have a slow fire rate
 
           myPlayer->getGun()->setFireRate(Weapons::FireRate::SLOW);
-          Serial.println("Setting player to have a slow fire rate");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have a slow fire rate");
         } else if (commandName == "Normal Fire Rate") {
           // Set the player to have a normal fire rate
 
           myPlayer->getGun()->setFireRate(Weapons::FireRate::NORMAL);
-          Serial.println("Setting player to have a normal fire rate");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have a normal fire rate");
         } else if (commandName == "Fake Kill Confirm") {
           // Set the player to have a fake kill confirm
 
           myPlayer->setKills(myPlayer->getKills() + 1);
-          Serial.println("Setting player to have a fake kill confirm");
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have a fake kill confirm");
         }
 
       } else if (commandGroup == "Guns") {
@@ -199,19 +200,19 @@ namespace Commands {
           // Set the guns to be swappable
 
           WeaponsManager::setGunsSwappable(true);
-          Serial.println("Setting guns to be swappable");
+          Logger::log(Logger::LogLevel::INFO, "Setting guns to be swappable");
         } else if (commandName == "Guns Unswappable") {
           // Set the guns to not be swappable
 
           WeaponsManager::setGunsSwappable(false);
-          Serial.println("Setting guns to not be swappable");
+          Logger::log(Logger::LogLevel::INFO, "Setting guns to not be swappable");
         } else {
           // Set the player's gun to the selected gun
 
           Weapons::Gun newGun = WeaponsManager::getGun(commandName);
           myPlayer->swapGun(newGun.getName());
-          Serial.print("Setting player to have the gun: ");
-          Serial.println(newGun.getName().c_str());
+
+          Logger::log(Logger::LogLevel::INFO, "Setting player to have the gun: " + newGun.getName());
         }
       } else if (commandGroup == "Gun Groups") {
         // Set the gun group to be on or off
@@ -220,10 +221,7 @@ namespace Commands {
         std::string state = commandName.substr(commandName.find(' ', 0) + 1);
         bool stateBool = state == "On";
         WeaponsManager::setGroupUseState(groupName, stateBool);
-        Serial.print("Setting gun group ");
-        Serial.print(groupName.c_str());
-        Serial.print(" to ");
-        Serial.println(state.c_str());
+        Logger::log(Logger::LogLevel::INFO, "Setting gun group " + groupName + " to " + state);
 
         // Now check if we need to change the player's gun
         Weapons::Gun *currentGun = myPlayer->getGun();
@@ -257,8 +255,7 @@ namespace Commands {
 
       string commandName = commandPointer->getCommandName();
 
-      Serial.print("sending command: ");
-      Serial.println(commandName.c_str());
+      Logger::log(Logger::LogLevel::INFO, "Sending command: " + commandName);
       if (currentSendType == BROADCAST and commandPointer->getCanBroadcast()) {
         LaserTag::getNetworkManager()->sendCommand(commandPointer->getCommandCode());
         processCommand(commandPointer); // as it's a broadcast, process the command locally too
@@ -272,7 +269,7 @@ namespace Commands {
       if ((!commandPointer->getCanBroadcast() && currentSendType == BROADCAST) ||
           (!commandPointer->getCanSelf() && currentSendType == SELF) ||
           (!commandPointer->getCanSingle() && currentSendType == SINGLE)) {
-        Serial.println("Trying to send a command that isn't able to be sent with this type");
+        Logger::log(Logger::LogLevel::ERROR, "Trying to send a command that isn't able to be sent with this type");
       }
     }
 

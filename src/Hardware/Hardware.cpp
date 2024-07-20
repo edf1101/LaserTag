@@ -3,6 +3,7 @@
 */
 
 #include "Hardware.h"
+#include "Logger/Logger.h"
 
 void Hardware::init() {
   // Initlises the hardware this class controls
@@ -12,13 +13,12 @@ void Hardware::init() {
   pinMode(POWER_HOLD_PIN, OUTPUT);
   digitalWrite(POWER_HOLD_PIN, HIGH);
 
-//  Serial.println("Searching for MCP");
+  Logger::log(Logger::LogLevel::INFO, "Searching for MCP");
+
 //  if (!mcp.begin_I2C()) {
-//    //if (!mcp.begin_SPI(CS_PIN)) {
-//    Serial.println("Error. MCP not found. Check wiring and I2C address.");
-//    while (1);
+//    Logger::log(Logger::LogLevel::FATAL, "No MCP found");
 //  }
-//Serial.println("found MCP");
+//  Logger::log(Logger::LogLevel::INFO, "MCP found");
 
 }
 

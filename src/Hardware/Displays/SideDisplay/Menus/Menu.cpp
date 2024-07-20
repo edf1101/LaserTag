@@ -28,22 +28,19 @@ namespace Menus {
       // called when the rotary encoder is turned
       rotaryCounter =
               (rotaryCounter + change + maxRotaryCounter) % maxRotaryCounter; // add the change to the rotary counter
-#if DEBUG_SERIAL
+
       if (change != 0)
-        Serial.println("menu.h: Rotary Turned position now: " + String(rotaryCounter));
-#endif
+        Logger::log(Logger::LogLevel::DETAIL, "menu.h: Rotary Turned position now: " + std::to_string(rotaryCounter));
+
     }
 
     void Menu::onRotaryPressed() {
       // called when the button is pressed
-#if DEBUG_SERIAL
-      Serial.println("Menu.h: Rotary Pressed");
-#endif
+
+      Logger::log(Logger::LogLevel::DETAIL, "menu.h: Rotary Pressed");
     }
 
     bool Menu::getCanTakeDamage() {
-
-      // TODO DO THIS!
       // iterate through parents until get to root or somewhere that has admin required access.
 
       if (requiresAdmin)

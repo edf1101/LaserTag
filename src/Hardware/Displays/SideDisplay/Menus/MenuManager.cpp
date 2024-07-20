@@ -11,6 +11,8 @@
 #include "../../../../LaserTag.h"
 #include "../../../../Network/Network.h"
 #include "../../../../Commands/CommandManager.h"
+#include "../../../../Logger/Logger.h"
+
 
 MenuManager::MenuManager(SideDisplay *_sideDisplay) {
   sideDisplay = _sideDisplay; // assign the pointer to the side display
@@ -82,7 +84,7 @@ void MenuManager::init() {
   messageMenu.init(sideDisplay, &mainMenu, LaserTag::getNetworkManager()->getMessageQueue(), "Messages");
   messageMenu.setParentMenu(&mainMenu);
 
-  debugMsgMenu.init(sideDisplay, &settingsMenu, LaserTag::getNetworkManager()->getDebugMessageQueue(), "Debug");
+  debugMsgMenu.init(sideDisplay, &settingsMenu, Logger::getLogBuffer(), "Debug");
   debugMsgMenu.setParentMenu(&settingsMenu);
 
   nameMenu.init(sideDisplay, &settingsMenu);
