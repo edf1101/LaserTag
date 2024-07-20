@@ -25,7 +25,6 @@ namespace Networks {
 
         void disconnectNetwork();
 
-        // TODO these should probs be destatic-ed as u can access them statically thru laser tag class
         static void tryMakeAdmin(std::string adminCode); // Setter for the admin status
         static bool getAdminStatus() { return adminStatus; } // Getter for the admin status
 

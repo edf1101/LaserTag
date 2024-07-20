@@ -9,7 +9,7 @@
 #include "../LaserTag.h"
 
 // constructor for player
-void PlayerWrapper::init(LaserTag *_mySystem, int _team) {
+void PlayerWrapper::init(int _team) {
   player.unitnum = random(1, 127);
   player.team = _team;
   player.name = "Gun" + std::to_string(player.unitnum);
@@ -17,8 +17,6 @@ void PlayerWrapper::init(LaserTag *_mySystem, int _team) {
   player.health = 100;
   player.kills = 0;
   player.carryingFlag = false;
-
-  mySystem = _mySystem;
 
   gun.setHUDFunction(std::bind(&LaserTag::updateHUD, mySystem)); // update the HUD function
 

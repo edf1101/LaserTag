@@ -30,7 +30,7 @@ public:
         INFINITE_LIVES, // can take damage but won't use revives to respawn
     };
 
-    void init(LaserTag *_mySystem, int _team); // Default constructor
+    void init(int _team); // Default constructor
     void loop(); // Function to be called every loop
 
     int getUnitnum() const; // Returns the player's unit number

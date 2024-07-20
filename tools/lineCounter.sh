@@ -10,8 +10,8 @@ echo "Counting lines of .h ..."
 find . -name '*.h' | xargs wc -l
 
 echo "Counting lines of image/sound data to ignore ..."
-cat Displays/Images/*.h | wc -l
-cat Sound/Sounds/*.h | wc -l
+cat Hardware/Displays/Images/*.h | wc -l
+cat Hardware/Sound/Sounds/*.h | wc -l
 
 echo "Counting lines of library code to ignore ..."
 cd ./libs

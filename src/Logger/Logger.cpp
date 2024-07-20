@@ -6,8 +6,8 @@
 */
 
 #include "Logger.h"
-#include "config.h"
-#include "LaserTag.h"
+#include "../config.h"
+#include "../LaserTag.h"
 
 void Logger::init(bool _serialOn, unsigned long _baudRate, LogLevel _loggerLevel) {
   // Initialises the logger

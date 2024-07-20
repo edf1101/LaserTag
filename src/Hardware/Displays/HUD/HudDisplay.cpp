@@ -6,7 +6,7 @@
 
 #include "HudDisplay.h"
 #include "../../Hardware.h"
-#include "Logger/Logger.h"
+#include "../../../Logger/Logger.h"
 
 // definitions of various OLED screen parameters
 #define SCREEN_WIDTH 128 // OLED testDisplay width, in pixels

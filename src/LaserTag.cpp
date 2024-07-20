@@ -23,7 +23,7 @@ void LaserTag::init() {
   commandManager.setupCommands();
 
   // Set up the player object
-  player.init(this, 1); // Create a player object with unitnum 1 and team 1
+  player.init(1); // Create a player object with unitnum 1 and team 1
 
   // set up the displays
   sideDisplay.init();
@@ -31,7 +31,7 @@ void LaserTag::init() {
 
   // set up the hardware class ASAP as it starts the power latch and that needs to be done fast
   Hardware::init();
-  firing.init(this); // Set up the firing object
+  firing.init(); // Set up the firing object
 
   ledManager.init(); // set up the LED manager
   auto effect = new LEDs::PulseColour();

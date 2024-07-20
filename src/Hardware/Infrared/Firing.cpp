@@ -6,16 +6,13 @@
 #include "../../LaserTag.h"
 #include "../../Commands/CommandManager.h"
 
-void Firing::init(LaserTag *_mySystem) {
+void Firing::init() {
   // This function is called once at the start of the game
   // It sets up the firing system
   // constructor to link the whole laserTag system to this firing class
   // This is important, so it can access sounds, player data, etc.
-
-  mySystem = _mySystem;
-
   // set up buttons
-  gameButtons = mySystem->getButtons();
+  gameButtons = LaserTag::getButtons();
   gameButtons->triggerButton.SetReleasedCallback(std::bind(&Firing::OnTriggerUp, this));
   gameButtons->magazineButton.SetPressedCallback(std::bind(&Firing::OnMagazineButtonDown, this));
 

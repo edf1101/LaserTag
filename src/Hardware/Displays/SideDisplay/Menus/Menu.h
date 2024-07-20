@@ -7,7 +7,7 @@ class SideDisplay;
 
 #include "Arduino.h"
 #include "../../../../config.h"
-#include "Logger/Logger.h"
+#include "../../../../Logger/Logger.h"
 
 namespace Menus {
 

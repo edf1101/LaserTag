@@ -1,12 +1,11 @@
-src/Sound/Sounds/* linguist-vendored
-src/Displays/Images/* linguist-vendored
-
-src/Libs/ESP32Encoder/* linguist-vendored
-
-src/Libs/Adafruit_NeoPixel/* linguist-vendored
-
+src/Hardware/Sound/Sounds/* linguist-vendored
+src/Hardware/Displays/Images/* linguist-vendored
+src/Libs/* linguist-vendored
 src/Libs/painlessMesh/* linguist-vendored
-src/Libs/painlessMesh/arduino/* linguist-vendored
-src/Libs/painlessMesh/boost/* linguist-vendored
-src/Libs/painlessMesh/painlessmesh/* linguist-vendored
-src/Libs/painlessMesh/plugin/* linguist-vendored
+src/Libs/painlessMesh/src/* linguist-vendored
+src/Libs/painlessMesh/src/painlessmesh/* linguist-vendored
+src/Libs/painlessMesh/src/boost/* linguist-vendored
+src/Libs/painlessMesh/src/plugin/* linguist-vendored
+src/Libs/painlessMesh/src/arduino/* linguist-vendored
+src/Libs/Adafruit_NeoPixel/* linguist-vendored
+src/Libs/ESP32Encoder/* linguist-vendored

@@ -21,7 +21,7 @@ class LaserTag; // Forward declaration
 
 class Firing {
 public:
-    void init(LaserTag *_mySystem); // Initialise the firing system
+    void init(); // Initialise the firing system
     void FiringLoop(); // Main loop function
     void sendCommand(uint16_t command); // Function to send a command to another gun
     void Fire(); // Function to send a hit signal to another gun

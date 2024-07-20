@@ -3,7 +3,7 @@
 */
 
 #include "Hardware.h"
-#include "Logger/Logger.h"
+#include "../Logger/Logger.h"
 
 void Hardware::init() {
   // Initlises the hardware this class controls

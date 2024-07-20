@@ -63,7 +63,11 @@ namespace Networks {
 
     void Network::disconnectNetwork() {
       // disconnect from the network
-      // TODO if you turn off your gun u lose all lives so you can't benefit from this.
+
+      // set lives to 0 so a player can't cheat by turning off their gun if they are chased.
+      LaserTag::getPlayer()->setRevives(0); // reset the revives
+      meshManager.sendUpdate(); // send a final update
+
       meshManager.disconnect();
 
     }
@@ -165,7 +169,8 @@ namespace Networks {
       // when we get a hit confirmation from the network we handle it.
       // it gets handles here as meshmanager is more low level
 
-      std::string msg = "Hit confirmation received format: Killer,Victim,died(bool) " + std::to_string(shooterUnitnum) + "," +
+      std::string msg =
+              "Hit confirmation received format: Killer,Victim,died(bool) " + std::to_string(shooterUnitnum) + "," +
               std::to_string(victimUnitnum) + "," + std::to_string(killConfirm);
 
       Logger::log(Logger::LogLevel::DETAIL, msg);

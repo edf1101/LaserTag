@@ -181,13 +181,16 @@ namespace Networks {
           allUnitnums.push_back(player->unitnum);
         }
 
-        // TODO have a max number of tries before giving up
-        // TODO If more than 99 players are in the game then we can't add any more
-        // TODO we can just break and not send back a response
         int unitnum = random(1, 127); // pick a random unitnum to start with
+        int tries = 0;
         while (std::find(allUnitnums.begin(), allUnitnums.end(), unitnum) != allUnitnums.end()) {
           // if the unitnum is already in use then pick a new one
           unitnum = random(1, 127);
+          tries++;
+          if (tries > 100) {
+            Logger::log(Logger::LogLevel::ERROR, "Couldn't find a free unitnum for new player");
+            return;
+          }
         }
 
         Logger::log(Logger::LogLevel::INFO, "Node " + std::to_string(from) + " is new assigning new unitnum");
